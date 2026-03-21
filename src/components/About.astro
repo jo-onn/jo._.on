@@ -2,7 +2,7 @@
 import { siteConfig } from "../config";
 ---
 
-<section id="about" class="p-8 sm:p-12 md:p-16 lg:p-24">
+<section id="about" class="py-1 px-4 sm:py-2 sm:px-6 md:py-3 md:px-8">
   <div>
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-start">
       <div class="lg:col-span-4">
@@ -16,6 +16,9 @@ import { siteConfig } from "../config";
           style={`background-color: ${siteConfig.accentColor}`}
         >
         </div>
+        {siteConfig.sectionSubtitles?.about && (
+          <p class="mt-3 text-lg text-gray-400">{siteConfig.sectionSubtitles.about}</p>
+        )}
       </div>
 
       <div class="lg:col-span-8 space-y-8">

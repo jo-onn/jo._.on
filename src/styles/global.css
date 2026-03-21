@@ -1,5 +1,109 @@
 @import "tailwindcss";
 
+#cursor-spotlight {
+  position: fixed;
+  width: 125px;
+  height: 125px;
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+  background: radial-gradient(circle, rgba(29, 78, 216, 0.25) 0%, rgba(29, 78, 216, 0.1) 50%, transparent 70%);
+  transition: opacity 0.3s;
+}
+
+@font-face {
+  font-family: 'OmyuPretty';
+  src: url('/fonts/omyu pretty.ttf') format('truetype');
+  font-weight: 90 2000;
+  font-style: normal;
+}
+
 body {
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: 'OmyuPretty', sans-serif;
+  overflow: hidden;
+  height: 100vh;
+}
+
+.snap-container {
+  height: 100vh;
+  overflow-y: scroll;
+  scroll-snap-type: y proximity;
+  scroll-behavior: smooth;
+}
+
+.snap-section {
+  scroll-snap-align: start;
+  min-height: 100vh;
+  overflow-y: auto;
+}
+
+.dark body {
+  background-color: #0d1b2a;
+  color: #cdd9e5;
+}
+
+.dark .bg-white {
+  background-color: #0d1b2a !important;
+}
+
+.dark .text-gray-900,
+.dark .text-gray-800,
+.dark .text-gray-700,
+.dark .text-gray-600 {
+  color: #a8c0d6 !important;
+}
+
+.dark .bg-gray-100 {
+  background-color: #1a2e42 !important;
+}
+
+.dark .text-gray-800 {
+  color: #cdd9e5 !important;
+}
+
+/* Header 다크모드 */
+.dark #header a,
+.dark #header button {
+  color: #4a6a80 !important;
+}
+
+.dark #header a:hover {
+  color: #cdd9e5 !important;
+}
+
+/* Hero 다크모드 */
+.dark #hero {
+  background-color: #0d1b2a !important;
+}
+
+.dark #hero h2 {
+  color: #7eb8d4 !important;
+}
+
+.dark #hero h1 {
+  color: #e8f4f8 !important;
+}
+
+.dark #hero h1 span {
+  color: #56b4d3 !important;
+}
+
+.dark #hero p {
+  color: #a8c0d6 !important;
+}
+
+.dark #hero svg {
+  color: #4a7fa0 !important;
+}
+
+.fade-in-section {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+}
+
+.fade-in-section.visible {
+  opacity: 1;
+  transform: translateY(0);
 }

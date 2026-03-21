@@ -5,7 +5,7 @@ const hasProjects = siteConfig.projects && siteConfig.projects.length > 0;
 
 {
   hasProjects && (
-    <section id="projects" class="p-8 sm:p-12 md:p-16 lg:p-24">
+    <section id="projects" class="p-4 sm:p-6 md:p-8">
       <div>
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-start">
           <div class="lg:col-span-4">
@@ -16,6 +16,9 @@ const hasProjects = siteConfig.projects && siteConfig.projects.length > 0;
               class="w-[75px] h-[5px] mt-2 rounded-full"
               style={`background-color: ${siteConfig.accentColor}`}
             />
+            {siteConfig.sectionSubtitles?.projects && (
+              <p class="mt-3 text-lg text-gray-400">{siteConfig.sectionSubtitles.projects}</p>
+            )}
           </div>
 
           <div class="lg:col-span-8">
@@ -34,12 +37,16 @@ const hasProjects = siteConfig.projects && siteConfig.projects.length > 0;
                   <div class="group relative">
                     <Component
                       {...linkProps}
-                      class={`block relative p-4 sm:p-6 md:p-8 bg-gray-50 rounded-xl sm:rounded-2xl border border-gray-200 transition-all duration-300 ${
+                      class={`block relative p-4 sm:p-6 md:p-8 bg-gray-50 rounded-xl sm:rounded-2xl border border-gray-200 transition-all duration-500 overflow-hidden ${
                         project.link
-                          ? "hover:bg-white hover:shadow-xl hover:border-gray-300 hover:-translate-y-1"
+                          ? "hover:bg-white hover:shadow-2xl hover:border-gray-300 hover:-translate-y-2 hover:scale-[1.01]"
                           : ""
                       }`}
                     >
+                      <div
+                        class="absolute left-0 top-0 h-full w-1 rounded-l-xl scale-y-0 group-hover:scale-y-100 transition-transform duration-500 origin-top"
+                        style={`background-color: ${siteConfig.accentColor}`}
+                      />
                       {project.link && (
                         <div class="absolute top-4 right-4 sm:top-6 sm:right-6 md:top-8 md:right-8 w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 flex items-center justify-center bg-gray-900 rounded-full text-white transition-all duration-300 group-hover:bg-gray-700">
                           <svg
@@ -66,7 +73,7 @@ const hasProjects = siteConfig.projects && siteConfig.projects.length > 0;
                           >
                             0{index + 1}
                           </span>
-                          <h3 class="text-xl sm:text-2xl font-bold text-gray-900 mt-1">
+                          <h3 class="text-xl sm:text-2xl font-bold text-gray-900 mt-1 transition-colors duration-300 group-hover:text-gray-700">
                             {project.name}
                           </h3>
                         </div>

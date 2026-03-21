@@ -17,23 +17,56 @@ import "../styles/global.css";
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={siteConfig.description} />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap"
       rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"
     />
     <title>{siteConfig.name} - {siteConfig.title}</title>
   </head>
   <body>
+    <div id="cursor-spotlight"></div>
     <Header />
-    <section>
-      <Hero />
-      <About />
-      <Projects />
-      <Experience />
-      <Education />
-    </section>
-    <Footer />
+    <div class="snap-container">
+      <div class="snap-section"><Hero /></div>
+      <div class="snap-section fade-in-section"><About /></div>
+      <div class="snap-section fade-in-section"><Projects /></div>
+      <div class="snap-section fade-in-section"><Experience /></div>
+      <div class="snap-section fade-in-section"><Education /></div>
+      <Footer />
+    </div>
   </body>
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll(".fade-in-section").forEach((el) => {
+      observer.observe(el);
+    });
+  </script>
+  <script>
+    const spotlight = document.getElementById("cursor-spotlight");
+    let x = 0, y = 0, mx = 0, my = 0;
+
+    document.addEventListener("mousemove", (e) => {
+      mx = e.clientX;
+      my = e.clientY;
+    });
+
+    const animate = () => {
+      x += (mx - x) * 0.1;
+      y += (my - y) * 0.1;
+      if (spotlight) {
+        spotlight.style.left = x + "px";
+        spotlight.style.top = y + "px";
+      }
+      requestAnimationFrame(animate);
+    };
+    animate();
+  </script>
 </html>
