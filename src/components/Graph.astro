@@ -1,0 +1,334 @@
+---
+import { getCollection } from "astro:content";
+import { siteConfig } from "../config";
+
+const blogPosts = await getCollection("blog", ({ data }) => !data.draft);
+
+const sectionNodes = [
+  { id: "projects",   type: "section", label: "Projects" },
+  { id: "experience", type: "section", label: "Experience" },
+  { id: "education",  type: "section", label: "Education" },
+  { id: "skills",     type: "section", label: "Skills" },
+  { id: "blog",       type: "section", label: "Blog" },
+];
+
+const sectionLinks = [
+  { source: "projects",   target: "experience" },
+  { source: "experience", target: "education" },
+  { source: "projects",   target: "skills" },
+  { source: "experience", target: "skills" },
+  { source: "blog",       target: "projects" },
+  { source: "blog",       target: "education" },
+];
+
+const itemNodes: { id: string; type: string; label: string; parent: string }[] = [];
+const itemLinks: { source: string; target: string }[] = [];
+
+siteConfig.projects?.forEach((p) => {
+  const id = `proj-${p.name}`;
+  itemNodes.push({ id, type: "item", label: p.name, parent: "projects" });
+  itemLinks.push({ source: "projects", target: id });
+});
+
+siteConfig.experience?.forEach((e) => {
+  const id = `exp-${e.company}`;
+  itemNodes.push({ id, type: "item", label: e.company, parent: "experience" });
+  itemLinks.push({ source: "experience", target: id });
+});
+
+siteConfig.education?.forEach((e) => {
+  const id = `edu-${e.school}`;
+  itemNodes.push({ id, type: "item", label: e.school, parent: "education" });
+  itemLinks.push({ source: "education", target: id });
+});
+
+siteConfig.skills?.slice(0, 12).forEach((s) => {
+  const id = `skill-${s}`;
+  itemNodes.push({ id, type: "item", label: s, parent: "skills" });
+  itemLinks.push({ source: "skills", target: id });
+});
+
+blogPosts
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .forEach((post) => {
+    const id = `blog-${post.slug}`;
+    itemNodes.push({ id, type: "item", label: post.data.title, parent: "blog" });
+    itemLinks.push({ source: "blog", target: id });
+  });
+
+const graphData = {
+  nodes: [...sectionNodes, ...itemNodes],
+  links: [...sectionLinks, ...itemLinks],
+  accentColor: siteConfig.accentColor,
+};
+---
+
+<div
+  id="graph-container"
+  data-graph={JSON.stringify(graphData)}
+  class="w-full h-full relative rounded-xl overflow-hidden"
+  style="background: transparent;"
+>
+  <span class="absolute top-3 right-4 text-[10px] text-gray-400 font-mono pointer-events-none select-none z-10">
+    scroll to zoom · drag to pan
+  </span>
+  <span class="absolute bottom-3 left-4 text-[10px] text-gray-400 font-mono pointer-events-none select-none z-10">
+    zoom in to explore nodes
+  </span>
+</div>
+
+<script>
+  import * as d3 from "d3";
+
+  const container = document.getElementById("graph-container");
+  if (container) initGraph(container);
+
+  function initGraph(container: HTMLElement) {
+    const raw = JSON.parse((container as HTMLElement & { dataset: DOMStringMap }).dataset.graph || "{}");
+    const { nodes: rawNodes, links: rawLinks, accentColor = "#2a3c6e" } = raw as {
+      nodes: { id: string; type: string; label: string; parent?: string }[];
+      links: { source: string; target: string }[];
+      accentColor: string;
+    };
+
+    const ZOOM_THRESHOLD = 1.3;
+    const width  = container.clientWidth  || 800;
+    const height = container.clientHeight || 400;
+
+    const nodes = rawNodes.map((d) => ({ ...d, x: 0, y: 0, vx: 0, vy: 0 }));
+    const links = rawLinks.map((d) => ({ ...d }));
+
+    // ── SVG ──────────────────────────────────────────────────────────
+    const svg = d3.select(container)
+      .append("svg")
+      .attr("width", "100%")
+      .attr("height", "100%")
+      .style("cursor", "grab");
+
+    // glow filter
+    const defs = svg.append("defs");
+    const filter = defs.append("filter")
+      .attr("id", "glow")
+      .attr("x", "-60%").attr("y", "-60%")
+      .attr("width", "220%").attr("height", "220%");
+    filter.append("feGaussianBlur")
+      .attr("in", "SourceGraphic").attr("stdDeviation", "6").attr("result", "blur");
+    const merge = filter.append("feMerge");
+    merge.append("feMergeNode").attr("in", "blur");
+    merge.append("feMergeNode").attr("in", "SourceGraphic");
+
+    // subtle grid background
+    const gridSize = 40;
+    const gridPattern = defs.append("pattern")
+      .attr("id", "grid").attr("width", gridSize).attr("height", gridSize)
+      .attr("patternUnits", "userSpaceOnUse");
+    gridPattern.append("path")
+      .attr("d", `M ${gridSize} 0 L 0 0 0 ${gridSize}`)
+      .attr("fill", "none").attr("stroke", "rgba(0,0,0,0.05)").attr("stroke-width", "0.5");
+
+    const g = svg.append("g");
+
+    // ── Force simulation ──────────────────────────────────────────────
+    const simulation = d3.forceSimulation(nodes as d3.SimulationNodeDatum[])
+      .force("link", d3.forceLink(links)
+        .id((d: any) => d.id)
+        .distance((d: any) => (d.source.type === "section" && d.target.type === "section") ? 80 : 40)
+        .strength((d: any) => (d.source.type === "section" && d.target.type === "section") ? 0.7 : 0.5)
+      )
+      .force("charge", d3.forceManyBody()
+        .strength((d: any) => d.type === "section" ? -700 : -90)
+      )
+      .force("center", d3.forceCenter(0, 0).strength(0.04))
+      .force("collision", d3.forceCollide()
+        .radius((d: any) => d.type === "section" ? 130 : 35)
+      );
+
+    // ── Links ─────────────────────────────────────────────────────────
+    const linkG  = g.append("g");
+    const linkEls = linkG.selectAll<SVGLineElement, unknown>("line")
+      .data(links)
+      .join("line")
+      .attr("stroke", "#94a3b8")
+      .attr("stroke-width", 1)
+      .attr("stroke-opacity", 0);
+
+    // ── Nodes ─────────────────────────────────────────────────────────
+    const nodeG  = g.append("g");
+    const nodeEls = nodeG.selectAll<SVGGElement, unknown>("g")
+      .data(nodes)
+      .join("g")
+      .style("cursor", "pointer");
+
+    // outer ring (section only)
+    nodeEls.filter((d: any) => d.type === "section")
+      .append("circle")
+      .attr("r", 58)
+      .attr("fill", "none")
+      .attr("stroke", accentColor)
+      .attr("stroke-width", 0.5)
+      .attr("stroke-opacity", 0.25);
+
+    // main circle
+    nodeEls.append("circle")
+      .attr("r", (d: any) => d.type === "section" ? 42 : 13)
+      .attr("fill", (d: any) => d.type === "section" ? accentColor : accentColor + "88")
+      .attr("stroke", (d: any) => d.type === "section" ? "rgba(255,255,255,0.4)" : "rgba(0,0,0,0.12)")
+      .attr("stroke-width", 1.5)
+      .attr("filter", (d: any) => d.type === "section" ? "url(#glow)" : null)
+      .attr("opacity", (d: any) => d.type === "section" ? 1 : 0);
+
+    // label
+    nodeEls.append("text")
+      .text((d: any) => d.label)
+      .attr("text-anchor", "middle")
+      .attr("dominant-baseline", (d: any) => d.type === "section" ? "middle" : "auto")
+      .attr("font-family", "monospace")
+      .attr("font-size", (d: any) => d.type === "section" ? "13px" : "10px")
+      .attr("font-weight", (d: any) => d.type === "section" ? "700" : "400")
+      .attr("fill", (d: any) => d.type === "section" ? "rgba(255,255,255,0.95)" : "#374151")
+      .attr("dy", (d: any) => d.type === "item" ? "26px" : "0")
+      .attr("opacity", (d: any) => d.type === "section" ? 1 : 0)
+      .attr("pointer-events", "none");
+
+    // ── Drag ─────────────────────────────────────────────────────────
+    nodeEls.call(
+      d3.drag<SVGGElement, unknown>()
+        .on("start", (event, d: any) => {
+          if (!event.active) simulation.alphaTarget(0.3).restart();
+          d.fx = d.x; d.fy = d.y;
+        })
+        .on("drag", (event, d: any) => { d.fx = event.x; d.fy = event.y; })
+        .on("end",  (event, d: any) => {
+          if (!event.active) simulation.alphaTarget(0);
+          d.fx = null; d.fy = null;
+        })
+    );
+
+    // ── Hover ────────────────────────────────────────────────────────
+    nodeEls
+      .on("mouseenter", function (_event, d: any) {
+        d3.select(this).select("circle:last-of-type")
+          .transition().duration(200)
+          .attr("r", d.type === "section" ? 48 : 17);
+      })
+      .on("mouseleave", function (_event, d: any) {
+        d3.select(this).select("circle:last-of-type")
+          .transition().duration(200)
+          .attr("r", d.type === "section" ? 42 : 13);
+      });
+
+    // ── Click expand/collapse ─────────────────────────────────────────
+    let expandedId: string | null = null;
+
+    nodeEls.on("click", (_event, d: any) => {
+      if (d.type !== "section") return;
+      expandedId = expandedId === d.id ? null : d.id;
+
+      // visual ring on expanded section node
+      nodeEls.filter((n: any) => n.type === "section")
+        .select("circle:first-of-type")
+        .transition().duration(200)
+        .attr("stroke-opacity", (n: any) => n.id === expandedId ? 0.6 : 0.25)
+        .attr("stroke-width",   (n: any) => n.id === expandedId ? 1.5 : 0.5);
+
+      // center view on clicked node
+      const targetTransform = d3.zoomIdentity
+        .translate(width / 2 - currentZoom * d.x, height / 2 - currentZoom * d.y)
+        .scale(currentZoom);
+      svg.transition().duration(450).ease(d3.easeCubicOut)
+        .call(zoom.transform, targetTransform);
+
+      updateLOD(currentZoom);
+    });
+
+    // ── LOD ──────────────────────────────────────────────────────────
+    let currentZoom = 1;
+    let currentTransform = d3.zoomIdentity;
+
+    function getVisibleSections(transform: d3.ZoomTransform): Set<string> {
+      const { x: tx, y: ty, k } = transform;
+      const margin = 120;
+      const x0 = (-tx / k) - margin;
+      const y0 = (-ty / k) - margin;
+      const x1 = ((width  - tx) / k) + margin;
+      const y1 = ((height - ty) / k) + margin;
+      const visible = new Set<string>();
+      nodes.forEach((n: any) => {
+        if (n.type === "section" && n.x >= x0 && n.x <= x1 && n.y >= y0 && n.y <= y1)
+          visible.add(n.id);
+      });
+      return visible;
+    }
+
+    function shouldShowItem(d: any, zoomShow: boolean): boolean {
+      if (d.parent === expandedId) return true;
+      if (!zoomShow) return false;
+      return getVisibleSections(currentTransform).has(d.parent);
+    }
+
+    function updateLOD(k: number) {
+      const zoomShow = k >= ZOOM_THRESHOLD;
+
+      nodeEls.filter((d: any) => d.type === "item")
+        .select("circle")
+        .transition().duration(350)
+        .attr("opacity", (d: any) => shouldShowItem(d, zoomShow) ? 1 : 0)
+        .attr("r",       (d: any) => shouldShowItem(d, zoomShow) ? 13 : 0);
+
+      nodeEls.filter((d: any) => d.type === "item")
+        .select("text")
+        .transition().duration(350)
+        .attr("opacity", (d: any) => shouldShowItem(d, zoomShow) ? 0.85 : 0);
+
+      linkEls.transition().duration(350)
+        .attr("stroke-opacity", (d: any) => {
+          const isChild = d.source?.type === "item" || d.target?.type === "item";
+          if (!isChild) return 0.3;
+          const parentId = d.source?.type === "section" ? d.source?.id : d.target?.id;
+          return shouldShowItem({ parent: parentId }, zoomShow) ? 0.4 : 0;
+        });
+
+      // inverse-scale labels so they stay readable
+      const sf  = Math.max(8, 11 / Math.sqrt(k));
+      const if_ = Math.max(6,  9 / Math.sqrt(k));
+      nodeEls.filter((d: any) => d.type === "section").select("text").attr("font-size", `${sf}px`);
+      nodeEls.filter((d: any) => d.type === "item"   ).select("text").attr("font-size", `${if_}px`);
+    }
+
+    // ── Zoom ─────────────────────────────────────────────────────────
+    const zoom = d3.zoom<SVGSVGElement, unknown>()
+      .scaleExtent([1, 10])
+      .on("zoom", (event) => {
+        g.attr("transform", event.transform);
+        currentZoom = event.transform.k;
+        currentTransform = event.transform;
+        updateLOD(currentZoom);
+      });
+
+    svg.call(zoom);
+    svg.on("dblclick.zoom", null);
+
+    const initialScale = 2.2;
+    currentZoom = initialScale;
+    svg.call(zoom.transform, d3.zoomIdentity.translate(width / 2, height / 2).scale(initialScale));
+
+    // ── Tick ─────────────────────────────────────────────────────────
+    simulation.on("tick", () => {
+      linkEls
+        .attr("x1", (d: any) => d.source.x)
+        .attr("y1", (d: any) => d.source.y)
+        .attr("x2", (d: any) => d.target.x)
+        .attr("y2", (d: any) => d.target.y);
+      nodeEls.attr("transform", (d: any) => `translate(${d.x},${d.y})`);
+    });
+
+    updateLOD(initialScale);
+
+    // ── Resize ───────────────────────────────────────────────────────
+    new ResizeObserver(() => {
+      const w = container.clientWidth;
+      const h = container.clientHeight;
+      svg.attr("viewBox", `0 0 ${w} ${h}`);
+    }).observe(container);
+  }
+</script>

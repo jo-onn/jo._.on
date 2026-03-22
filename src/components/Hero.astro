@@ -1,5 +1,6 @@
 ---
 import { siteConfig } from "../config";
+import sampleImg from "../assets/sample.png";
 ---
 
 <div
@@ -10,7 +11,7 @@ import { siteConfig } from "../config";
   <!-- Background photo -->
   <div class="absolute inset-0 -z-10">
     <img
-      src="/sample.png"
+      src={sampleImg.src}
       alt=""
       class="w-full h-full object-cover opacity-15 blur-sm"
     />

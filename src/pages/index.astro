@@ -5,15 +5,17 @@ import About from "../components/About.astro";
 import Projects from "../components/Projects.astro";
 import Experience from "../components/Experience.astro";
 import Education from "../components/Education.astro";
+import Blog from "../components/Blog.astro";
 import Footer from "../components/Footer.astro";
 import { siteConfig } from "../config";
 import "../styles/global.css";
+import omyuPrettyUrl from "../assets/omyu-pretty.ttf";
 ---
 
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL}favicon.svg`} />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={siteConfig.description} />
@@ -22,15 +24,17 @@ import "../styles/global.css";
       href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"
     />
     <title>{siteConfig.name} - {siteConfig.title}</title>
+    <style set:html={`@font-face { font-family: 'OmyuPretty'; src: url('${omyuPrettyUrl}') format('truetype'); font-weight: normal; font-style: normal; }`} />
   </head>
   <body>
     <div id="cursor-spotlight"></div>
     <Header />
     <div class="snap-container">
       <div class="snap-section"><Hero /></div>
-      <div class="snap-section fade-in-section"><About /></div>
-      <div class="snap-section fade-in-section"><Projects /></div>
+      <div class="snap-section h-screen flex flex-col fade-in-section"><About /></div>
       <div class="snap-section fade-in-section"><Experience /></div>
+      <div class="snap-section fade-in-section"><Projects /></div>
+      <div class="snap-section fade-in-section"><Blog /></div>
       <div class="snap-section fade-in-section"><Education /></div>
       <Footer />
     </div>

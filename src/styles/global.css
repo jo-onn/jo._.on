@@ -12,12 +12,6 @@
   transition: opacity 0.3s;
 }
 
-@font-face {
-  font-family: 'OmyuPretty';
-  src: url('/fonts/omyu pretty.ttf') format('truetype');
-  font-weight: 90 2000;
-  font-style: normal;
-}
 
 body {
   font-family: 'OmyuPretty', sans-serif;

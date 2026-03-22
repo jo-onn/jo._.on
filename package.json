@@ -9,8 +9,12 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@tailwindcss/typography": "^0.5.19",
     "@tailwindcss/vite": "^4.1.11",
     "astro": "^5.12.3",
+    "d3": "^7.9.0",
+    "rehype-katex": "^7.0.1",
+    "remark-math": "^6.0.0",
     "tailwindcss": "^4.1.11"
   }
 }
