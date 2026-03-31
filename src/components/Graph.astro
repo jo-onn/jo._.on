@@ -66,7 +66,7 @@ const graphData = {
 <div
   id="graph-container"
   data-graph={JSON.stringify(graphData)}
-  class="w-full h-full relative rounded-xl overflow-hidden"
+  class="w-full h-full relative"
   style="background: transparent;"
 >
   <span class="absolute top-3 right-4 text-[10px] text-gray-400 font-mono pointer-events-none select-none z-10">
@@ -96,14 +96,38 @@ const graphData = {
     const height = container.clientHeight || 400;
 
     const nodes = rawNodes.map((d) => ({ ...d, x: 0, y: 0, vx: 0, vy: 0 }));
-    const links = rawLinks.map((d) => ({ ...d }));
+
+    // item↔section links (fixed) + section↔section links (randomized each load)
+    const itemLinks = rawLinks.filter((l) => {
+      const src = rawNodes.find((n) => n.id === l.source);
+      const tgt = rawNodes.find((n) => n.id === l.target);
+      return src?.type === "item" || tgt?.type === "item";
+    });
+
+    const sectionIds = rawNodes.filter((n) => n.type === "section").map((n) => n.id);
+    const allPairs: { source: string; target: string }[] = [];
+    for (let i = 0; i < sectionIds.length; i++)
+      for (let j = i + 1; j < sectionIds.length; j++)
+        allPairs.push({ source: sectionIds[i], target: sectionIds[j] });
+
+    // Fisher-Yates shuffle
+    for (let i = allPairs.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [allPairs[i], allPairs[j]] = [allPairs[j], allPairs[i]];
+    }
+    // spanning tree (n-1) + 1~2 extra edges
+    const extra = Math.floor(Math.random() * 2) + 1;
+    const sectionLinks = allPairs.slice(0, sectionIds.length - 1 + extra);
+
+    const links = [...sectionLinks, ...itemLinks].map((d) => ({ ...d }));
 
     // ── SVG ──────────────────────────────────────────────────────────
     const svg = d3.select(container)
       .append("svg")
       .attr("width", "100%")
       .attr("height", "100%")
-      .style("cursor", "grab");
+      .style("cursor", "grab")
+      .style("overflow", "visible");
 
     // glow filter
     const defs = svg.append("defs");
@@ -116,15 +140,6 @@ const graphData = {
     const merge = filter.append("feMerge");
     merge.append("feMergeNode").attr("in", "blur");
     merge.append("feMergeNode").attr("in", "SourceGraphic");
-
-    // subtle grid background
-    const gridSize = 40;
-    const gridPattern = defs.append("pattern")
-      .attr("id", "grid").attr("width", gridSize).attr("height", gridSize)
-      .attr("patternUnits", "userSpaceOnUse");
-    gridPattern.append("path")
-      .attr("d", `M ${gridSize} 0 L 0 0 0 ${gridSize}`)
-      .attr("fill", "none").attr("stroke", "rgba(0,0,0,0.05)").attr("stroke-width", "0.5");
 
     const g = svg.append("g");
 
@@ -159,19 +174,30 @@ const graphData = {
       .join("g")
       .style("cursor", "pointer");
 
+    const sectionColors: Record<string, string> = {
+      projects:   "#60a5fa",
+      experience: "#a78bfa",
+      education:  "#34d399",
+      skills:     "#fbbf24",
+      blog:       "#fb7185",
+    };
+
     // outer ring (section only)
     nodeEls.filter((d: any) => d.type === "section")
       .append("circle")
       .attr("r", 58)
       .attr("fill", "none")
-      .attr("stroke", accentColor)
+      .attr("stroke", (d: any) => sectionColors[d.id] ?? accentColor)
       .attr("stroke-width", 0.5)
       .attr("stroke-opacity", 0.25);
 
     // main circle
     nodeEls.append("circle")
       .attr("r", (d: any) => d.type === "section" ? 42 : 13)
-      .attr("fill", (d: any) => d.type === "section" ? accentColor : accentColor + "88")
+      .attr("fill", (d: any) => {
+        if (d.type === "section") return sectionColors[d.id] ?? accentColor;
+        return (sectionColors[d.parent] ?? accentColor) + "88";
+      })
       .attr("stroke", (d: any) => d.type === "section" ? "rgba(255,255,255,0.4)" : "rgba(0,0,0,0.12)")
       .attr("stroke-width", 1.5)
       .attr("filter", (d: any) => d.type === "section" ? "url(#glow)" : null)

@@ -50,13 +50,29 @@ const hasEducation = siteConfig.education && siteConfig.education.length > 0;
 <script>
   const container = document.querySelector(".snap-container");
   const header = document.getElementById("header");
-  if (container && header) {
-    container.addEventListener("scroll", () => {
-      const opacity = Math.max(0.2, 1 - container.scrollTop / 1000);
-      header.style.opacity = String(opacity);
-    });
-  }
+  const heroEl = document.getElementById("hero");
 
+  if (container && header) {
+    const updateHeader = () => {
+      const heroHeight = heroEl?.offsetHeight ?? window.innerHeight;
+      const scrolled = container.scrollTop;
+
+      if (scrolled < heroHeight * 0.5) {
+        // Hero 구간 — 완전히 숨김
+        header.style.opacity = "0";
+        header.style.pointerEvents = "none";
+      } else {
+        // Hero 벗어난 후 — 서서히 나타나다가 스크롤 내릴수록 흐려짐
+        const fadeIn = Math.min(1, (scrolled - heroHeight * 0.5) / (heroHeight * 0.3));
+        const fadeOut = Math.max(0.2, 1 - (scrolled - heroHeight) / 1000);
+        header.style.opacity = String(Math.min(fadeIn, fadeOut));
+        header.style.pointerEvents = "auto";
+      }
+    };
+
+    container.addEventListener("scroll", updateHeader);
+    updateHeader();
+  }
 </script>
 
 <style>

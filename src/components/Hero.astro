@@ -1,338 +1,172 @@
 ---
 import { siteConfig } from "../config";
-import sampleImg from "../assets/sample.png";
+import sampleImg from "../assets/image.png";
+import codeSnippetImg from "../assets/code_snippet.png";
+import vitExImg from "../assets/vit_ex.png";
+import resnetExImg from "../assets/resnet_ex.png";
 ---
 
 <div
   id="hero"
-  class="relative isolate overflow-hidden bg-white py-8 md:h-[80vh]"
-  style={`--accent-color: ${siteConfig.accentColor}`}
+  class="relative flex items-center justify-center min-h-screen px-6 py-12"
+  style={'background: linear-gradient(135deg, ${SiteConfig.accentColer}22 0%, ${siteConfig.accentColor}10 50%, #f0f4ff 90%);'}
 >
-  <!-- Background photo -->
-  <div class="absolute inset-0 -z-10">
-    <img
-      src={sampleImg.src}
-      alt=""
-      class="w-full h-full object-cover opacity-15 blur-sm"
-    />
-  </div>
-  <!-- Gradient overlay -->
-  <div
-    class="absolute inset-0 -z-10"
-    style={`background: radial-gradient(ellipse 800px 1200px at 0% 0%, ${siteConfig.accentColor}40 0%, ${siteConfig.accentColor}25 20%, ${siteConfig.accentColor}10 40%, rgba(255, 255, 255, 0.3) 70%, rgba(255, 255, 255, 0.8) 90%, white 100%)`}
-  >
-  </div>
-  <svg
-    aria-hidden="true"
-    class="absolute inset-0 -z-10 size-full stroke-gray-200 [mask-image:radial-gradient(100%_100%_at_top_right,white,transparent)]"
-  >
-    <defs>
-      <pattern
-        x="50%"
-        y={-1}
-        id="0787a7c5-978c-4f66-83c7-11c213f99cb7"
-        width={200}
-        height={200}
-        patternUnits="userSpaceOnUse"
-      >
-        <path d="M.5 200V.5H200" fill="none"></path>
-      </pattern>
-      <pattern
-        id="programming-symbols"
-        x="0"
-        y="0"
-        width="400"
-        height="400"
-        patternUnits="userSpaceOnUse"
-      >
-        <text
-          x="50"
-          y="50"
-          fill={siteConfig.accentColor}
-          font-family="monospace"
-          font-size="24"
-          transform="rotate(-15)">&lt;/&gt;</text
-        >
-        <text
-          x="150"
-          y="100"
-          fill={siteConfig.accentColor}
-          font-family="monospace"
-          font-size="20"
-          transform="rotate(10)">{}</text
-        >
-        <text
-          x="250"
-          y="80"
-          fill={siteConfig.accentColor}
-          font-family="monospace"
-          font-size="18"
-          transform="rotate(-5)">=&gt;</text
-        >
-        <text
-          x="100"
-          y="200"
-          fill={siteConfig.accentColor}
-          font-family="monospace"
-          font-size="22"
-          transform="rotate(15)">[]</text
-        >
-        <text
-          x="300"
-          y="180"
-          fill={siteConfig.accentColor}
-          font-family="monospace"
-          font-size="20"
-          transform="rotate(-10)">&lt;&gt;</text
-        >
-        <text
-          x="200"
-          y="250"
-          fill={siteConfig.accentColor}
-          font-family="monospace"
-          font-size="24"
-          transform="rotate(5)">()</text
-        >
-        <text
-          x="50"
-          y="320"
-          fill={siteConfig.accentColor}
-          font-family="monospace"
-          font-size="18"
-          transform="rotate(-8)">::</text
-        >
-        <text
-          x="350"
-          y="300"
-          fill={siteConfig.accentColor}
-          font-family="monospace"
-          font-size="22"
-          transform="rotate(12)">==</text
-        >
-        <text
-          x="150"
-          y="350"
-          fill={siteConfig.accentColor}
-          font-family="monospace"
-          font-size="20"
-          transform="rotate(-15)">++</text
-        >
-        <text
-          x="250"
-          y="370"
-          fill={siteConfig.accentColor}
-          font-family="monospace"
-          font-size="24"
-          transform="rotate(8)">;</text
-        >
-      </pattern>
-    </defs>
-    <rect
-      fill="url(#programming-symbols)"
-      width="100%"
-      height="100%"
-      opacity="0.2"></rect>
-    <rect
-      fill="url(#0787a7c5-978c-4f66-83c7-11c213f99cb7)"
-      width="100%"
-      height="100%"
-      stroke-width={0}></rect>
-  </svg>
-  <div class="h-full mx-auto p-8 sm:p-12 md:p-24 flex items-center">
-    <div>
-      <h2
-        class="text-pretty text-xl sm:text-2xl md:text-5xl font-bold tracking-tight text-gray-700 animate-fade-in"
-      >
-        HELLO! 👋
-      </h2>
-      <h1
-        class="mt-6 sm:mt-8 md:mt-10 text-pretty text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold tracking-tight text-gray-800 animate-fade-in animation-delay-200"
-      >
-        I'm <span style={{ color: siteConfig.accentColor }}
-          >{siteConfig.name}</span
-        >
-      </h1>
-      <p
-        class="mt-4 sm:mt-6 md:mt-8 text-pretty text-base sm:text-lg md:text-xl/8 font-medium text-gray-600 animate-fade-in animation-delay-400"
-      >
-        <span id="typing-text"></span><span id="typing-cursor" style={{ color: siteConfig.accentColor }}>|</span>
-      </p>
+  <!-- Browser mockup card -->
+  <div class="w-full max-w-6xl rounded-2xl overflow-hidden shadow-2xl border border-gray-200 bg-white">
+
+    <!-- Browser chrome bar -->
+    <div class="flex items-center gap-3 px-4 py-3 bg-gray-100 border-b border-gray-200">
+      <div class="flex gap-1.5">
+        <span class="w-3 h-3 rounded-full bg-red-400"></span>
+        <span class="w-3 h-3 rounded-full bg-yellow-400"></span>
+        <span class="w-3 h-3 rounded-full bg-green-400"></span>
+      </div>
+      <div class="flex-1 mx-2">
+        <div class="bg-white rounded-md px-3 py-1 text-xs text-gray-400 font-mono border border-gray-200 max-w-xs mx-auto text-center">
+          jo-onn.github.io/jo._.on
+        </div>
+      </div>
+      <div class="flex gap-2 text-gray-400">
+        <!-- reload icon -->
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11A8.1 8.1 0 0 0 4.5 9M4 5v4h4"/><path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4"/></svg>
+      </div>
     </div>
-  </div>
-  <div
-    class="absolute bottom-0 left-0 right-0 p-8 sm:p-12 md:p-24 flex gap-x-4 sm:gap-x-6 md:gap-x-8 text-gray-700 animate-fade-in animation-delay-600"
-  >
-    {
-      siteConfig.social?.email && (
-        <a
-          href={`mailto:${siteConfig.social.email}`}
-          aria-label="Email"
-          class="transition-colors duration-300 hover:text-[var(--accent-color)]"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8"
-          >
-            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-            <path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z" />
-            <path d="M3 7l9 6l9 -6" />
-          </svg>
-        </a>
-      )
-    }
-    {
-      siteConfig.social?.linkedin && (
-        <a
-          href={siteConfig.social.linkedin}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="LinkedIn"
-          class="transition-colors duration-300 hover:text-[var(--accent-color)]"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8"
-          >
-            <>
-              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-              <path d="M8 11v5" />
-              <path d="M8 8v.01" />
-              <path d="M12 16v-5" />
-              <path d="M16 16v-3a2 2 0 1 0 -4 0" />
-              <path d="M3 7a4 4 0 0 1 4 -4h10a4 4 0 0 1 4 4v10a4 4 0 0 1 -4 4h-10a4 4 0 0 1 -4 -4z" />
-            </>
-          </svg>
-        </a>
-      )
-    }
-    {
-      siteConfig.social?.twitter && (
-        <a
-          href={siteConfig.social.twitter}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="Twitter"
-          class="transition-colors duration-300 hover:text-[var(--accent-color)]"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8"
-          >
-            <>
-              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-              <path d="M4 4l11.733 16h4.267l-11.733 -16z" />
-              <path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772" />
-            </>
-          </svg>
-        </a>
-      )
-    }
-    {
-      siteConfig.social?.github && (
-        <a
-          href={siteConfig.social.github}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="GitHub"
-          class="transition-colors duration-300 hover:text-[var(--accent-color)]"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8"
-          >
-            <>
-              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-              <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
-            </>
-          </svg>
-        </a>
-      )
-    }
-    <button
-      id="theme-toggle"
-      class="transition-colors duration-300 hover:text-[var(--accent-color)]"
-      aria-label="Toggle dark mode"
-    >
-      <span id="theme-icon" class="text-lg sm:text-xl md:text-2xl">🌙</span>
-    </button>
+
+    <!-- Webpage content inside card -->
+    <div class="relative overflow-hidden bg-white" style={`--accent-color: ${siteConfig.accentColor}`}>
+
+      <!-- Inner nav -->
+      <nav class="flex items-center justify-between px-8 py-4 border-b border-gray-100">
+        <span class="font-bold font-mono text-sm" style={`color: ${siteConfig.accentColor}`}>
+          {siteConfig.name}
+        </span>
+        <div class="hidden sm:flex items-center gap-6 text-xs text-gray-500 font-mono">
+          <a href="#about" class="hover:text-gray-800 transition-colors">About</a>
+          <a href="#experience" class="hover:text-gray-800 transition-colors">Experience</a>
+          <a href="#projects" class="hover:text-gray-800 transition-colors">Projects</a>
+          <a href="#blog" class="hover:text-gray-800 transition-colors">Blog</a>
+        </div>
+        <div class="flex gap-3 text-gray-500">
+          {siteConfig.social?.github && (
+            <a href={siteConfig.social.github} target="_blank" rel="noopener noreferrer" class="hover:text-gray-800 transition-colors">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5"/></svg>
+            </a>
+          )}
+          <button id="theme-toggle" class="hover:text-gray-800 transition-colors" aria-label="Toggle dark mode">
+            <span id="theme-icon" class="text-sm">🌙</span>
+          </button>
+        </div>
+      </nav>
+
+      <!-- Hero content -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-0">
+
+        <!-- Left: text -->
+        <div class="px-25 py-23 flex flex-col justify-center">
+          <p class="text-base font-mono text-gray-400 mb-5 animate-fade-in">HELLO 👋</p>
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold text-gray-800 leading-tight whitespace-nowrap animate-fade-in animation-delay-200">
+            I'm <span style={`color: ${siteConfig.accentColor}`}>{siteConfig.name}</span>
+          </h1>
+          <p class="mt-6 text-lg sm:text-xl text-gray-500 font-mono whitespace-nowrap animate-fade-in animation-delay-400">
+            <span id="typing-text"></span><span id="typing-cursor" style={`color: ${siteConfig.accentColor}`}>|</span>
+          </p>
+
+          <!-- Social links -->
+          <div class="mt-8 flex gap-4 text-gray-400 animate-fade-in animation-delay-600">
+            {siteConfig.social?.email && (
+              <a href={`mailto:${siteConfig.social.email}`} aria-label="Email" class="hover:text-[var(--accent-color)] transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z"/><path d="M3 7l9 6l9 -6"/></svg>
+              </a>
+            )}
+            {siteConfig.social?.linkedin && (
+              <a href={siteConfig.social.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" class="hover:text-[var(--accent-color)] transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M8 11v5"/><path d="M8 8v.01"/><path d="M12 16v-5"/><path d="M16 16v-3a2 2 0 1 0 -4 0"/><path d="M3 7a4 4 0 0 1 4 -4h10a4 4 0 0 1 4 4v10a4 4 0 0 1 -4 4h-10a4 4 0 0 1 -4 -4z"/></svg>
+              </a>
+            )}
+            {siteConfig.social?.twitter && (
+              <a href={siteConfig.social.twitter} target="_blank" rel="noopener noreferrer" aria-label="Twitter" class="hover:text-[var(--accent-color)] transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 4l11.733 16h4.267l-11.733 -16z"/><path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772"/></svg>
+              </a>
+            )}
+            {siteConfig.social?.github && (
+              <a href={siteConfig.social.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub" class="hover:text-[var(--accent-color)] transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5"/></svg>
+              </a>
+            )}
+          </div>
+        </div>
+
+        <!-- Right: image + chat bubble -->
+        <div class="relative h-100 md:h-[600px] flex items-center justify-center overflow-hidden">
+          <!-- vit_ex: 왼쪽 뒤 위 -->
+          <img
+            src={vitExImg.src}
+            alt=""
+            class="absolute rounded-xl shadow-sm"
+            style="width: calc(35% + 30px); top: 15%; left: 4%; z-index: 0; opacity: 0.9; filter: blur(0.5px);"
+          />
+          <!-- resnet_ex: 왼쪽 뒤 아래 -->
+          <img
+            src={resnetExImg.src}
+            alt=""
+            class="absolute rounded-xl shadow-sm"
+            style="width: calc(35% + 10px); top: 30%; right: 60%; z-index: 0; opacity: 0.5; filter: blur(1.4px);"
+          />
+          <!-- 코드 스니펫: 오른쪽 위 뒤 -->
+          <img
+            src={codeSnippetImg.src}
+            alt=""
+            class="absolute rounded-xl shadow-md"
+            style="width: calc(40% + 20px); top: 7%; right: 5%; z-index: 0; opacity: 1; filter: blur(0.3px);"
+          />
+          <!-- 메인 이미지 -->
+          <img
+            src={sampleImg.src}
+            alt=""
+            class="relative h-auto object-contain rounded-xl"
+            style="width: calc(40% + 20px); margin-left: 10px; z-index: 1; filter: drop-shadow(0 8px 24px rgba(0,0,0,0.18));"
+          />
+
+          <!-- Chat bubble (left of image) — 최상단 -->
+          <div class="absolute left-6 top-1/4 -translate-y-1/2" style="z-index: 2;">
+            <div class="relative bg-white border border-gray-200 shadow-md rounded-2xl rounded-br-none px-4 py-2.5">
+              <!-- ghost: 미리 전체 문구 길이만큼 공간 확보 -->
+              <p id="bubble-ghost" class="text-sm font-mono whitespace-nowrap invisible"></p>
+              <!-- 실제 타이핑 텍스트 -->
+              <p id="bubble-text" class="text-sm text-gray-700 font-mono whitespace-nowrap absolute inset-x-4 top-2.5"></p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
   </div>
 </div>
 
 <style>
   @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
   }
-
   .animate-fade-in {
-    animation: fadeIn 0.8s ease-out forwards;
+    animation: fadeIn 0.7s ease-out forwards;
     opacity: 0;
   }
-
-  .animation-delay-200 {
-    animation-delay: 0.2s;
-  }
-
-  .animation-delay-400 {
-    animation-delay: 0.4s;
-  }
-
-  .animation-delay-600 {
-    animation-delay: 0.6s;
-  }
+  .animation-delay-200 { animation-delay: 0.2s; }
+  .animation-delay-400 { animation-delay: 0.4s; }
+  .animation-delay-600 { animation-delay: 0.6s; }
 
   @keyframes blink {
     0%, 100% { opacity: 1; }
-    50% { opacity: 0; }
+    50%       { opacity: 0; }
   }
-
-  #typing-cursor {
-    animation: blink 0.8s infinite;
-  }
+  #typing-cursor { animation: blink 0.8s infinite; }
 </style>
 
 <script define:vars={{ title: siteConfig.title }}>
-  // 다크모드 토글
   const toggle = document.getElementById("theme-toggle");
-  const icon = document.getElementById("theme-icon");
+  const icon   = document.getElementById("theme-icon");
 
   const applyTheme = (dark) => {
     document.documentElement.classList.toggle("dark", dark);
@@ -340,14 +174,13 @@ import sampleImg from "../assets/sample.png";
   };
 
   applyTheme(localStorage.getItem("theme") === "dark");
-
   toggle?.addEventListener("click", () => {
     const isDark = document.documentElement.classList.contains("dark");
     applyTheme(!isDark);
     localStorage.setItem("theme", !isDark ? "dark" : "light");
   });
 
-  // 타이핑 효과
+  // 타이틀 타이핑
   const el = document.getElementById("typing-text");
   let i = 0;
   setTimeout(() => {
@@ -355,5 +188,47 @@ import sampleImg from "../assets/sample.png";
       if (el) el.textContent = title.slice(0, ++i);
       if (i >= title.length) clearInterval(interval);
     }, 60);
-  }, 1000);
+  }, 800);
+
+  // 말풍선 타이핑
+  const bubbleEl   = document.getElementById("bubble-text");
+  const bubbleGhost = document.getElementById("bubble-ghost");
+  const bubblePhrases = ["coffee 를 좋아해요 ☕", "스포츠 매니아예요 🏃", "인공지능을 공부 중이랍니다 🤖"];
+  let bIdx = 0;
+
+  function typeBubble() {
+    if (!bubbleEl || !bubbleGhost) return;
+    const phrase = bubblePhrases[bIdx % bubblePhrases.length];
+
+    // 말풍선 크기 미리 확보
+    bubbleGhost.textContent = phrase;
+    bubbleEl.textContent = "";
+    let j = 0;
+
+    const typeIn = setInterval(() => {
+      bubbleEl.textContent = phrase.slice(0, ++j);
+      if (j >= phrase.length) {
+        clearInterval(typeIn);
+        setTimeout(() => eraseOut(phrase), 1800);
+      }
+    }, 60);
+  }
+
+  function eraseOut(phrase) {
+    if (!bubbleEl || !bubbleGhost) return;
+    let j = phrase.length;
+
+    const eraseIn = setInterval(() => {
+      j--;
+      bubbleEl.textContent = phrase.slice(0, j);
+      if (j <= 0) {
+        clearInterval(eraseIn);
+        bubbleGhost.textContent = "";
+        bIdx++;
+        setTimeout(typeBubble, 400);
+      }
+    }, 40);
+  }
+
+  setTimeout(typeBubble, 1500);
 </script>

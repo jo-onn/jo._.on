@@ -17,27 +17,27 @@ export const siteConfig = {
     blog: "기록하는 것들",
   },
   aboutMe:
-    "AI와 의료 데이터가 만나는 지점에 관심이 많은 주니어 연구자입니다. 경희대학교 소프트웨어융합학과를 졸업하고, 현재 서울대학교 의료정보학 석사 과정에 재학 중입니다. 임상 데이터 분석, 자연어 처리, 그리고 실제 의료 현장에서 쓰일 수 있는 AI 시스템 개발에 관심을 갖고 있습니다. 연구와 개발 사이 어딘가에서, 작지만 의미 있는 것들을 만들어가고 있습니다.",
+    "AI와 의료 데이터가 만나는 지점에 관심이 많은 주니어 연구자입니다. 경희대학교 소프트웨어융합학과를 졸업하고, 현재 서울대학교병원 융합의학기술원에서 의료 <strong>인공지능</strong> 연구를 병행하고 있습니다. 임상, 병리학 데이터 분석, 컴퓨터 비전 그리고 <strong>실제 현장</strong>에서 쓰일 수 있는 AI 시스템 개발에 관심이 많습니다. 연구와 개발 사이 어딘가에서, 작지만 의미 있는 것들을 만들어가고 있습니다.",
   skills: [
-    "Python", "PyTorch", "Hugging Face",
-    "FastAPI", "Node.js", "TypeScript",
-    "Docker", "PostgreSQL",
-    "Clinical NLP", "Medical Imaging",
+    "Python", "PyTorch",
+    "FastAPI", "Docker", "Git",
+    "Computer Vision", "Medical Imaging",
+    "Clinical NLP",
   ],
   projects: [
     {
-      name: "MediNote — 임상 노트 요약 AI",
+      name: "015B: 도시텃밭 중개 및 AI를 활용한 도시농부 육성 플랫폼, 'CiFarm' ",
       description:
-        "전자의무기록(EMR)의 비정형 임상 노트를 자동으로 요약하는 LLM 기반 파이프라인. 내과 퇴원 요약문 데이터셋으로 fine-tuning하여 핵심 진단·처치 항목을 구조화된 형태로 추출합니다.",
-      link: "",
-      skills: ["Python", "PyTorch", "Hugging Face", "FastAPI"],
+        "LangGraph 기반 AI 에이전트로 텃밭 분양·재배 가이드를 제공하는 도시농업 플랫폼",
+      link: "https://hello.khlug.org/105312",
+      skills: ["Python", "PyTorch", "langchain", "langgraph", "FastAPI"],
     },
     {
-      name: "CXR-Classifier — 흉부 X-ray 이상 탐지",
+      name: "멀티모달 생체신호 데이터를 이용한 머신러닝 기반 집중도 예측 모델 개발 <ksc 2025>",
       description:
-        "공개 흉부 X-ray 데이터셋(NIH ChestX-ray14)을 활용한 다중 레이블 분류 모델. EfficientNet 백본에 class activation map 시각화를 적용해 병변 위치를 직관적으로 확인할 수 있습니다.",
-      link: "",
-      skills: ["Python", "PyTorch", "Medical Imaging"],
+        "K-EmoPhone 공개 데이터셋 기반 다중 생체신호 머신러닝 집중도 예측 모델",
+        link: "",
+      skills: ["Python", "Data Analysis", "Medical Data", "Machine Learning"],
     },
     {
       name: "Portfolio — 이 사이트",
@@ -51,21 +51,20 @@ export const siteConfig = {
     {
       company: "FutureWorkLab.co",
       title: "Junior AI Software Engineer / Researcher",
-      dateRange: "Aug 2024 — Mar 2025",
+      dateRange: "Dec 2024 — Aug 2025",
       bullets: [
-        "LLM 기반 업무 자동화 솔루션 프로토타입 개발 및 내부 실험 설계",
-        "RAG(Retrieval-Augmented Generation) 파이프라인 구현 및 성능 평가",
+        "LangGraph 기반 업무 카테고리 graph 자동화 솔루션 개발 및 내부 실험",
+        "RAG(Retrieval-Augmented Generation) 파이프라인 구현 및 prompt engineering 성능 평가",
         "FastAPI + Docker를 활용한 AI 서비스 백엔드 구축 및 배포",
       ],
     },
     {
-      company: "경희대학교 소프트웨어융합학과 학부 연구생",
+      company: "경희대학교 소프트웨어융합학과 AimsLab 학부 연구생",
       title: "Undergraduate Researcher",
-      dateRange: "Mar 2023 — Jun 2024",
+      dateRange: "Aug 2025 — Current ",
       bullets: [
         "헬스케어 데이터 전처리 및 시계열 분류 모델 실험",
-        "웨어러블 센서 기반 활동 인식 모델 비교 연구 참여",
-        "연구실 세미나에서 딥러닝 논문 리뷰 발표 다수 진행",
+        "웨어러블 센서 기반 데이터 분석 & 활동 간 정량적 집중도 측정 모델 비교 연구",
       ],
     },
   ],
