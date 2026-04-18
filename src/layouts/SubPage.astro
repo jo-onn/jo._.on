@@ -1,0 +1,54 @@
+---
+import { siteConfig } from "../config";
+import omyuPrettyUrl from "../assets/omyu-pretty.ttf";
+import "../styles/subpage.css";
+
+interface Props {
+  title: string;
+}
+const { title } = Astro.props;
+const base = import.meta.env.BASE_URL;
+---
+
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
+    <meta name="viewport" content="width=device-width" />
+    <title>{title} — {siteConfig.name}</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <style set:html={`@font-face { font-family: 'OmyuPretty'; src: url('${omyuPrettyUrl}') format('truetype'); font-weight: normal; font-style: normal; }`} />
+  </head>
+  <body class="bg-white min-h-screen">
+    <div id="cursor-spotlight"></div>
+
+    <!-- 상단 네비 -->
+    <nav class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 py-4 bg-white/80 backdrop-blur-sm border-b border-gray-100">
+      <a href={base} class="font-bold font-mono text-sm" style={`color: ${siteConfig.accentColor}`}>
+        ← {siteConfig.name}
+      </a>
+      <div class="flex items-center gap-6 text-xs text-gray-500 font-mono">
+        <a href={`${base}/about`} class="hover:text-gray-800 transition-colors">About</a>
+        <a href={`${base}/experience`} class="hover:text-gray-800 transition-colors">Experience</a>
+        <a href={`${base}/projects`} class="hover:text-gray-800 transition-colors">Projects</a>
+        <a href={`${base}/blog`} class="hover:text-gray-800 transition-colors">Blog</a>
+        <a href={`${base}/education`} class="hover:text-gray-800 transition-colors">Education</a>
+      </div>
+    </nav>
+
+    <main class="pt-20">
+      <slot />
+    </main>
+  </body>
+  <script>
+    const spotlight = document.getElementById("cursor-spotlight");
+    let x = 0, y = 0, mx = 0, my = 0;
+    document.addEventListener("mousemove", (e) => { mx = e.clientX; my = e.clientY; });
+    const animate = () => {
+      x += (mx - x) * 0.1; y += (my - y) * 0.1;
+      if (spotlight) { spotlight.style.left = x + "px"; spotlight.style.top = y + "px"; }
+      requestAnimationFrame(animate);
+    };
+    animate();
+  </script>
+</html>

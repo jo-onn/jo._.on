@@ -2,10 +2,10 @@
 import Header from "../components/Header.astro";
 import Hero from "../components/Hero.astro";
 import About from "../components/About.astro";
-import Projects from "../components/Projects.astro";
+import Graph from "../components/Graph.astro";
 import Experience from "../components/Experience.astro";
+import Projects from "../components/Projects.astro";
 import Education from "../components/Education.astro";
-import Blog from "../components/Blog.astro";
 import Footer from "../components/Footer.astro";
 import { siteConfig } from "../config";
 import "../styles/global.css";
@@ -23,21 +23,40 @@ import omyuPrettyUrl from "../assets/omyu-pretty.ttf";
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"
     />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&family=Carlito:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
     <title>{siteConfig.name} - {siteConfig.title}</title>
     <style set:html={`@font-face { font-family: 'OmyuPretty'; src: url('${omyuPrettyUrl}') format('truetype'); font-weight: normal; font-style: normal; }`} />
   </head>
   <body>
     <div id="cursor-spotlight"></div>
     <Header />
-    <div class="snap-container">
-      <div class="snap-section"><Hero /></div>
-      <div class="snap-section h-screen flex flex-col fade-in-section"><About /></div>
-      <div class="snap-section fade-in-section"><Experience /></div>
-      <div class="snap-section fade-in-section"><Projects /></div>
-      <div class="snap-section fade-in-section"><Blog /></div>
-      <div class="snap-section fade-in-section"><Education /></div>
-      <Footer />
-    </div>
+
+    <main>
+      <Hero />
+
+      <div class="fade-in-section">
+        <About />
+      </div>
+
+      <div class="fade-in-section">
+        <Graph />
+      </div>
+
+      <div class="fade-in-section">
+        <Experience />
+      </div>
+
+      <div class="fade-in-section">
+        <Projects />
+      </div>
+
+      <div class="fade-in-section">
+        <Education />
+      </div>
+    </main>
+
+    <Footer />
   </body>
   <script>
     const observer = new IntersectionObserver((entries) => {
@@ -47,11 +66,65 @@ import omyuPrettyUrl from "../assets/omyu-pretty.ttf";
           observer.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.15 });
+    }, { threshold: 0.1 });
 
     document.querySelectorAll(".fade-in-section").forEach((el) => {
       observer.observe(el);
     });
+  </script>
+  <script>
+    // Section subtitle typewriter (Korean ↔ English)
+    function runSectionTypewriter(el: HTMLElement) {
+      const phrases: string[] = JSON.parse(el.dataset.phrases || "[]");
+      if (phrases.length < 2) return;
+
+      let idx = 0;
+      let char = phrases[0].length;
+      let erasing = false;
+      let forced: number | null = null;
+      let timer: ReturnType<typeof setTimeout> | null = null;
+
+      function tick() {
+        const phrase = phrases[idx % phrases.length];
+        if (!erasing) {
+          if (char < phrase.length) {
+            char++;
+            el.textContent = phrase.slice(0, char);
+            timer = setTimeout(tick, 50);
+          } else {
+            if (forced !== null && idx % phrases.length === forced) return; // pause
+            timer = setTimeout(() => { erasing = true; tick(); }, 2400);
+          }
+        } else {
+          if (char > 0) {
+            char--;
+            el.textContent = phrase.slice(0, char);
+            timer = setTimeout(tick, 32);
+          } else {
+            erasing = false;
+            idx++;
+            char = 0;
+            timer = setTimeout(tick, 350);
+          }
+        }
+      }
+
+      window.addEventListener("langforce", (e: Event) => {
+        const lang = (e as CustomEvent<string>).detail;
+        const target = lang === "en" ? 1 : 0;
+        forced = target;
+        if (timer) clearTimeout(timer);
+        if (idx % phrases.length === target && !erasing && char === phrases[target].length) return;
+        erasing = true;
+        timer = setTimeout(tick, 0);
+      });
+
+      const baseDelay = 2500;
+      const jitter = Math.random() * 1200;
+      timer = setTimeout(tick, baseDelay + jitter);
+    }
+
+    document.querySelectorAll<HTMLElement>(".section-typewriter").forEach(runSectionTypewriter);
   </script>
   <script>
     const spotlight = document.getElementById("cursor-spotlight");

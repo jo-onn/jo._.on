@@ -1,77 +1,364 @@
 ---
 import { siteConfig } from "../config";
 const hasExperience = siteConfig.experience && siteConfig.experience.length > 0;
+
+/* ── date parsing ─────────────────────────────────────────────────── */
+const MONTH_MAP: Record<string, number> = {
+  Jan:0, Feb:1, Mar:2, Apr:3, May:4, Jun:5,
+  Jul:6, Aug:7, Sep:8, Oct:9, Nov:10, Dec:11,
+};
+
+function parseMonths(s: string): number {
+  const t = s.trim();
+  if (/current/i.test(t)) {
+    const n = new Date();
+    return n.getFullYear() * 12 + n.getMonth();
+  }
+  const parts = t.split(/\s+/);
+  const mon = MONTH_MAP[parts[0]];
+  const yr  = parseInt(parts[parts.length - 1]);
+  if (mon !== undefined && !isNaN(yr)) return yr * 12 + mon;
+  if (!isNaN(yr)) return yr * 12;
+  return 0;
+}
+
+/* ── layout constants ─────────────────────────────────────────────── */
+const CARD_SPACING = 260; // 카드 간 고정 간격 (실제 시간과 무관)
+const MIN_YEAR_GAP = 130; // 연도 원 사이 최소 간격
+const PAD          = 160; // left / right padding (≥ CARD_W/2)
+const LINE_Y       = 300;
+const CONNECTOR_H  = 70;
+const CARD_W       = 280;
+
+/* ── compute positions ────────────────────────────────────────────── */
+const items = siteConfig.experience.map((exp, i) => {
+  const parts = exp.dateRange.split(/\s*[—–\-]\s*/);
+  const startM = parseMonths(parts[0] ?? "");
+  const endM   = parts[1] ? parseMonths(parts[1]) : parseMonths("Current");
+  return { ...exp, startM, endM };
+});
+
+// 실제 카드가 있는 월만 (중복 제거, 정렬)
+const uniqueMs = [...new Set(items.map(e => e.startM))].sort((a, b) => a - b);
+
+// 카드 x 위치: 인덱스 기반 고정 간격 (시간 비례 X)
+function toX(m: number): number {
+  const idx = uniqueMs.indexOf(m);
+  return PAD + idx * CARD_SPACING;
+}
+
+// 연도 원 x 위치: 인접 카드 사이를 시간 비율로 보간
+function yearToX(yrM: number): number {
+  if (yrM <= uniqueMs[0]) return toX(uniqueMs[0]);
+  if (yrM >= uniqueMs[uniqueMs.length - 1]) return toX(uniqueMs[uniqueMs.length - 1]);
+  for (let i = 0; i < uniqueMs.length - 1; i++) {
+    if (uniqueMs[i] <= yrM && yrM <= uniqueMs[i + 1]) {
+      const t = (yrM - uniqueMs[i]) / (uniqueMs[i + 1] - uniqueMs[i]);
+      return PAD + i * CARD_SPACING + t * CARD_SPACING;
+    }
+  }
+  return PAD;
+}
+
+// 카드가 시작하는 연도만 원 표시
+const years = [...new Set(items.map(e => Math.floor(e.startM / 12)))].sort((a, b) => a - b);
+
+const yearCircleX: Record<number, number> = {};
+years.forEach((yr, i) => {
+  const raw = yearToX(yr * 12);
+  yearCircleX[yr] = i === 0 ? raw : Math.max(raw, yearCircleX[years[i - 1]] + MIN_YEAR_GAP);
+});
+
+const totalW = PAD + (uniqueMs.length - 1) * CARD_SPACING + CARD_SPACING + PAD;
+const containerH = LINE_Y * 2; // symmetric: above + below
+
+const colors = ["#7c3aed", "#db2777", "#2563eb", "#059669"];
 ---
 
-{
-  hasExperience && (
-    <section id="experience" class="p-4 sm:p-6 md:p-8">
-      <div class="max-w-7xl mx-auto">
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-start">
-          <div class="lg:col-span-4">
-            <h2 class="text-3xl sm:text-4xl md:text-5xl xl:text-7xl font-bold text-gray-900">
-              Experience
-            </h2>
-            <div
-              class="w-[75px] h-[5px] mt-2 rounded-full"
-              style={`background-color: ${siteConfig.accentColor}`}
-            />
-            {siteConfig.sectionSubtitles?.experience && (
-              <p class="mt-3 text-lg text-gray-400">{siteConfig.sectionSubtitles.experience}</p>
-            )}
-          </div>
+{hasExperience && (
+  <section
+    id="experience"
+    class="dot-bg py-14 px-10 md:px-20 lg:px-32 overflow-hidden"
+  >
 
-          <div class="lg:col-span-8">
-            <div class="relative">
-              {siteConfig.experience.map((exp, index) => (
-                <div class="relative mb-12 last:mb-0">
-                  {/* Timeline dot at top of card */}
-                  <div
-                    class="absolute left-1/2 -top-2 w-4 h-4 bg-white border-2 rounded-full -translate-x-1/2 z-20 transition-all duration-300"
-                    style={`border-color: ${siteConfig.accentColor}; background-color: ${siteConfig.accentColor}`}
-                  />
+    <!-- Title -->
+    <div class="mb-12">
+      {siteConfig.sectionSubtitles?.experience && (
+        <span class="eyebrow inline-block w-fit text-xs font-mono font-bold tracking-[0.18em] text-gray-500 uppercase border border-gray-300 bg-white rounded-full px-3 py-1 mb-6">
+          {siteConfig.sectionSubtitles.experience}
+        </span>
+      )}
+      <h2 class="font-extrabold leading-tight"
+          style="font-size: clamp(2.2rem, 4.5vw, 4rem);">
+        What I <span style="background: linear-gradient(135deg, #7c3aed, #db2777); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">do</span>
+      </h2>
+      {siteConfig.sectionDescriptions?.experience && (
+        <p class="mt-4 text-sm text-gray-400 whitespace-nowrap" style="height: 1.5em;">
+          <span class="section-typewriter" data-phrases={JSON.stringify([siteConfig.sectionDescriptions.experience, siteConfig.sectionDescriptionsEn?.experience ?? ""])}>{siteConfig.sectionDescriptions.experience}</span>
+        </p>
+      )}
+    </div>
 
-                  {/* Connecting line below card */}
-                  {index < siteConfig.experience.length - 1 && (
-                    <div class="absolute left-1/2 bottom-0 w-0.5 h-12 bg-gray-300 -translate-x-1/2 translate-y-full z-10" />
-                  )}
+    <!-- Timeline scroll wrapper -->
+    <div class="relative">
+      <div
+        id="exp-track"
+        style="overflow-x: scroll; overflow-y: visible; cursor: grab; user-select: none; scrollbar-width: none; -ms-overflow-style: none; padding-bottom: 12px;"
+      >
+        <div
+          id="exp-inner"
+          style={`position: relative; width: ${totalW}px; height: ${containerH}px; overflow: visible;`}
+        >
 
-                  {/* Experience card */}
-                  <div class="bg-white rounded-lg shadow-sm border border-gray-100 p-4 sm:p-5 md:p-6 hover:shadow-md transition-shadow duration-300">
-                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4">
-                      <div>
-                        <h3 class="text-lg sm:text-xl font-semibold text-gray-900">
-                          {exp.title}
-                        </h3>
-                        <p
-                          class="text-base sm:text-lg"
-                          style={`color: ${siteConfig.accentColor}`}
-                        >
-                          {exp.company}
-                        </p>
-                      </div>
-                      <span class="text-xs sm:text-sm text-gray-500 mt-2 sm:mt-0">
-                        {exp.dateRange}
-                      </span>
-                    </div>
+          <!-- ── Central gradient line ────────────────────────────── -->
+          <div style={`
+            position: absolute;
+            left: ${PAD}px;
+            top: ${LINE_Y}px;
+            width: ${totalW - PAD * 2}px;
+            height: 3px;
+            transform: translateY(-50%);
+            background: linear-gradient(90deg, #7c3aed, #db2877);
+          `}></div>
 
-                    <ul class="space-y-2">
-                      {exp.bullets.map((bullet) => (
-                        <li class="flex items-start">
-                          <span class="inline-block w-1.5 h-1.5 rounded-full bg-gray-400 mt-2 mr-3 flex-shrink-0" />
-                          <span class="text-sm sm:text-base text-gray-600">
-                            {bullet}
-                          </span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+
+          <!-- ── Month ticks (카드 있는 월만) ─────────────────────── -->
+          {uniqueMs.map(m => {
+            const x   = toX(m);
+            const yr  = Math.floor(m / 12);
+            const mon = m % 12;
+            const ABBR = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+            const label = `${ABBR[mon]} ${yr}`;
+            return (
+              <div>
+                <div style={`
+                  position: absolute;
+                  left: ${x}px;
+                  top: ${LINE_Y + 2}px;
+                  width: 1px;
+                  height: 10px;
+                  background: #94a3b8;
+                  transform: translateX(-50%);
+                `}></div>
+                <span style={`
+                  position: absolute;
+                  left: ${x}px;
+                  top: ${LINE_Y + 15}px;
+                  transform: translateX(-50%);
+                  font-size: 9px;
+                  color: #94a3b8;
+                  font-family: monospace;
+                  white-space: nowrap;
+                `}>{label}</span>
+              </div>
+            );
+          })}
+
+          <!-- ── Year circles ───────────────────────────────────── -->
+          {years.map(yr => {
+            const x = yearCircleX[yr];
+            return (
+              <div style={`
+                position: absolute;
+                left: ${x}px;
+                top: ${LINE_Y}px;
+                transform: translate(-50%, -50%);
+                z-index: 10;
+              `}>
+                <div style="
+                  width: 76px;
+                  height: 76px;
+                  border-radius: 50%;
+                  border: 3px solid #7c3aed;
+                  background: white;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  font-weight: 700;
+                  font-size: 15px;
+                  color: #7c3aed;
+                  font-family: 'Manrope', sans-serif;
+                  box-shadow: 0 2px 8px rgba(124,58,237,0.15);
+                ">
+                  {yr}
                 </div>
-              ))}
-            </div>
-          </div>
+              </div>
+            );
+          })}
+
+          <!-- ── Experience cards ───────────────────────────────── -->
+          {items.map((exp, idx) => {
+            const isAbove = idx % 2 === 0;
+            const c       = colors[idx % colors.length];
+            const x       = toX(exp.startM);
+            const startLabel = (exp.dateRange.split(/\s*[—–\-]\s*/)[0] ?? "").trim();
+
+            const dot = (
+              <div style={`
+                width: 10px; height: 10px;
+                border-radius: 50%;
+                background: ${c};
+                flex-shrink: 0;
+              `}></div>
+            );
+
+            const connector = (
+              <div style={`
+                width: 2px;
+                height: ${CONNECTOR_H}px;
+                background: ${c};
+                flex-shrink: 0;
+              `}></div>
+            );
+
+            const card = (
+              <div
+                class="exp-card"
+                data-idx={idx}
+                style={`
+                  width: ${CARD_W}px;
+                  background: white;
+                  border-radius: 18px;
+                  border: 1px solid #f1f5f9;
+                  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+                  padding: 20px;
+                  cursor: pointer;
+                  transition: box-shadow 0.3s, transform 0.3s;
+                `}
+              >
+                <p style="font-size: 13px; font-family: monospace; color: #9ca3af; margin-bottom: 6px;">
+                  {startLabel}
+                </p>
+                <h3 style="font-size: 18px; font-weight: 700; color: #111827; line-height: 1.35; margin-bottom: 4px;">
+                  {exp.title}
+                </h3>
+                {exp.link ? (
+                  <a href={exp.link} target="_blank" rel="noopener noreferrer"
+                     style={`font-size: 14px; font-weight: 600; color: ${c}; text-decoration: none; border-bottom: 1px solid ${c}; opacity: 0.9;`}>
+                    {exp.company}
+                  </a>
+                ) : (
+                  <p style={`font-size: 14px; font-weight: 600; color: ${c};`}>{exp.company}</p>
+                )}
+
+                <ul class="exp-bullets" style="margin-top: 13px; display: none; flex-direction: column; gap: 8px; list-style: none; padding: 0; margin-left: 0;">
+                  {exp.bullets.map(b => (
+                    <li style="display: flex; align-items: flex-start; gap: 7px; font-size: 12px; color: #6b7280; line-height: 1.55;">
+                      <span style={`margin-top: 5px; width: 4px; height: 4px; border-radius: 50%; background: ${c}; flex-shrink: 0;`}></span>
+                      <span set:html={b} />
+                    </li>
+                  ))}
+                </ul>
+
+                <div class="exp-toggle" style="margin-top: 10px; display: flex; align-items: center; gap: 4px; font-size: 11px; font-family: monospace; color: #9ca3af;">
+                  <span class="toggle-label">자세히 보기</span>
+                  <svg class="toggle-icon" style="width: 12px; height: 12px; transition: transform 0.2s;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <path d="M6 9l6 6 6-6"/>
+                  </svg>
+                </div>
+              </div>
+            );
+
+            if (isAbove) {
+              return (
+                <div style={`
+                  position: absolute;
+                  left: ${x}px;
+                  top: ${LINE_Y - 5}px;
+                  transform: translate(-50%, -100%);
+                  display: flex;
+                  flex-direction: column;
+                  align-items: center;
+                  z-index: 5;
+                  overflow: visible;
+                `}>
+                  {card}
+                  {connector}
+                  {dot}
+                </div>
+              );
+            } else {
+              return (
+                <div style={`
+                  position: absolute;
+                  left: ${x}px;
+                  top: ${LINE_Y + 5}px;
+                  transform: translateX(-50%);
+                  display: flex;
+                  flex-direction: column;
+                  align-items: center;
+                  z-index: 5;
+                  overflow: visible;
+                `}>
+                  {dot}
+                  {connector}
+                  {card}
+                </div>
+              );
+            }
+          })}
+
         </div>
       </div>
-    </section>
-  )
-}
+
+      {siteConfig.experience.length >= 3 && (
+        <p class="mt-4 text-xs text-gray-400 font-mono">← 드래그해서 더 보기</p>
+      )}
+    </div>
+
+  </section>
+)}
+
+<style>
+  #exp-track::-webkit-scrollbar { display: none; }
+</style>
+
+<script>
+  /* ── drag-to-scroll ─────────────────────────────────────────────── */
+  const track = document.getElementById("exp-track") as HTMLElement | null;
+  if (track) {
+    let dragging = false, startX = 0, scrollLeft = 0, moved = false;
+
+    track.addEventListener("mousedown", (e) => {
+      dragging = true; moved = false;
+      startX = e.pageX - track.offsetLeft;
+      scrollLeft = track.scrollLeft;
+      track.style.cursor = "grabbing";
+    });
+    window.addEventListener("mouseup", () => {
+      dragging = false;
+      if (track) track.style.cursor = "grab";
+    });
+    window.addEventListener("mousemove", (e) => {
+      if (!dragging) return;
+      const delta = e.pageX - track.offsetLeft - startX;
+      if (Math.abs(delta) > 4) moved = true;
+      track.scrollLeft = scrollLeft - delta;
+    });
+    track.addEventListener("touchstart", (e) => {
+      startX = e.touches[0].pageX;
+      scrollLeft = track.scrollLeft;
+      moved = false;
+    }, { passive: true });
+    track.addEventListener("touchmove", (e) => {
+      const delta = e.touches[0].pageX - startX;
+      if (Math.abs(delta) > 4) moved = true;
+      track.scrollLeft = scrollLeft - delta;
+    }, { passive: true });
+  }
+
+  /* ── card expand / collapse ─────────────────────────────────────── */
+  document.querySelectorAll<HTMLElement>(".exp-card").forEach((card) => {
+    card.addEventListener("click", () => {
+      const bullets = card.querySelector<HTMLElement>(".exp-bullets");
+      const label   = card.querySelector<HTMLElement>(".toggle-label");
+      const icon    = card.querySelector<SVGElement>(".toggle-icon");
+      if (!bullets) return;
+
+      const isOpen = bullets.style.display === "flex";
+      bullets.style.display = isOpen ? "none" : "flex";
+      if (label) label.textContent = isOpen ? "자세히 보기" : "접기";
+      if (icon)  icon.style.transform = isOpen ? "" : "rotate(180deg)";
+    });
+  });
+</script>

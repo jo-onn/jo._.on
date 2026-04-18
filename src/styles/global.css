@@ -8,95 +8,103 @@
   pointer-events: none;
   transform: translate(-50%, -50%);
   z-index: 9999;
-  background: radial-gradient(circle, rgba(29, 78, 216, 0.25) 0%, rgba(29, 78, 216, 0.1) 50%, transparent 70%);
+  background: radial-gradient(circle, rgba(124, 58, 237, 0.18) 0%, rgba(124, 58, 237, 0.07) 50%, transparent 70%);
   transition: opacity 0.3s;
 }
 
-
+/* ── Light mode body ───────────────────────────────────── */
 body {
-  font-family: 'OmyuPretty', sans-serif;
-  overflow: hidden;
-  height: 100vh;
-}
-
-.snap-container {
-  height: 100vh;
-  overflow-y: scroll;
-  scroll-snap-type: y proximity;
+  font-family: 'Manrope', sans-serif;
   scroll-behavior: smooth;
+  background-color: #f7f8fa;
+  background-image:
+    radial-gradient(ellipse 60% 50% at 0% 0%,   rgba(186,224,235,0.55) 0%, transparent 70%),
+    radial-gradient(ellipse 55% 45% at 100% 0%,  rgba(248,210,185,0.50) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 40% at 50% 100%, rgba(220,210,250,0.30) 0%, transparent 70%);
+  background-attachment: fixed;
 }
 
-.snap-section {
-  scroll-snap-align: start;
-  min-height: 100vh;
-  overflow-y: auto;
+/* ── Dark mode body ────────────────────────────────────── */
+html.dark body {
+  background-color: #091620;
+  background-image:
+    radial-gradient(ellipse 60% 50% at 0% 0%,   rgba(0,90,130,0.28) 0%, transparent 70%),
+    radial-gradient(ellipse 55% 45% at 100% 0%,  rgba(0,60,100,0.22) 0%, transparent 70%);
+  color: #e2e8f0;
 }
 
-.dark body {
-  background-color: #0d1b2a;
-  color: #cdd9e5;
+/* ── Dark mode: cards & text ───────────────────────────── */
+html.dark .bg-white          { background-color: #0e2030 !important; }
+html.dark .bg-gray-50        { background-color: #0b1a28 !important; }
+html.dark .bg-gray-100       { background-color: #122030 !important; }
+html.dark .border-gray-100   { border-color: #1a3040 !important; }
+html.dark .border-gray-200   { border-color: #1e3550 !important; }
+html.dark .text-gray-900     { color: #e8f0f8 !important; }
+html.dark .text-gray-800     { color: #ccdae8 !important; }
+html.dark .text-gray-700     { color: #9ab5c8 !important; }
+html.dark .text-gray-600     { color: #7a9db0 !important; }
+html.dark .text-gray-500     { color: #5a8090 !important; }
+html.dark .text-gray-400     { color: #486070 !important; }
+
+/* ── Dark mode: header nav ─────────────────────────────── */
+html.dark #main-nav {
+  background: rgba(10,25,40,0.88) !important;
+  border-color: #1a3040 !important;
+}
+html.dark .nav-icon:hover,
+html.dark .nav-icon.bg-gray-100 {
+  background-color: #1a3040 !important;
+}
+html.dark .nav-icon.text-gray-800 { color: #9ad4e8 !important; }
+html.dark .nav-divider           { background-color: #1a3040 !important; }
+html.dark #night-toggle:hover,
+html.dark #lang-toggle:hover     { background-color: #1a3040 !important; }
+html.dark #nav-label {
+  background: #0e2030 !important;
+  border-color: #1a3040 !important;
+  color: #6ab8cc !important;
 }
 
-.dark .bg-white {
-  background-color: #0d1b2a !important;
+/* ── Section dot grid (light only) ────────────────────── */
+.dot-bg {
+  background-image: radial-gradient(circle, rgba(200,208,224,0.55) 1.2px, transparent 1.2px);
+  background-size: 28px 28px;
+}
+html.dark .dot-bg {
+  background-image: none;
 }
 
-.dark .text-gray-900,
-.dark .text-gray-800,
-.dark .text-gray-700,
-.dark .text-gray-600 {
-  color: #a8c0d6 !important;
+/* ── Section headings & eyebrows: Carlito (Calibri-like) ─ */
+h1, h2, h3,
+.eyebrow {
+  font-family: 'Carlito', 'Calibri', sans-serif;
 }
 
-.dark .bg-gray-100 {
-  background-color: #1a2e42 !important;
+/* ── About bio typography ──────────────────────────────── */
+.about-bio {
+  font-family: 'Manrope', sans-serif;
+  font-size: 1.15rem;
+  line-height: 1.85;
+  color: #374151;
 }
-
-.dark .text-gray-800 {
-  color: #cdd9e5 !important;
+.about-bio p { margin-bottom: 1em; }
+.about-bio a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: currentColor;
+  text-underline-offset: 3px;
+  font-weight: 600;
 }
+.about-bio a:hover { color: #7c3aed; }
+.about-bio strong { font-weight: 700; }
+html.dark .about-bio { color: #9ab5c8; }
 
-/* Header 다크모드 */
-.dark #header a,
-.dark #header button {
-  color: #4a6a80 !important;
-}
-
-.dark #header a:hover {
-  color: #cdd9e5 !important;
-}
-
-/* Hero 다크모드 */
-.dark #hero {
-  background-color: #0d1b2a !important;
-}
-
-.dark #hero h2 {
-  color: #7eb8d4 !important;
-}
-
-.dark #hero h1 {
-  color: #e8f4f8 !important;
-}
-
-.dark #hero h1 span {
-  color: #56b4d3 !important;
-}
-
-.dark #hero p {
-  color: #a8c0d6 !important;
-}
-
-.dark #hero svg {
-  color: #4a7fa0 !important;
-}
-
+/* ── Fade-in sections ──────────────────────────────────── */
 .fade-in-section {
   opacity: 0;
   transform: translateY(40px);
   transition: opacity 0.7s ease-out, transform 0.7s ease-out;
 }
-
 .fade-in-section.visible {
   opacity: 1;
   transform: translateY(0);

@@ -1,82 +1,148 @@
 ---
 import { siteConfig } from "../config";
 
-const hasProjects = siteConfig.projects && siteConfig.projects.length > 0;
-const hasExperience = siteConfig.experience && siteConfig.experience.length > 0;
-const hasEducation = siteConfig.education && siteConfig.education.length > 0;
+const navItems = [
+  { href: "#hero",       label: "Home",       section: "hero" },
+  { href: "#about",      label: "Skills",     section: "about" },
+  { href: "#experience", label: "Experience", section: "experience" },
+  { href: "#projects",   label: "Projects",   section: "projects" },
+  { href: "#education",  label: "Education",  section: "education" },
+];
 ---
 
-<header
-  id="header"
-  class="fixed top-0 right-0 z-50 hidden md:flex h-[30vh] items-center transition-opacity duration-500"
->
-  <nav class="px-13 pt-100">
-    <ul class="flex flex-col items-end gap-10">
-      <li>
-        <a href="#about" class="text-gray-700 hover:text-black transition-colors font-medium text-3xl">
-          About
-        </a>
-      </li>
-      {hasExperience && (
-        <li>
-          <a href="#experience" class="text-gray-700 hover:text-black transition-colors font-medium text-3xl">
-            Experience
-          </a>
-        </li>
-      )}
-      {hasProjects && (
-        <li>
-          <a href="#projects" class="text-gray-700 hover:text-black transition-colors font-medium text-3xl">
-            Projects
-          </a>
-        </li>
-      )}
-      <li>
-        <a href="#blog" class="text-gray-700 hover:text-black transition-colors font-medium text-3xl">
-          Blog
-        </a>
-      </li>
-      {hasEducation && (
-        <li>
-          <a href="#education" class="text-gray-700 hover:text-black transition-colors font-medium text-3xl">
-            Education
-          </a>
-        </li>
-      )}
-    </ul>
+<header class="fixed top-5 left-1/2 -translate-x-1/2 z-50 flex flex-col items-center">
+  <nav
+    id="main-nav"
+    class="flex items-center gap-0.5 bg-white/85 backdrop-blur-md border border-gray-200 rounded-2xl px-2 py-2 shadow-md"
+  >
+    {navItems.map(({ href, label, section }) => (
+      <a
+        href={href}
+        data-section={section}
+        data-label={label}
+        class="nav-icon w-9 h-9 flex items-center justify-center rounded-xl transition-all duration-200 text-gray-400 hover:text-gray-700 hover:bg-gray-100/80"
+      >
+        {section === "hero" && (
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12l-2 0l9 -9l9 9l-2 0"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7"/><path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6"/>
+          </svg>
+        )}
+        {section === "about" && (
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M16 18a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm0 -12a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm-7 12a6 6 0 0 1 6 -6a6 6 0 0 1 -6 -6a6 6 0 0 1 -6 6a6 6 0 0 1 6 6z"/>
+          </svg>
+        )}
+        {section === "experience" && (
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 9a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-9z"/><path d="M8 7v-2a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v2"/><path d="M3 13a20 20 0 0 0 18 0"/>
+          </svg>
+        )}
+        {section === "projects" && (
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 4h4l3 3h7a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-11a2 2 0 0 1 2 -2"/>
+          </svg>
+        )}
+        {section === "education" && (
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 9l-10 -4l-10 4l10 4l10 -4v6"/><path d="M6 10.6v5.4a6 6 0 0 0 12 0v-5.4"/>
+          </svg>
+        )}
+      </a>
+    ))}
+
+    <!-- Divider -->
+    <div class="nav-divider w-px h-5 bg-gray-200 mx-1 shrink-0"></div>
+
+    <!-- Night mode toggle -->
+    <button
+      id="night-toggle"
+      class="w-9 h-9 flex items-center justify-center rounded-xl transition-all duration-200 text-gray-400 hover:text-gray-700 hover:bg-gray-100/80"
+      aria-label="Toggle dark mode"
+    >
+      <svg id="icon-moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z"/>
+      </svg>
+      <svg id="icon-sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
+        <path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"/><path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7"/>
+      </svg>
+    </button>
+
+    <!-- Language toggle -->
+    <button
+      id="lang-toggle"
+      class="w-9 h-9 flex items-center justify-center rounded-xl transition-all duration-200 text-gray-400 hover:text-gray-700 hover:bg-gray-100/80 text-[10px] font-mono font-bold tracking-wide"
+      aria-label="Toggle language"
+    >
+      KO
+    </button>
   </nav>
+
+  <!-- Active section label pill -->
+  <div
+    id="nav-label"
+    class="mt-1.5 px-3 py-0.5 bg-white border border-gray-200 rounded-full text-xs font-mono text-gray-500 shadow-sm"
+  >
+    Home
+  </div>
 </header>
 
 <script>
-  const container = document.querySelector(".snap-container");
-  const header = document.getElementById("header");
-  const heroEl = document.getElementById("hero");
+  /* ── Active section tracking ─────────────────────────── */
+  const sections = ["hero", "about", "experience", "projects", "education"];
+  const navIcons = document.querySelectorAll<HTMLAnchorElement>(".nav-icon");
+  const navLabel = document.getElementById("nav-label")!;
 
-  if (container && header) {
-    const updateHeader = () => {
-      const heroHeight = heroEl?.offsetHeight ?? window.innerHeight;
-      const scrolled = container.scrollTop;
-
-      if (scrolled < heroHeight * 0.5) {
-        // Hero 구간 — 완전히 숨김
-        header.style.opacity = "0";
-        header.style.pointerEvents = "none";
-      } else {
-        // Hero 벗어난 후 — 서서히 나타나다가 스크롤 내릴수록 흐려짐
-        const fadeIn = Math.min(1, (scrolled - heroHeight * 0.5) / (heroHeight * 0.3));
-        const fadeOut = Math.max(0.2, 1 - (scrolled - heroHeight) / 1000);
-        header.style.opacity = String(Math.min(fadeIn, fadeOut));
-        header.style.pointerEvents = "auto";
-      }
-    };
-
-    container.addEventListener("scroll", updateHeader);
-    updateHeader();
+  function setActive(sectionId: string) {
+    navIcons.forEach((icon) => {
+      const matches = icon.dataset.section === sectionId;
+      icon.classList.toggle("bg-gray-100", matches);
+      icon.classList.toggle("text-gray-800", matches);
+      icon.classList.toggle("text-gray-400", !matches);
+    });
+    const active = [...navIcons].find(i => i.dataset.section === sectionId);
+    if (active && navLabel) navLabel.textContent = active.dataset.label ?? "";
   }
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) setActive(entry.target.id);
+      });
+    },
+    { rootMargin: "-40% 0px -55% 0px" }
+  );
+
+  sections.forEach((id) => {
+    const el = document.getElementById(id);
+    if (el) observer.observe(el);
+  });
+
+  setActive("hero");
+
+  /* ── Night mode ──────────────────────────────────────── */
+  const nightBtn  = document.getElementById("night-toggle")!;
+  const iconMoon  = document.getElementById("icon-moon")!;
+  const iconSun   = document.getElementById("icon-sun")!;
+  const nav       = document.getElementById("main-nav")!;
+
+  let dark = false;
+
+  function applyDark(on: boolean) {
+    dark = on;
+    document.documentElement.classList.toggle("dark", on);
+    iconMoon.style.display = on ? "none"  : "";
+    iconSun.style.display  = on ? ""      : "none";
+  }
+
+  nightBtn.addEventListener("click", () => applyDark(!dark));
+
+  /* ── Language toggle ─────────────────────────────────── */
+  const langBtn = document.getElementById("lang-toggle")!;
+  let lang: "ko" | "en" = "ko";
+
+  langBtn.addEventListener("click", () => {
+    lang = lang === "ko" ? "en" : "ko";
+    langBtn.textContent = lang === "ko" ? "KO" : "EN";
+    window.dispatchEvent(new CustomEvent("langforce", { detail: lang }));
+  });
 </script>
-
-<style>
-  html {
-    scroll-behavior: smooth;
-  }
-</style>

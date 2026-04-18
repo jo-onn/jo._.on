@@ -1,360 +1,328 @@
 ---
-import { getCollection } from "astro:content";
 import { siteConfig } from "../config";
+import medicalImagingImg from "../assets/medical-imaging.png";
+import clinicalNlpImg    from "../assets/clinical-nlp.png";
 
-const blogPosts = await getCollection("blog", ({ data }) => !data.draft);
-
-const sectionNodes = [
-  { id: "projects",   type: "section", label: "Projects" },
-  { id: "experience", type: "section", label: "Experience" },
-  { id: "education",  type: "section", label: "Education" },
-  { id: "skills",     type: "section", label: "Skills" },
-  { id: "blog",       type: "section", label: "Blog" },
-];
-
-const sectionLinks = [
-  { source: "projects",   target: "experience" },
-  { source: "experience", target: "education" },
-  { source: "projects",   target: "skills" },
-  { source: "experience", target: "skills" },
-  { source: "blog",       target: "projects" },
-  { source: "blog",       target: "education" },
-];
-
-const itemNodes: { id: string; type: string; label: string; parent: string }[] = [];
-const itemLinks: { source: string; target: string }[] = [];
-
-siteConfig.projects?.forEach((p) => {
-  const id = `proj-${p.name}`;
-  itemNodes.push({ id, type: "item", label: p.name, parent: "projects" });
-  itemLinks.push({ source: "projects", target: id });
-});
-
-siteConfig.experience?.forEach((e) => {
-  const id = `exp-${e.company}`;
-  itemNodes.push({ id, type: "item", label: e.company, parent: "experience" });
-  itemLinks.push({ source: "experience", target: id });
-});
-
-siteConfig.education?.forEach((e) => {
-  const id = `edu-${e.school}`;
-  itemNodes.push({ id, type: "item", label: e.school, parent: "education" });
-  itemLinks.push({ source: "education", target: id });
-});
-
-siteConfig.skills?.slice(0, 12).forEach((s) => {
-  const id = `skill-${s}`;
-  itemNodes.push({ id, type: "item", label: s, parent: "skills" });
-  itemLinks.push({ source: "skills", target: id });
-});
-
-blogPosts
-  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
-  .forEach((post) => {
-    const id = `blog-${post.slug}`;
-    itemNodes.push({ id, type: "item", label: post.data.title, parent: "blog" });
-    itemLinks.push({ source: "blog", target: id });
-  });
-
-const graphData = {
-  nodes: [...sectionNodes, ...itemNodes],
-  links: [...sectionLinks, ...itemLinks],
-  accentColor: siteConfig.accentColor,
+// Simple Icons CDN: https://cdn.simpleicons.org/{slug}/{hex-color}
+const iconUrlMap: Record<string, string> = {
+  "Python":          "https://cdn.simpleicons.org/python/3776AB",
+  "PyTorch":         "https://cdn.simpleicons.org/pytorch/EE4C2C",
+  "FastAPI":         "https://cdn.simpleicons.org/fastapi/009688",
+  "Docker":          "https://cdn.simpleicons.org/docker/2496ED",
+  "Git":             "https://cdn.simpleicons.org/git/F05032",
+  "Computer Vision": "https://cdn.simpleicons.org/opencv/5C3EE8",
+  "Medical Imaging": medicalImagingImg.src,
+  "Clinical NLP":    clinicalNlpImg.src,
+  "GitHub":          "https://cdn.simpleicons.org/github/181717",
+  "Figma":           "https://cdn.simpleicons.org/figma/F24E1E",
+  "CSS":             "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg",
+  "Tailwind":        "https://cdn.simpleicons.org/tailwindcss/06B6D4",
 };
+
+const emojiFallback: Record<string, string> = {};
+
+const extraSkills = ["GitHub", "Figma", "CSS", "Tailwind"];
+
+const items = [
+  ...siteConfig.skills,
+  ...extraSkills,
+].map((s) => ({
+  label: s,
+  type: "skill" as const,
+  href: "#about",
+}));
 ---
 
-<div
-  id="graph-container"
-  data-graph={JSON.stringify(graphData)}
-  class="w-full h-full relative"
-  style="background: transparent;"
->
-  <span class="absolute top-3 right-4 text-[10px] text-gray-400 font-mono pointer-events-none select-none z-10">
-    scroll to zoom · drag to pan
-  </span>
-  <span class="absolute bottom-3 left-4 text-[10px] text-gray-400 font-mono pointer-events-none select-none z-10">
-    zoom in to explore nodes
-  </span>
-</div>
+<section id="skills" class="dot-bg py-14 px-10 md:px-20 lg:px-32">
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
 
-<script>
-  import * as d3 from "d3";
+    <!-- Left: title -->
+    <div class="flex flex-col justify-center">
+      {siteConfig.sectionSubtitles?.about && (
+        <span class="eyebrow inline-block w-fit text-xs font-mono font-bold tracking-[0.18em] text-gray-500 uppercase border border-gray-300 bg-white rounded-full px-3 py-1 mb-6">
+          Tech Stack
+        </span>
+      )}
+      <h2 class="font-extrabold leading-tight" style="font-size: clamp(2.2rem, 4.5vw, 4rem);">
+        My <span style="background: linear-gradient(135deg, #7c3aed, #db2877); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Skills</span>
+      </h2>
+    </div>
 
-  const container = document.getElementById("graph-container");
-  if (container) initGraph(container);
+    <!-- Right: Globe -->
+    <div class="flex items-center justify-center">
+      <div
+        id="globe-wrap"
+        class="w-full h-[520px]"
+        style="mask-image: radial-gradient(ellipse 85% 80% at 50% 50%, black 60%, transparent 100%); -webkit-mask-image: radial-gradient(ellipse 85% 80% at 50% 50%, black 60%, transparent 100%);"
+      >
+        <canvas id="globe-canvas" class="w-full h-full cursor-grab"></canvas>
+      </div>
+    </div>
 
-  function initGraph(container: HTMLElement) {
-    const raw = JSON.parse((container as HTMLElement & { dataset: DOMStringMap }).dataset.graph || "{}");
-    const { nodes: rawNodes, links: rawLinks, accentColor = "#2a3c6e" } = raw as {
-      nodes: { id: string; type: string; label: string; parent?: string }[];
-      links: { source: string; target: string }[];
-      accentColor: string;
-    };
+  </div>
+</section>
 
-    const ZOOM_THRESHOLD = 1.3;
-    const width  = container.clientWidth  || 800;
-    const height = container.clientHeight || 400;
+<script define:vars={{ items, iconUrlMap, emojiFallback, accentColor: siteConfig.accentColor }}>
+  const canvas = document.getElementById("globe-canvas");
+  const wrap   = document.getElementById("globe-wrap");
+  const ctx    = canvas.getContext("2d");
 
-    const nodes = rawNodes.map((d) => ({ ...d, x: 0, y: 0, vx: 0, vy: 0 }));
-
-    // item↔section links (fixed) + section↔section links (randomized each load)
-    const itemLinks = rawLinks.filter((l) => {
-      const src = rawNodes.find((n) => n.id === l.source);
-      const tgt = rawNodes.find((n) => n.id === l.target);
-      return src?.type === "item" || tgt?.type === "item";
-    });
-
-    const sectionIds = rawNodes.filter((n) => n.type === "section").map((n) => n.id);
-    const allPairs: { source: string; target: string }[] = [];
-    for (let i = 0; i < sectionIds.length; i++)
-      for (let j = i + 1; j < sectionIds.length; j++)
-        allPairs.push({ source: sectionIds[i], target: sectionIds[j] });
-
-    // Fisher-Yates shuffle
-    for (let i = allPairs.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [allPairs[i], allPairs[j]] = [allPairs[j], allPairs[i]];
-    }
-    // spanning tree (n-1) + 1~2 extra edges
-    const extra = Math.floor(Math.random() * 2) + 1;
-    const sectionLinks = allPairs.slice(0, sectionIds.length - 1 + extra);
-
-    const links = [...sectionLinks, ...itemLinks].map((d) => ({ ...d }));
-
-    // ── SVG ──────────────────────────────────────────────────────────
-    const svg = d3.select(container)
-      .append("svg")
-      .attr("width", "100%")
-      .attr("height", "100%")
-      .style("cursor", "grab")
-      .style("overflow", "visible");
-
-    // glow filter
-    const defs = svg.append("defs");
-    const filter = defs.append("filter")
-      .attr("id", "glow")
-      .attr("x", "-60%").attr("y", "-60%")
-      .attr("width", "220%").attr("height", "220%");
-    filter.append("feGaussianBlur")
-      .attr("in", "SourceGraphic").attr("stdDeviation", "6").attr("result", "blur");
-    const merge = filter.append("feMerge");
-    merge.append("feMergeNode").attr("in", "blur");
-    merge.append("feMergeNode").attr("in", "SourceGraphic");
-
-    const g = svg.append("g");
-
-    // ── Force simulation ──────────────────────────────────────────────
-    const simulation = d3.forceSimulation(nodes as d3.SimulationNodeDatum[])
-      .force("link", d3.forceLink(links)
-        .id((d: any) => d.id)
-        .distance((d: any) => (d.source.type === "section" && d.target.type === "section") ? 80 : 40)
-        .strength((d: any) => (d.source.type === "section" && d.target.type === "section") ? 0.7 : 0.5)
-      )
-      .force("charge", d3.forceManyBody()
-        .strength((d: any) => d.type === "section" ? -700 : -90)
-      )
-      .force("center", d3.forceCenter(0, 0).strength(0.04))
-      .force("collision", d3.forceCollide()
-        .radius((d: any) => d.type === "section" ? 130 : 35)
-      );
-
-    // ── Links ─────────────────────────────────────────────────────────
-    const linkG  = g.append("g");
-    const linkEls = linkG.selectAll<SVGLineElement, unknown>("line")
-      .data(links)
-      .join("line")
-      .attr("stroke", "#94a3b8")
-      .attr("stroke-width", 1)
-      .attr("stroke-opacity", 0);
-
-    // ── Nodes ─────────────────────────────────────────────────────────
-    const nodeG  = g.append("g");
-    const nodeEls = nodeG.selectAll<SVGGElement, unknown>("g")
-      .data(nodes)
-      .join("g")
-      .style("cursor", "pointer");
-
-    const sectionColors: Record<string, string> = {
-      projects:   "#60a5fa",
-      experience: "#a78bfa",
-      education:  "#34d399",
-      skills:     "#fbbf24",
-      blog:       "#fb7185",
-    };
-
-    // outer ring (section only)
-    nodeEls.filter((d: any) => d.type === "section")
-      .append("circle")
-      .attr("r", 58)
-      .attr("fill", "none")
-      .attr("stroke", (d: any) => sectionColors[d.id] ?? accentColor)
-      .attr("stroke-width", 0.5)
-      .attr("stroke-opacity", 0.25);
-
-    // main circle
-    nodeEls.append("circle")
-      .attr("r", (d: any) => d.type === "section" ? 42 : 13)
-      .attr("fill", (d: any) => {
-        if (d.type === "section") return sectionColors[d.id] ?? accentColor;
-        return (sectionColors[d.parent] ?? accentColor) + "88";
-      })
-      .attr("stroke", (d: any) => d.type === "section" ? "rgba(255,255,255,0.4)" : "rgba(0,0,0,0.12)")
-      .attr("stroke-width", 1.5)
-      .attr("filter", (d: any) => d.type === "section" ? "url(#glow)" : null)
-      .attr("opacity", (d: any) => d.type === "section" ? 1 : 0);
-
-    // label
-    nodeEls.append("text")
-      .text((d: any) => d.label)
-      .attr("text-anchor", "middle")
-      .attr("dominant-baseline", (d: any) => d.type === "section" ? "middle" : "auto")
-      .attr("font-family", "monospace")
-      .attr("font-size", (d: any) => d.type === "section" ? "13px" : "10px")
-      .attr("font-weight", (d: any) => d.type === "section" ? "700" : "400")
-      .attr("fill", (d: any) => d.type === "section" ? "rgba(255,255,255,0.95)" : "#374151")
-      .attr("dy", (d: any) => d.type === "item" ? "26px" : "0")
-      .attr("opacity", (d: any) => d.type === "section" ? 1 : 0)
-      .attr("pointer-events", "none");
-
-    // ── Drag ─────────────────────────────────────────────────────────
-    nodeEls.call(
-      d3.drag<SVGGElement, unknown>()
-        .on("start", (event, d: any) => {
-          if (!event.active) simulation.alphaTarget(0.3).restart();
-          d.fx = d.x; d.fy = d.y;
-        })
-        .on("drag", (event, d: any) => { d.fx = event.x; d.fy = event.y; })
-        .on("end",  (event, d: any) => {
-          if (!event.active) simulation.alphaTarget(0);
-          d.fx = null; d.fy = null;
-        })
-    );
-
-    // ── Hover ────────────────────────────────────────────────────────
-    nodeEls
-      .on("mouseenter", function (_event, d: any) {
-        d3.select(this).select("circle:last-of-type")
-          .transition().duration(200)
-          .attr("r", d.type === "section" ? 48 : 17);
-      })
-      .on("mouseleave", function (_event, d: any) {
-        d3.select(this).select("circle:last-of-type")
-          .transition().duration(200)
-          .attr("r", d.type === "section" ? 42 : 13);
-      });
-
-    // ── Click expand/collapse ─────────────────────────────────────────
-    let expandedId: string | null = null;
-
-    nodeEls.on("click", (_event, d: any) => {
-      if (d.type !== "section") return;
-      expandedId = expandedId === d.id ? null : d.id;
-
-      // visual ring on expanded section node
-      nodeEls.filter((n: any) => n.type === "section")
-        .select("circle:first-of-type")
-        .transition().duration(200)
-        .attr("stroke-opacity", (n: any) => n.id === expandedId ? 0.6 : 0.25)
-        .attr("stroke-width",   (n: any) => n.id === expandedId ? 1.5 : 0.5);
-
-      // center view on clicked node
-      const targetTransform = d3.zoomIdentity
-        .translate(width / 2 - currentZoom * d.x, height / 2 - currentZoom * d.y)
-        .scale(currentZoom);
-      svg.transition().duration(450).ease(d3.easeCubicOut)
-        .call(zoom.transform, targetTransform);
-
-      updateLOD(currentZoom);
-    });
-
-    // ── LOD ──────────────────────────────────────────────────────────
-    let currentZoom = 1;
-    let currentTransform = d3.zoomIdentity;
-
-    function getVisibleSections(transform: d3.ZoomTransform): Set<string> {
-      const { x: tx, y: ty, k } = transform;
-      const margin = 120;
-      const x0 = (-tx / k) - margin;
-      const y0 = (-ty / k) - margin;
-      const x1 = ((width  - tx) / k) + margin;
-      const y1 = ((height - ty) / k) + margin;
-      const visible = new Set<string>();
-      nodes.forEach((n: any) => {
-        if (n.type === "section" && n.x >= x0 && n.x <= x1 && n.y >= y0 && n.y <= y1)
-          visible.add(n.id);
-      });
-      return visible;
-    }
-
-    function shouldShowItem(d: any, zoomShow: boolean): boolean {
-      if (d.parent === expandedId) return true;
-      if (!zoomShow) return false;
-      return getVisibleSections(currentTransform).has(d.parent);
-    }
-
-    function updateLOD(k: number) {
-      const zoomShow = k >= ZOOM_THRESHOLD;
-
-      nodeEls.filter((d: any) => d.type === "item")
-        .select("circle")
-        .transition().duration(350)
-        .attr("opacity", (d: any) => shouldShowItem(d, zoomShow) ? 1 : 0)
-        .attr("r",       (d: any) => shouldShowItem(d, zoomShow) ? 13 : 0);
-
-      nodeEls.filter((d: any) => d.type === "item")
-        .select("text")
-        .transition().duration(350)
-        .attr("opacity", (d: any) => shouldShowItem(d, zoomShow) ? 0.85 : 0);
-
-      linkEls.transition().duration(350)
-        .attr("stroke-opacity", (d: any) => {
-          const isChild = d.source?.type === "item" || d.target?.type === "item";
-          if (!isChild) return 0.3;
-          const parentId = d.source?.type === "section" ? d.source?.id : d.target?.id;
-          return shouldShowItem({ parent: parentId }, zoomShow) ? 0.4 : 0;
-        });
-
-      // inverse-scale labels so they stay readable
-      const sf  = Math.max(8, 11 / Math.sqrt(k));
-      const if_ = Math.max(6,  9 / Math.sqrt(k));
-      nodeEls.filter((d: any) => d.type === "section").select("text").attr("font-size", `${sf}px`);
-      nodeEls.filter((d: any) => d.type === "item"   ).select("text").attr("font-size", `${if_}px`);
-    }
-
-    // ── Zoom ─────────────────────────────────────────────────────────
-    const zoom = d3.zoom<SVGSVGElement, unknown>()
-      .scaleExtent([1, 10])
-      .on("zoom", (event) => {
-        g.attr("transform", event.transform);
-        currentZoom = event.transform.k;
-        currentTransform = event.transform;
-        updateLOD(currentZoom);
-      });
-
-    svg.call(zoom);
-    svg.on("dblclick.zoom", null);
-
-    const initialScale = 2.2;
-    currentZoom = initialScale;
-    svg.call(zoom.transform, d3.zoomIdentity.translate(width / 2, height / 2).scale(initialScale));
-
-    // ── Tick ─────────────────────────────────────────────────────────
-    simulation.on("tick", () => {
-      linkEls
-        .attr("x1", (d: any) => d.source.x)
-        .attr("y1", (d: any) => d.source.y)
-        .attr("x2", (d: any) => d.target.x)
-        .attr("y2", (d: any) => d.target.y);
-      nodeEls.attr("transform", (d: any) => `translate(${d.x},${d.y})`);
-    });
-
-    updateLOD(initialScale);
-
-    // ── Resize ───────────────────────────────────────────────────────
-    new ResizeObserver(() => {
-      const w = container.clientWidth;
-      const h = container.clientHeight;
-      svg.attr("viewBox", `0 0 ${w} ${h}`);
-    }).observe(container);
+  function resize() {
+    canvas.width  = wrap.clientWidth;
+    canvas.height = wrap.clientHeight;
   }
+  resize();
+  new ResizeObserver(resize).observe(wrap);
+
+  // ── Preload images ───────────────────────────────────────────────────
+  const imgCache = {};
+  Object.entries(iconUrlMap).forEach(([label, url]) => {
+    const img = new Image();
+    if (url.startsWith("http")) img.crossOrigin = "anonymous";
+    img.src = url;
+    imgCache[label] = img;
+  });
+
+  // ── Fibonacci sphere placement ───────────────────────────────────────
+  const goldenAngle = Math.PI * (3 - Math.sqrt(5));
+  const pts = items.map((item, i) => {
+    const y = 1 - (i / Math.max(items.length - 1, 1)) * 2;
+    const r = Math.sqrt(Math.max(0, 1 - y * y));
+    const t = goldenAngle * i;
+    return { ...item, ox: Math.cos(t) * r, oy: y, oz: Math.sin(t) * r };
+  });
+
+  // ── Rotation state ───────────────────────────────────────────────────
+  let rotX = 0.25, rotY = 0;
+  let velX = 0,    velY = 0.0025;
+  let dragging = false, lastMX = 0, lastMY = 0;
+  let hoveredIdx = -1;
+
+  // ── 3-D helpers ──────────────────────────────────────────────────────
+  function rotate(ox, oy, oz, rx, ry) {
+    const cy = Math.cos(ry), sy = Math.sin(ry);
+    const x1 =  ox * cy + oz * sy;
+    const z1 = -ox * sy + oz * cy;
+    const cx = Math.cos(rx), sx = Math.sin(rx);
+    return { x: x1, y: oy * cx - z1 * sx, z: oy * sx + z1 * cx };
+  }
+
+  function project(x, y, z) {
+    const cx = canvas.width  / 2;
+    const cy = canvas.height / 2;
+    const R  = Math.min(cx, cy) * 0.74;
+    const fov = 2.4;
+    const s = fov / (fov + z);
+    return { sx: cx + x * R * s, sy: cy + y * R * s, scale: s, depth: z, R };
+  }
+
+  function isDark() {
+    return document.documentElement.classList.contains("dark");
+  }
+
+  // ── Wireframe ────────────────────────────────────────────────────────
+  function drawWireframe() {
+    const cx = canvas.width  / 2;
+    const cy = canvas.height / 2;
+    const R  = Math.min(cx, cy) * 0.74;
+    const dark = isDark();
+
+    ctx.save();
+    ctx.strokeStyle = dark ? "rgba(56,189,248,0.22)" : "rgba(170,185,210,0.2)";
+    ctx.lineWidth = 0.7;
+
+    [-60,-30,0,30,60].forEach((lat) => {
+      const phi = lat * Math.PI / 180;
+      const rr  = R * Math.cos(phi);
+      const yOff = R * Math.sin(phi) * Math.cos(rotX);
+      ctx.beginPath();
+      ctx.ellipse(cx, cy + yOff, rr * Math.max(0.08, Math.abs(Math.cos(rotY))), rr * Math.abs(Math.sin(rotX + Math.PI / 2)), 0, 0, Math.PI * 2);
+      ctx.stroke();
+    });
+
+    for (let lon = 0; lon < 180; lon += 30) {
+      const angle = lon * Math.PI / 180 + rotY;
+      ctx.beginPath();
+      ctx.ellipse(cx, cy, Math.abs(Math.cos(angle)) * R, R, 0, 0, Math.PI * 2);
+      ctx.stroke();
+    }
+
+    ctx.strokeStyle = dark ? "rgba(56,189,248,0.55)" : "rgba(170,185,210,0.32)";
+    ctx.lineWidth = dark ? 1.6 : 1.2;
+    ctx.beginPath();
+    ctx.arc(cx, cy, R, 0, Math.PI * 2);
+    ctx.stroke();
+
+    // dark mode: soft blue glow behind globe
+    if (dark) {
+      const glow = ctx.createRadialGradient(cx, cy, 0, cx, cy, R * 0.9);
+      glow.addColorStop(0, "rgba(56,189,248,0.07)");
+      glow.addColorStop(1, "rgba(56,189,248,0)");
+      ctx.fillStyle = glow;
+      ctx.beginPath();
+      ctx.arc(cx, cy, R * 0.9, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    ctx.restore();
+  }
+
+  // ── Draw nodes ───────────────────────────────────────────────────────
+  function drawNodes(projected) {
+    // depth 오름차순(뒤→앞)으로 정렬해 앞 요소가 위에 그려지게
+    const sorted = projected.map((p, i) => ({ ...p, i })).sort((a, b) => b.depth - a.depth);
+
+    for (const p of sorted) {
+      const item      = items[p.i];
+      const isHovered = p.i === hoveredIdx;
+      // depth: z=-1(front,scale↑) … z=1(back,scale↓)
+      // t=1→front, t=0→back  (inverted from raw depth)
+      const t = 1 - (p.depth + 1) / 2;
+
+      // 크기: 원근(p.scale) + 추가 깊이 배율로 앞뒤 차이 강조
+      const iconSize  = 15 * (0.5 + t * 0.5) * p.scale * 2.2 * (isHovered ? 1.2 : 1);
+      const labelSize = Math.max(7, iconSize * 0.42);
+
+      // 깊이별 시각 효과 (t=1 앞, t=0 뒤)
+      const dark       = isDark();
+      const alpha      = 0.1 + t * 0.9;
+      const grayscale  = isHovered ? 0 : Math.round(Math.pow(1 - t, 0.7) * 100);
+      const brightness = isHovered
+        ? (dark ? 150 : 100)
+        : dark
+          ? Math.round(50 + t * 100)   // dark: brighter icons
+          : Math.round(18 + t * 82);
+
+      // 라벨은 앞쪽(t>0.6) 에서만 페이드인
+      const labelAlpha = isHovered
+        ? 1
+        : t > 0.6 ? Math.min(1, (t - 0.6) / 0.28) : 0;
+
+      ctx.save();
+
+      // hover glow
+      if (isHovered) {
+        ctx.globalAlpha = 0.45;
+        const gR = iconSize * 1.15;
+        const grad = ctx.createRadialGradient(p.sx, p.sy, 0, p.sx, p.sy, gR);
+        grad.addColorStop(0, "rgba(180,200,255,0.65)");
+        grad.addColorStop(1, "rgba(180,200,255,0)");
+        ctx.beginPath();
+        ctx.arc(p.sx, p.sy, gR, 0, Math.PI * 2);
+        ctx.fillStyle = grad;
+        ctx.fill();
+      }
+
+      // 아이콘
+      ctx.globalAlpha = alpha;
+      ctx.filter = `grayscale(${grayscale}%) brightness(${brightness}%)`;
+
+      const img = imgCache[item.label];
+      if (img && img.complete && img.naturalWidth > 0) {
+        const half = iconSize / 2;
+        ctx.drawImage(img, p.sx - half, p.sy - half, iconSize, iconSize);
+      } else {
+        ctx.filter = `grayscale(${grayscale}%)`;
+        ctx.font = `${Math.round(iconSize * 0.88)}px serif`;
+        ctx.textAlign    = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText(emojiFallback[item.label] ?? "•", p.sx, p.sy);
+      }
+
+      // 텍스트 라벨 (앞쪽에서만 등장)
+      if (labelAlpha > 0) {
+        ctx.filter      = "none";
+        ctx.globalAlpha = labelAlpha;
+        ctx.font        = `400 ${Math.round(labelSize * 0.78)}px 'IBM Plex Mono', monospace`;
+        ctx.textAlign    = "center";
+        ctx.textBaseline = "top";
+        ctx.fillStyle    = isHovered ? accentColor : (isDark() ? "#7dd3fc" : "#374151");
+        ctx.fillText(item.label.toUpperCase(), p.sx, p.sy + iconSize * 0.58);
+      }
+
+      ctx.restore();
+    }
+  }
+
+  // ── Render loop ──────────────────────────────────────────────────────
+  function getProjected() {
+    return pts.map((pt) => {
+      const { x, y, z } = rotate(pt.ox, pt.oy, pt.oz, rotX, rotY);
+      return project(x, y, z);
+    });
+  }
+
+  function render() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    drawWireframe(); // dot grid comes from CSS background behind canvas
+    drawNodes(getProjected());
+
+    if (!dragging) {
+      velY += (0.0025 - velY) * 0.018;
+      velX *= 0.94;
+      rotY += velY;
+      rotX += velX;
+    }
+    requestAnimationFrame(render);
+  }
+  render();
+
+  // ── Hit-test ─────────────────────────────────────────────────────────
+  function hitTest(mx, my) {
+    const proj = getProjected();
+    for (let i = proj.length - 1; i >= 0; i--) {
+      const p = proj[i];
+      const isSection = items[i].type === "section";
+      const t    = (p.depth + 1) / 2;
+      const size = 15 * (0.5 + t * 0.5) * p.scale * 2.2;
+      const dx = mx - p.sx, dy = my - p.sy;
+      if (Math.hypot(dx, dy) < size * 0.85) return i;
+    }
+    return -1;
+  }
+
+  // ── Mouse ────────────────────────────────────────────────────────────
+  canvas.addEventListener("mousedown", (e) => {
+    dragging = true; velX = 0; velY = 0;
+    lastMX = e.clientX; lastMY = e.clientY;
+    canvas.style.cursor = "grabbing";
+  });
+  window.addEventListener("mouseup", () => {
+    dragging = false;
+    canvas.style.cursor = hoveredIdx >= 0 ? "pointer" : "grab";
+  });
+  window.addEventListener("mousemove", (e) => {
+    if (dragging) {
+      velY = (e.clientX - lastMX) * 0.005;
+      velX = (e.clientY - lastMY) * 0.005;
+      rotY += velY; rotX += velX;
+      lastMX = e.clientX; lastMY = e.clientY;
+    } else {
+      const rect = canvas.getBoundingClientRect();
+      hoveredIdx = hitTest(e.clientX - rect.left, e.clientY - rect.top);
+      canvas.style.cursor = hoveredIdx >= 0 ? "pointer" : "grab";
+    }
+  });
+  canvas.addEventListener("click", (e) => {
+    const rect = canvas.getBoundingClientRect();
+    const idx  = hitTest(e.clientX - rect.left, e.clientY - rect.top);
+    if (idx >= 0) {
+      const el = document.querySelector(items[idx].href);
+      if (el) el.scrollIntoView({ behavior: "smooth" });
+    }
+  });
+
+  // ── Touch ────────────────────────────────────────────────────────────
+  canvas.addEventListener("touchstart", (e) => {
+    dragging = true; velX = 0; velY = 0;
+    lastMX = e.touches[0].clientX; lastMY = e.touches[0].clientY;
+  }, { passive: true });
+  canvas.addEventListener("touchmove", (e) => {
+    if (!dragging) return;
+    velY = (e.touches[0].clientX - lastMX) * 0.005;
+    velX = (e.touches[0].clientY - lastMY) * 0.005;
+    rotY += velY; rotX += velX;
+    lastMX = e.touches[0].clientX; lastMY = e.touches[0].clientY;
+  }, { passive: true });
+  canvas.addEventListener("touchend", () => { dragging = false; });
 </script>
