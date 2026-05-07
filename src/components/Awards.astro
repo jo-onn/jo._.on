@@ -1,0 +1,27 @@
+---
+import { siteConfig } from "../config";
+const hasAwards = siteConfig.awards && siteConfig.awards.length > 0;
+---
+
+{hasAwards && (
+  <section id="awards" class="dot-bg py-10 px-10 md:px-20 lg:px-32">
+
+    <div class="max-w-6xl mx-auto">
+
+      <!-- Eyebrow -->
+      <span class="inline-block text-xs font-sans font-bold tracking-[0.18em] text-gray-500 uppercase border border-gray-300 bg-white rounded-full px-3 py-1 mb-6">Awards & Honors</span>
+
+      <!-- List -->
+      <div class="flex flex-col gap-3">
+        {siteConfig.awards.map((award) => (
+          <div class="flex items-baseline gap-6">
+            <span class="text-sm text-gray-400 font-sans shrink-0 w-16">{award.dateRange}</span>
+            <span class="text-sm text-gray-700">{award.prize}&nbsp;{award.title}</span>
+          </div>
+        ))}
+      </div>
+
+    </div>
+
+  </section>
+)}

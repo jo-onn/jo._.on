@@ -1,14 +1,16 @@
 ---
 import { siteConfig } from "../config";
+const bioEn = siteConfig.aboutMe ?? "";
+const bioKo = siteConfig.aboutMeKo ?? bioEn;
 ---
 
 <section
   id="about"
-  class="dot-bg py-14 px-10 md:px-20 lg:px-32"
+  class="dot-bg py-10 px-10 md:px-20 lg:px-32"
 >
   <!-- Small label -->
   <span
-    class="inline-block text-xs font-mono font-bold tracking-[0.18em] text-gray-500 uppercase border border-gray-300 bg-white rounded-full px-3 py-1 mb-8"
+    class="inline-block text-xs font-sans font-bold tracking-[0.18em] text-gray-500 uppercase border border-gray-300 bg-white rounded-full px-3 py-1 mb-8"
   >
     About
   </span>
@@ -16,16 +18,31 @@ import { siteConfig } from "../config";
   <!-- Bio text -->
   {siteConfig.aboutMe && (
     <div
+      id="about-bio"
       class="about-bio max-w-5xl mb-6"
-      set:html={siteConfig.aboutMe}
+      set:html={bioKo}
     />
   )}
 
-  <!-- Skills line -->
+  <!-- Skills -->
   {siteConfig.skills && siteConfig.skills.length > 0 && (
-    <p class="text-sm text-gray-600 max-w-5xl">
-      <span class="font-bold text-gray-800">🔬 Research Interests:</span>{" "}
-      {siteConfig.skills.join(", ")}.
-    </p>
+    <div class="mt-6 max-w-5xl">
+      <p class="text-xs font-sans font-bold tracking-[0.15em] text-gray-400 uppercase mb-3">Research Interests</p>
+      <div class="flex flex-wrap gap-2">
+        {siteConfig.skills.map((skill) => (
+          <span class="inline-block text-xs font-sans font-medium text-gray-600 bg-gray-100 border border-gray-200 rounded-full px-3 py-1 hover:bg-gray-200 transition-colors">
+            {skill}
+          </span>
+        ))}
+      </div>
+    </div>
   )}
 </section>
+
+<script define:vars={{ bioEn, bioKo }}>
+  window.addEventListener("langforce", (e) => {
+    const lang = e.detail;
+    const el = document.getElementById("about-bio");
+    if (el) el.innerHTML = lang === "ko" ? bioKo : bioEn;
+  });
+</script>

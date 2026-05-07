@@ -78,13 +78,13 @@ const colors = ["#7c3aed", "#db2777", "#2563eb", "#059669"];
 {hasExperience && (
   <section
     id="experience"
-    class="dot-bg py-14 px-10 md:px-20 lg:px-32 overflow-hidden"
+    class="dot-bg py-10 px-10 md:px-20 lg:px-32 overflow-hidden"
   >
 
     <!-- Title -->
-    <div class="mb-12">
+    <div class="mb-8">
       {siteConfig.sectionSubtitles?.experience && (
-        <span class="eyebrow inline-block w-fit text-xs font-mono font-bold tracking-[0.18em] text-gray-500 uppercase border border-gray-300 bg-white rounded-full px-3 py-1 mb-6">
+        <span class="eyebrow inline-block w-fit text-xs font-sans font-bold tracking-[0.18em] text-gray-500 uppercase border border-gray-300 bg-white rounded-full px-3 py-1 mb-6">
           {siteConfig.sectionSubtitles.experience}
         </span>
       )}
@@ -147,7 +147,7 @@ const colors = ["#7c3aed", "#db2777", "#2563eb", "#059669"];
                   transform: translateX(-50%);
                   font-size: 9px;
                   color: #94a3b8;
-                  font-family: monospace;
+                  font-family: 'Pretendard', sans-serif;
                   white-space: nowrap;
                 `}>{label}</span>
               </div>
@@ -177,7 +177,7 @@ const colors = ["#7c3aed", "#db2777", "#2563eb", "#059669"];
                   font-weight: 700;
                   font-size: 15px;
                   color: #7c3aed;
-                  font-family: 'Manrope', sans-serif;
+                  font-family: 'Pretendard', sans-serif;
                   box-shadow: 0 2px 8px rgba(124,58,237,0.15);
                 ">
                   {yr}
@@ -226,7 +226,7 @@ const colors = ["#7c3aed", "#db2777", "#2563eb", "#059669"];
                   transition: box-shadow 0.3s, transform 0.3s;
                 `}
               >
-                <p style="font-size: 13px; font-family: monospace; color: #9ca3af; margin-bottom: 6px;">
+                <p style="font-size: 13px; font-family: 'Pretendard', sans-serif; color: #9ca3af; margin-bottom: 6px;">
                   {startLabel}
                 </p>
                 <h3 style="font-size: 18px; font-weight: 700; color: #111827; line-height: 1.35; margin-bottom: 4px;">
@@ -250,7 +250,7 @@ const colors = ["#7c3aed", "#db2777", "#2563eb", "#059669"];
                   ))}
                 </ul>
 
-                <div class="exp-toggle" style="margin-top: 10px; display: flex; align-items: center; gap: 4px; font-size: 11px; font-family: monospace; color: #9ca3af;">
+                <div class="exp-toggle" style="margin-top: 10px; display: flex; align-items: center; gap: 4px; font-size: 11px; font-family: 'Pretendard', sans-serif; color: #9ca3af;">
                   <span class="toggle-label">자세히 보기</span>
                   <svg class="toggle-icon" style="width: 12px; height: 12px; transition: transform 0.2s;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                     <path d="M6 9l6 6 6-6"/>
@@ -302,7 +302,7 @@ const colors = ["#7c3aed", "#db2777", "#2563eb", "#059669"];
       </div>
 
       {siteConfig.experience.length >= 3 && (
-        <p class="mt-4 text-xs text-gray-400 font-mono">← 드래그해서 더 보기</p>
+        <p class="mt-4 text-xs text-gray-400 font-sans">← 드래그해서 더 보기</p>
       )}
     </div>
 

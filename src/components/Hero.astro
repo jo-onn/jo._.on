@@ -5,104 +5,72 @@ import sampleImg from "../assets/image.png";
 
 <div
   id="hero"
-  class="relative flex items-center justify-center min-h-screen px-6 pt-20 pb-10"
+  class="relative flex items-center justify-center px-6 pt-60 pb-10"
   style="background: transparent;"
 >
-  <div class="w-full max-w-3xl flex flex-col items-center gap-6">
+  <div class="w-full max-w-2xl flex flex-col items-center gap-6">
 
     <!-- Floating card -->
     <div
-      class="w-full bg-white rounded-3xl border border-gray-100 px-8 py-14 animate-fade-in"
+      class="w-full bg-white rounded-3xl border border-gray-100 px-8 py-12 animate-fade-in"
       style="box-shadow: 0 8px 48px rgba(0,0,0,0.10); background-image: linear-gradient(rgba(200,208,224,0.25) 1px, transparent 1px), linear-gradient(90deg, rgba(200,208,224,0.25) 1px, transparent 1px); background-size: 32px 32px; background-color: white;"
     >
-      <div class="flex items-center gap-6 sm:gap-10">
+      <div class="flex items-center gap-8 sm:gap-14">
 
         <!-- Left: info -->
-        <div class="flex-1 flex flex-col gap-2 min-w-0">
-          <p class="text-xs font-mono text-gray-400">HELLO 👋</p>
+        <div class="flex-1 flex flex-col gap-2 min-w-0" style="font-size: 1.25em;">
+          <p id="hero-greeting" class="text-s font-mono text-gray-400">안녕하세요 👋</p>
 
           <h1
             class="font-extrabold leading-tight"
-            style="font-size: clamp(2rem, 6vw, 3.2rem);"
+            style="font-size: clamp(4rem, 6vw, 2rem);"
           >
-            I'm <span style="background: linear-gradient(135deg, #7c3aed, #db2877); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">{siteConfig.name}</span>
+            <span id="hero-prefix" style="color: #c8cdd6; font-weight: 600; font-size: 0.4em; margin-right: 0.4em;">저는</span>{siteConfig.name}<span id="hero-suffix" style="color: #c8cdd6; font-weight: 800; font-size: 0.52em; margin-left: 0.4em;">입니다</span>
           </h1>
 
-          <p class="text-sm sm:text-base text-gray-500 font-mono">
+          <p class="text-l sm:text-base text-gray-500 font-mono mt-3">
             <span id="typing-text"></span><span id="typing-cursor" style="color: #7c3aed;">|</span>
           </p>
 
-          <!-- Social links -->
-          <div class="flex gap-4 text-gray-400 mt-2">
-            {siteConfig.social?.email && (
-              <a href={`mailto:${siteConfig.social.email}`} aria-label="Email" class="transition-colors hover:text-[#7c3aed]">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z"/><path d="M3 7l9 6l9 -6"/></svg>
-              </a>
-            )}
-            {siteConfig.social?.linkedin && (
-              <a href={siteConfig.social.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" class="transition-colors hover:text-[#7c3aed]">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M8 11v5"/><path d="M8 8v.01"/><path d="M12 16v-5"/><path d="M16 16v-3a2 2 0 1 0 -4 0"/><path d="M3 7a4 4 0 0 1 4 -4h10a4 4 0 0 1 4 4v10a4 4 0 0 1 -4 4h-10a4 4 0 0 1 -4 -4z"/></svg>
-              </a>
-            )}
-            {siteConfig.social?.twitter && (
-              <a href={siteConfig.social.twitter} target="_blank" rel="noopener noreferrer" aria-label="Twitter" class="transition-colors hover:text-[#7c3aed]">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 4l11.733 16h4.267l-11.733 -16z"/><path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772"/></svg>
-              </a>
-            )}
-            {siteConfig.social?.github && (
-              <a href={siteConfig.social.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub" class="transition-colors hover:text-[#7c3aed]">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5"/></svg>
-              </a>
-            )}
+        </div>
+
+        <!-- Right: photo with double ring -->
+        <div class="shrink-0">
+          <!-- Outer gradient ring -->
+          <div style="border-radius: 50%; padding: 2.5px; background: linear-gradient(135deg, rgba(255,195,150,0.75) 0%, rgba(185,220,230,0.65) 50%, rgba(255,210,170,0.6) 100%);">
+            <!-- Gap filled with background color -->
+            <div style="border-radius: 50%; padding: 7px; background: #faf7f4;">
+              <img
+                src={sampleImg.src}
+                alt=""
+                style="display: block; width: clamp(130px, 18vw, 165px); height: clamp(130px, 18vw, 165px); border-radius: 50%; object-fit: cover;"
+              />
+            </div>
           </div>
         </div>
 
-        <!-- Right: circular photo -->
-        <div class="shrink-0">
-          <img
-            src={sampleImg.src}
-            alt=""
-            style="width: clamp(90px, 14vw, 130px); height: clamp(90px, 14vw, 130px); border-radius: 50%; object-fit: cover; border: 3px solid #f3f4f6; box-shadow: 0 4px 20px rgba(124,58,237,0.15);"
-          />
-        </div>
-
       </div>
     </div>
 
-    <!-- Search bar (below card) -->
-    <div class="w-full max-w-sm animate-fade-in">
-      <div class="relative">
-        <input
-          id="section-search"
-          type="text"
-          placeholder="섹션 검색... (ex. AI, Python, 논문)"
-          class="w-full pl-4 pr-10 py-2.5 rounded-full border border-gray-200 bg-white text-xs text-gray-600 font-mono focus:outline-none focus:border-purple-300 transition-all shadow-sm"
-        />
-        <button
-          id="search-btn"
-          class="absolute right-1.5 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full flex items-center justify-center text-white"
-          style="background: linear-gradient(135deg, #7c3aed, #db2877);"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l14 0"/><path d="M13 18l6 -6"/><path d="M13 6l6 6"/></svg>
-        </button>
-        <p id="search-hint" class="absolute -bottom-5 left-4 text-xs text-gray-400 font-mono hidden"></p>
-      </div>
+    <!-- Divider -->
+    <div class="animate-fade-in w-full flex justify-center">
+      <div style="width: 55%; height: 1px; background: linear-gradient(90deg, transparent, #d1d5db, transparent);"></div>
     </div>
 
     <!-- Contact links -->
-    <div class="flex items-center gap-1 animate-fade-in">
+    <div class="flex items-center gap-2 animate-fade-in">
       {siteConfig.social?.github && (
         <a
           href={siteConfig.social.github}
           target="_blank"
           rel="noopener noreferrer"
           aria-label="GitHub"
-          class="w-10 h-10 flex items-center justify-center rounded-xl text-gray-400 transition-all duration-200 hover:text-gray-600"
+          class="w-12 h-12 flex items-center justify-center rounded-xl text-gray-400 transition-all duration-200 hover:text-gray-600"
           style="background: transparent;"
           onmouseenter="this.style.background='rgba(255,255,255,0.7)'"
           onmouseleave="this.style.background='transparent'"
         >
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5"/></svg>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5"/></svg>
         </a>
       )}
       {siteConfig.social?.linkedin && (
@@ -111,24 +79,24 @@ import sampleImg from "../assets/image.png";
           target="_blank"
           rel="noopener noreferrer"
           aria-label="LinkedIn"
-          class="w-10 h-10 flex items-center justify-center rounded-xl text-gray-400 transition-all duration-200 hover:text-gray-600"
+          class="w-12 h-12 flex items-center justify-center rounded-xl text-gray-400 transition-all duration-200 hover:text-gray-600"
           style="background: transparent;"
           onmouseenter="this.style.background='rgba(255,255,255,0.7)'"
           onmouseleave="this.style.background='transparent'"
         >
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 11v5"/><path d="M8 8v.01"/><path d="M12 16v-5"/><path d="M16 16v-3a2 2 0 1 0 -4 0"/><path d="M3 7a4 4 0 0 1 4 -4h10a4 4 0 0 1 4 4v10a4 4 0 0 1 -4 4h-10a4 4 0 0 1 -4 -4z"/></svg>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 11v5"/><path d="M8 8v.01"/><path d="M12 16v-5"/><path d="M16 16v-3a2 2 0 1 0 -4 0"/><path d="M3 7a4 4 0 0 1 4 -4h10a4 4 0 0 1 4 4v10a4 4 0 0 1 -4 4h-10a4 4 0 0 1 -4 -4z"/></svg>
         </a>
       )}
       {siteConfig.social?.email && (
         <a
           href={`mailto:${siteConfig.social.email}`}
           aria-label="Email"
-          class="w-10 h-10 flex items-center justify-center rounded-xl text-gray-400 transition-all duration-200 hover:text-gray-600"
+          class="w-12 h-12 flex items-center justify-center rounded-xl text-gray-400 transition-all duration-200 hover:text-gray-600"
           style="background: transparent;"
           onmouseenter="this.style.background='rgba(255,255,255,0.7)'"
           onmouseleave="this.style.background='transparent'"
         >
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z"/><path d="M3 7l9 6l9 -6"/></svg>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z"/><path d="M3 7l9 6l9 -6"/></svg>
         </a>
       )}
     </div>
@@ -154,54 +122,38 @@ import sampleImg from "../assets/image.png";
   #typing-cursor { animation: blink 0.8s infinite; }
 </style>
 
-<script define:vars={{ title: siteConfig.title }}>
-  const sectionKeywords = {
-    about:      ["ai", "의료", "연구", "소개", "about", "medical", "인공지능", "경희대", "snu"],
-    experience: ["경력", "인턴", "연구실", "fastapi", "experience", "work", "langraph", "rag", "futurework"],
-    projects:   ["프로젝트", "개발", "langgraph", "pytorch", "project", "cifarm", "집중도", "portfolio"],
-    blog:       ["블로그", "글", "논문", "pca", "blog", "주성분", "deep learning", "기록"],
-    education:  ["학교", "학위", "snu", "경희대", "education", "서울대", "gpa", "졸업"],
+<script define:vars={{ titleEn: siteConfig.title, titleKo: siteConfig.titleKo }}>
+  const el       = document.getElementById("typing-text");
+  const greeting = document.getElementById("hero-greeting");
+  const prefix   = document.getElementById("hero-prefix");
+  const suffix   = document.getElementById("hero-suffix");
+
+  const strings = {
+    ko: { greeting: "안녕하세요 👋", prefix: "저는", suffix: "입니다", title: titleKo },
+    en: { greeting: "HELLO 👋",      prefix: "I'm",  suffix: "",       title: titleEn },
   };
 
-  const searchInput = document.getElementById("section-search");
-  const searchBtn   = document.getElementById("search-btn");
-  const searchHint  = document.getElementById("search-hint");
+  let typingTimer = null;
 
-  function scrollToSection(sectionId) {
-    const el = document.getElementById(sectionId);
-    if (el) el.scrollIntoView({ behavior: "smooth" });
-  }
-
-  function doSearch() {
-    const query = searchInput?.value.trim().toLowerCase();
-    if (!query || !searchHint) return;
-    const matched = Object.entries(sectionKeywords).find(([, kws]) =>
-      kws.some((kw) => kw.includes(query) || query.includes(kw))
-    );
-    if (matched) {
-      const [section] = matched;
-      searchHint.textContent = `→ ${section} 섹션으로 이동`;
-      searchHint.classList.remove("hidden");
-      setTimeout(() => scrollToSection(section), 400);
-    } else {
-      searchHint.textContent = "일치하는 섹션을 찾지 못했어요";
-      searchHint.classList.remove("hidden");
-    }
-  }
-
-  searchBtn?.addEventListener("click", doSearch);
-  searchInput?.addEventListener("keydown", (e) => { if (e.key === "Enter") doSearch(); });
-  searchInput?.addEventListener("input", () => {
-    if (searchHint && searchInput.value === "") searchHint.classList.add("hidden");
-  });
-
-  // 타이틀 타이핑
-  const el = document.getElementById("typing-text");
-  let i = 0;
-  setTimeout(() => {
-    const interval = setInterval(() => {
-      if (el) el.textContent = title.slice(0, ++i);
-      if (i >= title.length) clearInterval(interval);
+  function typeTitle(text) {
+    if (typingTimer) clearInterval(typingTimer);
+    if (!el) return;
+    el.textContent = "";
+    let i = 0;
+    typingTimer = setInterval(() => {
+      el.textContent = text.slice(0, ++i);
+      if (i >= text.length) clearInterval(typingTimer);
     }, 60);
-  }, 600);
+  }
+
+  setTimeout(() => typeTitle(strings.ko.title), 600);
+
+  window.addEventListener("langforce", (e) => {
+    const lang = e.detail;
+    const s = strings[lang] || strings.ko;
+    if (greeting) greeting.textContent = s.greeting;
+    if (prefix)   prefix.textContent   = s.prefix;
+    if (suffix)   suffix.textContent   = s.suffix;
+    typeTitle(s.title);
+  });
 </script>

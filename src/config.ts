@@ -1,12 +1,14 @@
 export const siteConfig = {
   name: "jo._.on",
   title: "Junior AI Researcher / Engineer",
+  titleKo: "주니어 AI 연구원 / 엔지니어",
   description: "AI와 의료 데이터의 교차점에서 연구하는 개발자 jo._.on의 포트폴리오입니다.",
   accentColor: "#2a3c6e",
   social: {
-    email: "jhk_lee@gmail.com",
-    linkedin: "https://linkedin.com/in/yourprofile",
+    email: "leejoon2067gmail.com",
+    linkedin: "https://www.linkedin.com/in/jo-on/",
     github: "https://github.com/jo-onn",
+    cv: "/resume.pdf",
   },  sectionDescriptions: {
     about:      "AI와 의료 데이터의 교차점에서 연구하는 주니어 AI 엔지니어입니다.",
     experience: "AI 스타트업과 대학 연구실에서 쌓아온 실무 경험들입니다.",
@@ -35,31 +37,70 @@ export const siteConfig = {
     education:  "Academic background in software convergence and medical AI.",
     blog:       "A space to write down what I study and discover.",
   },
-  aboutMe:"I am currently a Undergraduate student in <strong>Software Convergence & Physical Education</strong> at <a href='https://www.khu.ac.kr' target='_blank' style='font-weight:600; text-decoration: underline;'>Kyung-Hee University </a>Korea, advised by Prof. Won-hee Lee.\
-          My research focuses on <strong>Aritificial Intelligence</strong> in <strong>medical image analysis</strong>, <strong>Anomaly Detection</strong>. \
-          I have also gained Engineering experience through internships at startup company <a href='https://www.futureworklab.co.kr' target='_blank' style='font-weight:600; text-decoration: underline;'>futureworkLab</a>, as a AI Software Engineer Intern where I worked on LinkBrain Project. \
-          More details can be found in my CV.",
+  aboutMe: `
+    <p>HI, I'm <strong>JOON</strong> 👋</p>
+    <p>I am currently an Undergraduate student in <strong>Software Convergence & Physical Education</strong> at <a href='https://www.khu.ac.kr' target='_blank'>Kyung-Hee University</a>, Korea, advised by <a href='https://scholar.google.com/citations?user=p79efpQAAAAJ&hl=en' target='_blank'>Prof. Won-Hee Lee</a>.</p>
+    <p>My research focuses on <strong>Artificial Intelligence</strong> in <strong>medical image analysis</strong> and <strong>Anomaly Detection</strong>. 🤗🤗</p>
+    <p>I have also gained engineering experience through an internship at <a href='https://www.futureworklab.co.kr' target='_blank'>futureworkLab</a> as an AI Software Engineer Intern, where I worked on the LinkBrain Project.</p>
+    <p>More details can be found in my CV.</p>
+  `,
+  aboutMeKo: `
+    <p>안녕하세요, 저는 <strong>JOON</strong>입니다 👋</p>
+    <p>현재 <a href='https://www.khu.ac.kr' target='_blank'>경희대학교</a>에 재학 중이며, 소프트웨어융합학과 <a href='https://scholar.google.com/citations?user=p79efpQAAAAJ&hl=en' target='_blank'>이원희 교수님</a>의 지도 아래 연구를 진행하고 있습니다.</p>
+    <p>저는 <strong>의료 영상 분석</strong>과 <strong>이상 탐지</strong> 분야에서의 <strong>인공지능</strong> 활용 연구에 관심이 많습니다. 🤗🤗 </p>
+    <p>스타트업 <a href='https://www.futureworklab.co.kr' target='_blank'>futureworkLab</a>에서 AI 소프트웨어 엔지니어 인턴으로 근무하며 LinkBrain 프로젝트에 참여한 실무 경험도 있습니다.</p>
+    <p>자세한 내용은 CV에서 확인하실 수 있습니다.</p>
+  `,
   skills: [
     "Python", "Deep Learning","Computer Vision", "Medical Imaging", "Clinical NLP",
   ],
   projects: [
     {
-      name: "015B: 도시텃밭 중개 및 AI를 활용한 도시농부 육성 플랫폼, 'CiFarm' ",
+      name: "A Comparative Study of Deep Learning-Based Anomaly Detection for Intracranial Hemorrhage in Brain CT",
+      dateRange: "2026",
+      badges: [
+        { label: "Paper Submission", type: "paper" },
+        { label: "MIDL 2026", type: "conference" },
+      ],
+      images: ["/projects/brain-ct-1.png", "/projects/brain-ct-2.png"],
+      imagePosition: "center top",
       description:
-        "LangGraph 기반 AI 에이전트로 텃밭 분양·재배 가이드를 제공하는 도시농업 플랫폼",
-      link: "https://hello.khlug.org/105312",
-      skills: ["Python", "PyTorch", "langchain", "langgraph", "FastAPI"],
+        "A systematic benchmark of 11 deep learning anomaly detection methods for intracranial hemorrhage detection in brain CT favors reconstruction-based over self-supervised approaches.",
+      links: [],
+      skills: ["Python", "PyTorch", "Deep Learning", "Medical Imaging", "Anomaly Detection"],
     },
     {
-      name: "멀티모달 생체신호 데이터를 이용한 머신러닝 기반 집중도 예측 모델 개발 <ksc 2025>",
+      name: "Multimodal Biosignal-Based Attention Prediction Model",
+      dateRange: "2025",
+      badges: [
+        { label: "Paper Submission", type: "paper" },
+        { label: "KSC 2025", type: "conference" },
+      ],
+      images: ["/projects/ksc-1.png"],
+      imagePosition: "center center",
       description:
-        "K-EmoPhone 공개 데이터셋 기반 다중 생체신호 머신러닝 집중도 예측 모델",
-        link: "",
-      skills: ["Python", "Data Analysis", "Medical Data", "Machine Learning"],
+        "Proposes a machine learning pipeline to predict learner attention using multimodal wearable biosignals — HR, RRI, EDA, and skin temperature / beyond single-sensor approaches by leveraging multimodal time-series data in educational attention monitoring.",
+      links: [],
+      skills: ["Python", "Data Analysis", "Medical Data", "Machine Learning", "TimeSeries"],
+    },
+    {
+      name: "CiFarm — 도시텃밭 중개 및 AI 도시농부 육성 플랫폼",
+      dateRange: "2024",
+      badges: [
+        { label: "Project", type: "project" },
+        { label: "KHUthon 2024", type: "award" },
+      ],
+      images: ["/projects/cifarm-1.png"],
+      imagePosition: "center top",
+      description:
+        "LangGraph 기반 AI 에이전트로 텃밭 분양·재배 가이드를 제공하는 도시농업 플랫폼",
+      links: [
+        { label: "GitHub", href: "https://hello.khlug.org/105312" },
+      ],
+      skills: ["Python", "PyTorch", "LangChain", "LangGraph", "FastAPI"],
     },
   ],
   experience: [
-
     {
       company: "KyungHee University",
       title: "Department of Physical Education & Software Convergence",
@@ -102,21 +143,46 @@ export const siteConfig = {
   education: [
     {
       school: "Seoul National University",
-      degree: "Master's in Medical Informatics",
-      dateRange: "2026 —",
+      degree: "M.S. in Medical Informatics & AI",
+      dateRange: "2026 - ",
+      status: "upcoming",
+      link: "https://www.snu.ac.kr",
       achievements: [
-        "임상 자연어 처리 및 의료 AI 연구 예정",
-        "전자의무기록 데이터 표준화(HL7 FHIR) 관련 프로젝트 참여 예정",
-      ],
+        "입학 예정",],
     },
     {
       school: "Kyung-Hee University",
       degree: "B.S. in Software Convergence",
-      dateRange: "2020 — 2026",
+      dateRange: "2020 - 2026",
+      link: "https://www.khu.ac.kr",
       achievements: [
-        "GPA 4.01 / 4.5 졸업",
-        "캡스톤 프로젝트: 웨어러블 기반 낙상 감지 시스템 (최우수상)",
-      ],
+        "GPA 4.01 / 4.5 졸업"],
+    },
+  ],
+  awards: [
+    {
+      title: "KyungHee Univ KHUTHON",
+      prize: "🥈 [Grand Prize] ",
+      issuer: "경희대학교",
+      dateRange: "2024.05",
+    },
+    {
+      title: "KyungHee Univ KHUDA 5th Final Competition",
+      prize: "🥉 [Excellence Award] ",
+      issuer: "경희대학교",
+      dateRange: "2024.04",
+    },
+    {
+      title: "한국경제신문사 Idea Competition",
+      prize: "🎖️ [Encouragement Award] ",
+      issuer: "한국경제신문사",
+      dateRange: "2024.10",
+    },
+    {
+      title: "Korea Univ INISW Ac 5th Final Competition",
+      prize: "🥉 [Excellence Award] ",
+      issuer: "고려대학교",
+      dateRange: "2024.12",
     },
   ],
 };

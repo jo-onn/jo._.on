@@ -1,26 +1,19 @@
 @import "tailwindcss";
 
-#cursor-spotlight {
-  position: fixed;
-  width: 125px;
-  height: 125px;
-  border-radius: 50%;
-  pointer-events: none;
-  transform: translate(-50%, -50%);
-  z-index: 9999;
-  background: radial-gradient(circle, rgba(124, 58, 237, 0.18) 0%, rgba(124, 58, 237, 0.07) 50%, transparent 70%);
-  transition: opacity 0.3s;
+@theme {
+  --font-sans: 'Pretendard', sans-serif;
 }
+
 
 /* ── Light mode body ───────────────────────────────────── */
 body {
   font-family: 'Manrope', sans-serif;
   scroll-behavior: smooth;
-  background-color: #f7f8fa;
+  background-color: #faf7f4;
   background-image:
-    radial-gradient(ellipse 60% 50% at 0% 0%,   rgba(186,224,235,0.55) 0%, transparent 70%),
-    radial-gradient(ellipse 55% 45% at 100% 0%,  rgba(248,210,185,0.50) 0%, transparent 70%),
-    radial-gradient(ellipse 40% 40% at 50% 100%, rgba(220,210,250,0.30) 0%, transparent 70%);
+    radial-gradient(ellipse 60% 55% at 0% 0%,   rgba(210,230,240,0.50) 0%, transparent 70%),
+    radial-gradient(ellipse 55% 50% at 100% 0%,  rgba(255,210,185,0.55) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 40% at 50% 100%, rgba(255,220,200,0.25) 0%, transparent 70%);
   background-attachment: fixed;
 }
 
@@ -75,9 +68,11 @@ html.dark .dot-bg {
 }
 
 /* ── Section headings & eyebrows: Carlito (Calibri-like) ─ */
-h1, h2, h3,
+h1, h2, h3 {
+  font-family: 'Playfair Display', Georgia, serif;
+}
 .eyebrow {
-  font-family: 'Carlito', 'Calibri', sans-serif;
+  font-family: 'Manrope', sans-serif;
 }
 
 /* ── About bio typography ──────────────────────────────── */
@@ -87,7 +82,7 @@ h1, h2, h3,
   line-height: 1.85;
   color: #374151;
 }
-.about-bio p { margin-bottom: 1em; }
+.about-bio p { margin-bottom: 0; }
 .about-bio a {
   color: inherit;
   text-decoration: underline;

@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+@theme {
+  --font-sans: 'Pretendard', sans-serif;
+}
+
 #cursor-spotlight {
   position: fixed;
   width: 125px;
