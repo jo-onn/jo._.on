@@ -161,16 +161,16 @@ export const siteConfig = {
   ],
   awards: [
     {
-      title: "KyungHee Univ KHUTHON",
-      prize: "🥈 [Grand Prize] ",
-      issuer: "경희대학교",
-      dateRange: "2024.05",
-    },
-    {
       title: "KyungHee Univ KHUDA 5th Final Competition",
       prize: "🥉 [Excellence Award] ",
       issuer: "경희대학교",
       dateRange: "2024.04",
+    },
+    {
+      title: "KyungHee Univ KHUTHON",
+      prize: "🥈 [Grand Prize] ",
+      issuer: "경희대학교",
+      dateRange: "2024.05",
     },
     {
       title: "한국경제신문사 Idea Competition",
