@@ -5,7 +5,7 @@ export const siteConfig = {
   description: "AI와 의료 데이터의 교차점에서 연구하는 개발자 jo._.on의 포트폴리오입니다.",
   accentColor: "#2a3c6e",
   social: {
-    email: "leejoon2067gmail.com",
+    email: "leejoon2067@gmail.com",
     linkedin: "https://www.linkedin.com/in/jo-on/",
     github: "https://github.com/jo-onn",
     cv: "/resume.pdf",
@@ -148,7 +148,7 @@ export const siteConfig = {
       status: "upcoming",
       link: "https://www.snu.ac.kr",
       achievements: [
-        "입학 예정",],
+        "인턴 연구원",],
     },
     {
       school: "Kyung-Hee University",
