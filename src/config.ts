@@ -136,8 +136,8 @@ export const siteConfig = {
       title: "AI Intern Researcher",
       dateRange: "Mar 2026 — Current ",
       bullets: [
-        "웨어러블 센서 기반 데이터 분석 & 활동 간 정량적 집중도 측정 모델 비교 연구",
-        "CT data 를 활용한 Deep Learning model Comparsion Analysis"
+        "Pathology Data & Image Data 기반 AI (ex. vLLM, Transformer, AI Architecture) 모델링 연구",
+        "의료 데이터 특성에 따른 AI 모델링 전략 연구"
       ],
     },
   ],
