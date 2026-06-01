@@ -95,7 +95,8 @@ export const siteConfig = {
       description:
         "LangGraph 기반 AI 에이전트로 텃밭 분양·재배 가이드를 제공하는 도시농업 플랫폼",
       links: [
-        { label: "GitHub", href: "https://hello.khlug.org/105312" },
+        { label: "KHUTHON", href: "https://hello.khlug.org/105312" },
+        { label: "GitHub", href: "https://github.com/jo-onn" }
       ],
       skills: ["Python", "PyTorch", "LangChain", "LangGraph", "FastAPI"],
     },
@@ -144,11 +145,11 @@ export const siteConfig = {
     {
       school: "Seoul National University",
       degree: "M.S. in Medical Informatics & AI",
-      dateRange: "2026 - ",
+      dateRange: "2026 - currernt",
       status: "upcoming",
       link: "https://www.snu.ac.kr",
       achievements: [
-        "인턴 연구원",],
+        "인턴 연구원", "석사 과정 예정"],
     },
     {
       school: "Kyung-Hee University",
