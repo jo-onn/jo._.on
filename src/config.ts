@@ -42,17 +42,17 @@ export const siteConfig = {
     <p>I am currently an Undergraduate student in <strong>Software Convergence & Physical Education</strong> at <a href='https://www.khu.ac.kr' target='_blank'>Kyung-Hee University</a>, Korea, advised by <a href='https://scholar.google.com/citations?user=p79efpQAAAAJ&hl=en' target='_blank'>Prof. Won-Hee Lee</a>.</p>
     <p>My research focuses on <strong>Artificial Intelligence</strong> in <strong>medical image analysis</strong> and <strong>Anomaly Detection</strong>. 🤗🤗</p>
     <p>I have also gained engineering experience through an internship at <a href='https://www.futureworklab.co.kr' target='_blank'>futureworkLab</a> as an AI Software Engineer Intern, where I worked on the LinkBrain Project.</p>
-    <p>More details can be found in my CV.</p>
+    <p>More details can be found in my <a href='resume.pdf' target='_blank'>CV</a>.</p>
   `,
   aboutMeKo: `
     <p>안녕하세요, 저는 <strong>이준혁</strong>입니다 👋</p>
     <p>현재 <a href='https://www.khu.ac.kr' target='_blank'>경희대학교</a>에 재학 중이며, 소프트웨어융합학과 <a href='https://scholar.google.com/citations?user=p79efpQAAAAJ&hl=en' target='_blank'>이원희 교수님</a>의 지도 아래 연구를 진행하고 있습니다.</p>
     <p>저는 <strong>의료 영상 분석</strong>과 <strong>이상 탐지</strong> 분야에서의 <strong>인공지능</strong> 활용 연구에 관심이 많습니다. 🤗🤗 </p>
     <p>스타트업 <a href='https://www.futureworklab.co.kr' target='_blank'>futureworkLab</a>에서 AI 소프트웨어 엔지니어 인턴으로 근무하며 LinkBrain 프로젝트에 참여한 실무 경험도 있습니다.</p>
-    <p>자세한 내용은 CV에서 확인하실 수 있습니다.</p>
+    <p>자세한 내용은 <a href='resume.pdf' target='_blank'>CV</a>에서 확인하실 수 있습니다.</p>
   `,
   skills: [
-    "Python", "Deep Learning","Computer Vision", "Medical Imaging", "Clinical NLP",
+    "Python", "Deep Learning","Computer Vision", "Medical Imaging", "Machine Learning",
   ],
   projects: [
     {
