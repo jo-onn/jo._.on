@@ -115,7 +115,7 @@ export const siteConfig = {
     },
     {
       company: "FutureWorkLab",
-      title: "AI Engineer · Research",
+      title: "AI Engineer · Research 인턴",
       dateRange: "Dec 2024 — Aug 2025",
       link: "https://futureworklab.co",
       bullets: [
@@ -128,7 +128,7 @@ export const siteConfig = {
     },
     {
       company: "AIMS Lab, Kyung-Hee University",
-      title: "Undergraduate Researcher",
+      title: "학부연구생",
       dateRange: "Aug 2025 — Jul 2026",
       link: "https://sites.google.com/view/khu-aims/home/",
       bullets: [
@@ -138,7 +138,7 @@ export const siteConfig = {
     },
     {
       company: "Seoul National University Hospital, BMI Lab",
-      title: "Research Intern · Seoul University Hospital Institute of Convergence Medicine",
+      title: "인턴 연구원 · 서울대학교병원 융합의학기술원 BMI Lab",
       dateRange: "Mar 2026 — Current",
       link: "https://snuh-bmilab.ai.kr/",
       bullets: [
