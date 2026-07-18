@@ -66,7 +66,9 @@ export const siteConfig = {
       imagePosition: "center top",
       description:
         "A systematic benchmark of 11 deep learning anomaly detection methods for intracranial hemorrhage detection in brain CT favors reconstruction-based over self-supervised approaches.",
-      links: [],
+      links: [
+        { label: "Paper", href: "/projects/midl-2026-paper.pdf" },
+      ],
       skills: ["Python", "PyTorch", "Deep Learning", "Medical Imaging", "Anomaly Detection"],
     },
     {
@@ -80,7 +82,9 @@ export const siteConfig = {
       imagePosition: "center center",
       description:
         "Proposes a machine learning pipeline to predict learner attention using multimodal wearable biosignals — HR, RRI, EDA, and skin temperature / beyond single-sensor approaches by leveraging multimodal time-series data in educational attention monitoring.",
-      links: [],
+      links: [
+        { label: "Poster", href: "/projects/ksc-2025-poster.pdf" },
+      ],
       skills: ["Python", "Data Analysis", "Medical Data", "Machine Learning", "TimeSeries"],
     },
     {
@@ -149,7 +153,7 @@ export const siteConfig = {
       status: "upcoming",
       link: "https://www.snu.ac.kr",
       achievements: [
-        "인턴 연구원", "석사 과정 예정"],
+        "인턴 연구원"],
     },
     {
       school: "Kyung-Hee University",
