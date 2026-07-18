@@ -251,7 +251,7 @@ const colors = ["#7c3aed", "#db2777", "#2563eb", "#059669"];
                 </ul>
 
                 <div class="exp-toggle" style="margin-top: 10px; display: flex; align-items: center; gap: 4px; font-size: 11px; font-family: 'Pretendard', sans-serif; color: #9ca3af;">
-                  <span class="toggle-label">자세히 보기</span>
+                  <span class="toggle-label">See more</span>
                   <svg class="toggle-icon" style="width: 12px; height: 12px; transition: transform 0.2s;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                     <path d="M6 9l6 6 6-6"/>
                   </svg>
@@ -302,7 +302,7 @@ const colors = ["#7c3aed", "#db2777", "#2563eb", "#059669"];
       </div>
 
       {siteConfig.experience.length >= 3 && (
-        <p class="mt-4 text-xs text-gray-400 font-sans">← 드래그해서 더 보기</p>
+        <p class="mt-4 text-xs text-gray-400 font-sans">← Drag to see more</p>
       )}
     </div>
 
@@ -357,7 +357,7 @@ const colors = ["#7c3aed", "#db2777", "#2563eb", "#059669"];
 
       const isOpen = bullets.style.display === "flex";
       bullets.style.display = isOpen ? "none" : "flex";
-      if (label) label.textContent = isOpen ? "자세히 보기" : "접기";
+      if (label) label.textContent = isOpen ? "See more" : "Collapse";
       if (icon)  icon.style.transform = isOpen ? "" : "rotate(180deg)";
     });
   });

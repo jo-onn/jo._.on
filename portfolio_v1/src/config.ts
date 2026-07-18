@@ -105,56 +105,53 @@ export const siteConfig = {
   ],
   experience: [
     {
-      company: "KyungHee University",
-      title: "Department of Physical Education & Software Convergence",
-      dateRange: "Mar 2020 — June 2026",
+      company: "Kyung-Hee University",
+      title: "Physical Education & Software Convergence",
+      dateRange: "Mar 2020 — Feb 2026",
       link: "https://www.khu.ac.kr",
       bullets: [
-        "경희대학교 체육학과 & 소프트웨어융합학과 다전공생"
+        "Double major in Physical Education & Software Convergence.",
       ],
     },
     {
-      company: "FutureWorkLab.co",
-      title: "AI Software Engineer Intern",
+      company: "FutureWorkLab",
+      title: "AI Engineer · Research",
       dateRange: "Dec 2024 — Aug 2025",
       link: "https://futureworklab.co",
       bullets: [
-        "LangGraph 기반 업무 카테고리 graph 자동화 솔루션 개발 및 내부 실험",
-        "RAG(Retrieval-Augmented Generation) 파이프라인 구현 및 prompt engineering 성능 평가",
-        "FastAPI + Docker를 활용한 AI 서비스 백엔드 구축 및 배포",
+        "Joined the early PoC stage of <strong>LinkBrain</strong>, a graph-centric 'second brain' service that auto-structures links & memos into a knowledge graph with AI-powered search.",
+        "Designed and built the <strong>LangGraph</strong>-based agentic pipeline — a query-intent routing node (user_query_analysis) and a hierarchical category flow (main → sub → subsub → critique) branched by domain.",
+        "Researched GNN-based knowledge-graph link prediction (<strong>GnBERT</strong>), combining GNN + BERT to overcome KG-BERT's lack of structural information.",
+        "Built entity-extraction and critique nodes (critique_entity) to keep the knowledge graph high-quality; refactored prompts and fixed link/memo storage bugs.",
+        "Coordinated specs across PM & engineers — issues in Linear, pipeline/policy/research docs in Notion.",
       ],
     },
     {
-      company: "경희대학교 소프트웨어융합학과 Aims Lab",
+      company: "AIMS Lab, Kyung-Hee University",
       title: "Undergraduate Researcher",
-      dateRange: "Aug 2025 — Current ",
+      dateRange: "Aug 2025 — Jul 2026",
       bullets: [
-        "웨어러블 센서 기반 데이터 분석 & 활동 간 정량적 집중도 측정 모델 비교 연구",
-        "CT data 를 활용한 Deep Learning model Comparsion Analysis"
+        "Comparative study of quantitative attention-measurement models from wearable-sensor data.",
+        "Deep-learning model comparison analysis on brain CT data.",
       ],
     },
     {
-      company: "서울대학교 병원 BMI Lab",
-      title: "AI Intern Researcher",
-      dateRange: "Mar 2026 — Current ",
+      company: "Seoul National University Hospital, BMI Lab",
+      title: "Research Intern · Institute of Convergence Medicine",
+      dateRange: "Mar 2026 — Current",
+      link: "https://www.snuh.org",
       bullets: [
-        "Pathology Data & Image Data 기반 AI (ex. vLLM, Transformer, AI Architecture) 모델링 연구",
-        "의료 데이터 특성에 따른 AI 모델링 전략 연구"
+        "Validating <strong>DINO</strong>-based self-supervised ViT encoders for stain/scanner-robust feature extraction on pathology whole-slide images (WSI).",
+        "Justified self-distillation (DINO) over contrastive SSL for label-scarce, downstream-agnostic pathology data; analyzed centering/sharpening, teacher-student EMA, and multi-crop.",
+        "Reproduced the full DINO pipeline (ViT-B/14) on ImageNet-1k, matching paper numbers (kNN top-1 82.4%, linear probing 79.2%), then ran from-scratch training.",
+        "Proposed a hierarchical patch → bag (MIL) → slide style-embedding structure with stain/scanner conditional tokens; reviewed DINOv2 (iBOT, KoLeo, Sinkhorn-Knopp).",
       ],
     },
   ],
   education: [
     {
-      school: "Seoul National University",
-      degree: "Intern Researcher in Bio-Medical Informatics & AI Lab",
-      dateRange: "2026.03 - current",
-      status: "upcoming",
-      link: "https://www.snu.ac.kr",
-      achievements: [
-        "인턴 연구원"],
-    },
-    {
-      school: "Kyung-Hee University",
+      school: "KyungHee University",
+      lab : "Aims Lab",
       degree: "B.S. in Software Convergence",
       dateRange: "2020.03 - 2026",
       link: "https://www.khu.ac.kr",
