@@ -137,7 +137,7 @@ export const siteConfig = {
     },
     {
       company: "Seoul National University Hospital, BMI Lab",
-      title: "Research Intern · Institute of Convergence Medicine",
+      title: "Research Intern · Seoul University Hospital Institute of Convergence Medicine",
       dateRange: "Mar 2026 — Current",
       link: "https://www.snuh.org",
       bullets: [
