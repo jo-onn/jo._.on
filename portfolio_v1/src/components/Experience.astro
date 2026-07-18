@@ -72,7 +72,7 @@ years.forEach((yr, i) => {
 const totalW = PAD + (uniqueMs.length - 1) * CARD_SPACING + CARD_SPACING + PAD;
 const containerH = LINE_Y * 2; // symmetric: above + below
 
-const colors = ["#7c3aed", "#db2777", "#2563eb", "#059669"];
+const colors = ["#2a3c6e", "#3a5088", "#4a63a2", "#5b78bd"];
 ---
 
 {hasExperience && (
@@ -88,8 +88,8 @@ const colors = ["#7c3aed", "#db2777", "#2563eb", "#059669"];
           {siteConfig.sectionSubtitles.experience}
         </span>
       )}
-      <h2 class="text-gray-900 font-extrabold leading-tight"
-          style="font-size: clamp(2.2rem, 4.5vw, 4rem);">
+      <h2 class="text-gray-900 leading-tight"
+          style="font-size: clamp(2.2rem, 4.5vw, 4rem); font-weight: 550;">
         What I did
       </h2>
       {siteConfig.sectionDescriptionsEn?.experience && (
@@ -118,7 +118,7 @@ const colors = ["#7c3aed", "#db2777", "#2563eb", "#059669"];
             width: ${totalW - PAD * 2}px;
             height: 3px;
             transform: translateY(-50%);
-            background: linear-gradient(90deg, #7c3aed, #db2877);
+            background: linear-gradient(90deg, #2a3c6e, #5b78bd);
           `}></div>
 
 
@@ -169,16 +169,16 @@ const colors = ["#7c3aed", "#db2777", "#2563eb", "#059669"];
                   width: 76px;
                   height: 76px;
                   border-radius: 50%;
-                  border: 3px solid #7c3aed;
+                  border: 3px solid #2a3c6e;
                   background: white;
                   display: flex;
                   align-items: center;
                   justify-content: center;
                   font-weight: 700;
                   font-size: 15px;
-                  color: #7c3aed;
+                  color: #2a3c6e;
                   font-family: 'Pretendard', sans-serif;
-                  box-shadow: 0 2px 8px rgba(124,58,237,0.15);
+                  box-shadow: 0 2px 8px rgba(42,60,110,0.15);
                 ">
                   {yr}
                 </div>
