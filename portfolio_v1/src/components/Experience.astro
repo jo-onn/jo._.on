@@ -92,9 +92,9 @@ const colors = ["#7c3aed", "#db2777", "#2563eb", "#059669"];
           style="font-size: clamp(2.2rem, 4.5vw, 4rem);">
         What I <span style="background: linear-gradient(135deg, #7c3aed, #db2777); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">do</span>
       </h2>
-      {siteConfig.sectionDescriptions?.experience && (
+      {siteConfig.sectionDescriptionsEn?.experience && (
         <p class="mt-4 text-sm text-gray-400 whitespace-nowrap" style="height: 1.5em;">
-          <span class="section-typewriter" data-phrases={JSON.stringify([siteConfig.sectionDescriptions.experience, siteConfig.sectionDescriptionsEn?.experience ?? ""])}>{siteConfig.sectionDescriptions.experience}</span>
+          <span>{siteConfig.sectionDescriptionsEn.experience}</span>
         </p>
       )}
     </div>

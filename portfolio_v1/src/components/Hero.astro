@@ -19,13 +19,13 @@ import sampleImg from "../assets/image.png";
 
         <!-- Left: info -->
         <div class="flex-1 flex flex-col gap-2 min-w-0" style="font-size: 1.25em;">
-          <p id="hero-greeting" class="text-s font-mono text-gray-400">안녕하세요 👋</p>
+          <p id="hero-greeting" class="text-s font-mono text-gray-400">HELLO 👋</p>
 
           <h1
             class="font-extrabold leading-tight"
             style="font-size: clamp(4rem, 6vw, 2rem); white-space: nowrap;"
           >
-            <span id="hero-prefix" style="color: #c8cdd6; font-weight: 600; font-size: 0.4em; margin-right: 0.4em;">저는</span>{siteConfig.name}<span id="hero-suffix" style="color: #c8cdd6; font-weight: 800; font-size: 0.52em; margin-left: 0.4em;">입니다</span>
+            <span id="hero-prefix" style="color: #c8cdd6; font-weight: 600; font-size: 0.4em; margin-right: 0.4em;">I'm</span>{siteConfig.name}<span id="hero-suffix" style="color: #c8cdd6; font-weight: 800; font-size: 0.52em; margin-left: 0.4em;"></span>
           </h1>
 
           <p class="text-l sm:text-base text-gray-500 font-mono mt-3">
@@ -122,16 +122,8 @@ import sampleImg from "../assets/image.png";
   #typing-cursor { animation: blink 0.8s infinite; }
 </style>
 
-<script define:vars={{ titleEn: siteConfig.title, titleKo: siteConfig.titleKo }}>
-  const el       = document.getElementById("typing-text");
-  const greeting = document.getElementById("hero-greeting");
-  const prefix   = document.getElementById("hero-prefix");
-  const suffix   = document.getElementById("hero-suffix");
-
-  const strings = {
-    ko: { greeting: "안녕하세요 👋", prefix: "저는", suffix: "입니다", title: titleKo },
-    en: { greeting: "HELLO 👋",      prefix: "I'm",  suffix: "",       title: titleEn },
-  };
+<script define:vars={{ titleEn: siteConfig.title }}>
+  const el = document.getElementById("typing-text");
 
   let typingTimer = null;
 
@@ -146,14 +138,5 @@ import sampleImg from "../assets/image.png";
     }, 60);
   }
 
-  setTimeout(() => typeTitle(strings.ko.title), 600);
-
-  window.addEventListener("langforce", (e) => {
-    const lang = e.detail;
-    const s = strings[lang] || strings.ko;
-    if (greeting) greeting.textContent = s.greeting;
-    if (prefix)   prefix.textContent   = s.prefix;
-    if (suffix)   suffix.textContent   = s.suffix;
-    typeTitle(s.title);
-  });
+  setTimeout(() => typeTitle(titleEn), 600);
 </script>

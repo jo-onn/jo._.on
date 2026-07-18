@@ -20,9 +20,9 @@ const posts = (await getCollection("blog", ({ data }) => !data.draft))
         <h2 class="font-extrabold leading-tight" style="font-family: 'Pretendard', sans-serif; font-size: clamp(3rem, 6vw, 5.5rem);">
           <span style="background: linear-gradient(135deg, #7c3aed, #db2777); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Blog</span>
         </h2>
-        {siteConfig.sectionDescriptions?.blog && (
+        {siteConfig.sectionDescriptionsEn?.blog && (
           <p class="mt-4 text-sm text-gray-400 whitespace-nowrap" style="font-family: 'Pretendard', sans-serif; height: 1.5em;">
-            <span class="section-typewriter" data-phrases={JSON.stringify([siteConfig.sectionDescriptions.blog, siteConfig.sectionDescriptionsEn?.blog ?? ""])}>{siteConfig.sectionDescriptions.blog}</span>
+            <span>{siteConfig.sectionDescriptionsEn.blog}</span>
           </p>
         )}
       </div>

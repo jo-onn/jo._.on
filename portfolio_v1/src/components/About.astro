@@ -1,7 +1,6 @@
 ---
 import { siteConfig } from "../config";
 const bioEn = siteConfig.aboutMe ?? "";
-const bioKo = siteConfig.aboutMeKo ?? bioEn;
 ---
 
 <section
@@ -20,7 +19,7 @@ const bioKo = siteConfig.aboutMeKo ?? bioEn;
     <div
       id="about-bio"
       class="about-bio max-w-5xl mb-6"
-      set:html={bioKo}
+      set:html={bioEn}
     />
   )}
 
@@ -38,11 +37,3 @@ const bioKo = siteConfig.aboutMeKo ?? bioEn;
     </div>
   )}
 </section>
-
-<script define:vars={{ bioEn, bioKo }}>
-  window.addEventListener("langforce", (e) => {
-    const lang = e.detail;
-    const el = document.getElementById("about-bio");
-    if (el) el.innerHTML = lang === "ko" ? bioKo : bioEn;
-  });
-</script>

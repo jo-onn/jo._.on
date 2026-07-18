@@ -50,8 +50,7 @@ html.dark .nav-icon.bg-gray-100 {
 }
 html.dark .nav-icon.text-gray-800 { color: #9ad4e8 !important; }
 html.dark .nav-divider           { background-color: #1a3040 !important; }
-html.dark #night-toggle:hover,
-html.dark #lang-toggle:hover     { background-color: #1a3040 !important; }
+html.dark #night-toggle:hover     { background-color: #1a3040 !important; }
 html.dark #nav-label {
   background: #0e2030 !important;
   border-color: #1a3040 !important;

@@ -39,10 +39,9 @@ export const siteConfig = {
   },
   aboutMe: `
     <p>HI, I'm <strong>JOON</strong> 👋</p>
-    <p>I am currently an Undergraduate student in <strong>Software Convergence & Physical Education</strong> at <a href='https://www.khu.ac.kr' target='_blank'>Kyung-Hee University</a>, Korea, advised by <a href='https://scholar.google.com/citations?user=p79efpQAAAAJ&hl=en' target='_blank'>Prof. Won-Hee Lee</a>.</p>
+    <p>I was a Undergraduate student in <strong>Software Convergence & Physical Education</strong> at <a href='https://www.khu.ac.kr' target='_blank'>Kyung-Hee University</a>, Korea, advised by <a href='https://scholar.google.com/citations?user=p79efpQAAAAJ&hl=en' target='_blank'>Prof. Won-Hee Lee</a>.</p>
     <p>My research focuses on <strong>Artificial Intelligence</strong> in <strong>medical image analysis</strong> and <strong>Anomaly Detection</strong>. 🤗🤗</p>
-    <p>I have also gained engineering experience through an internship at <a href='https://www.futureworklab.co.kr' target='_blank'>futureworkLab</a> as an AI Software Engineer Intern, where I worked on the LinkBrain Project.</p>
-    <p>More details can be found in my <a href='resume.pdf' target='_blank'>CV</a>.</p>
+    <p>I have also gained engineering experience through an internship at <a href='https://www.futureworklab.co.kr' target='_blank'>futureworkLab</a> as an AI Software Engineer & Research Intern, where I worked on the LinkBrain Project. More details can be found in my <a href='resume.pdf' target='_blank'>CV</a>.</p>
   `,
   aboutMeKo: `
     <p>안녕하세요, 저는 <strong>이준혁</strong>입니다 👋</p>
@@ -148,8 +147,8 @@ export const siteConfig = {
   education: [
     {
       school: "Seoul National University",
-      degree: "M.S. in Medical Informatics & AI",
-      dateRange: "2026 - currernt",
+      degree: "Intern Researcher in Bio-Medical Informatics & AI Lab",
+      dateRange: "2026.03 - currernt",
       status: "upcoming",
       link: "https://www.snu.ac.kr",
       achievements: [
@@ -158,7 +157,7 @@ export const siteConfig = {
     {
       school: "Kyung-Hee University",
       degree: "B.S. in Software Convergence",
-      dateRange: "2020 - 2026",
+      dateRange: "2020.03 - 2026",
       link: "https://www.khu.ac.kr",
       achievements: [
         "GPA 4.01 / 4.5 졸업"],
