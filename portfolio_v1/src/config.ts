@@ -130,6 +130,7 @@ export const siteConfig = {
       company: "AIMS Lab, Kyung-Hee University",
       title: "Undergraduate Researcher",
       dateRange: "Aug 2025 — Jul 2026",
+      link: "https://sites.google.com/view/khu-aims/home/",
       bullets: [
         "Comparative study of quantitative attention-measurement models from wearable-sensor data.",
         "Deep-learning model comparison analysis on brain CT data.",
@@ -139,7 +140,7 @@ export const siteConfig = {
       company: "Seoul National University Hospital, BMI Lab",
       title: "Research Intern · Seoul University Hospital Institute of Convergence Medicine",
       dateRange: "Mar 2026 — Current",
-      link: "https://www.snuh.org",
+      link: "https://snuh-bmilab.ai.kr/",
       bullets: [
         "Validating <strong>DINO</strong>-based self-supervised ViT encoders for stain/scanner-robust feature extraction on pathology whole-slide images (WSI).",
         "Justified self-distillation (DINO) over contrastive SSL for label-scarce, downstream-agnostic pathology data; analyzed centering/sharpening, teacher-student EMA, and multi-crop.",
