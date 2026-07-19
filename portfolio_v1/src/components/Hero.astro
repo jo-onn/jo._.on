@@ -15,15 +15,15 @@ import sampleImg from "../assets/image.png";
       class="w-full bg-white rounded-3xl border border-gray-100 px-8 py-12 animate-fade-in"
       style="box-shadow: 0 8px 48px rgba(0,0,0,0.10); background-image: linear-gradient(rgba(200,208,224,0.25) 1px, transparent 1px), linear-gradient(90deg, rgba(200,208,224,0.25) 1px, transparent 1px); background-size: 32px 32px; background-color: white;"
     >
-      <div class="flex items-center gap-7 sm:gap-12">
+      <div class="flex flex-col-reverse sm:flex-row items-center gap-7 sm:gap-12">
 
         <!-- Left: info -->
-        <div class="flex-1 flex flex-col gap-2 min-w-0" style="font-size: 1.25em;">
+        <div class="flex-1 flex flex-col gap-2 min-w-0 items-center sm:items-start text-center sm:text-left" style="font-size: 1.25em;">
           <p id="hero-greeting" class="text-s font-mono text-gray-400">HELLO 👋</p>
 
           <h1
             class="font-extrabold leading-tight"
-            style="font-size: clamp(4rem, 6vw, 2rem); white-space: nowrap;"
+            style="font-size: clamp(2.2rem, 7vw, 4rem); white-space: nowrap;"
           >
             <span id="hero-prefix" style="color: #c8cdd6; font-weight: 600; font-size: 0.4em; margin-right: 0.4em;">I'm</span>{siteConfig.name}<span id="hero-suffix" style="color: #c8cdd6; font-weight: 800; font-size: 0.52em; margin-left: 0.4em;"></span>
           </h1>
