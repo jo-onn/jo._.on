@@ -70,6 +70,20 @@ export const siteConfig = {
       skills: ["Python", "PyTorch", "Deep Learning", "Medical Imaging", "Anomaly Detection"],
     },
     {
+      name: "Musinsa Fit — Ingredient-Based Skincare Recommendation",
+      dateRange: "2026",
+      badges: [
+        { label: "Project", type: "project" },
+      ],
+      description:
+        "An ingredient-based skincare recommendation service for Musinsa Beauty. From ~700K reviews and 1,198 products, it shows the platform never uses the skin-type data it collects, then closes the gap with an ingredient-OCR → skin-fit scoring pipeline surfaced as a Chrome extension.",
+      links: [
+        { label: "Demo", href: "https://www.youtube.com/watch?v=NTmTXhBoTvY" },
+        { label: "Report", href: "/projects/musinsa-fit-report.pdf" },
+      ],
+      skills: ["Python", "JavaScript", "FastAPI", "Data Analysis", "Chrome Extension"],
+    },
+    {
       name: "Multimodal Biosignal-Based Attention Prediction Model",
       dateRange: "2025",
       badges: [
