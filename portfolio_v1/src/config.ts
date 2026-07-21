@@ -76,7 +76,7 @@ export const siteConfig = {
         { label: "Project", type: "project" },
       ],
       description:
-        "An ingredient-based skincare recommendation service for Musinsa Beauty. From ~700K reviews and 1,198 products, it shows the platform never uses the skin-type data it collects, then closes the gap with an ingredient-OCR → skin-fit scoring pipeline surfaced as a Chrome extension.",
+        "An ingredient-based skincare recommendation service for Musinsa Beauty. From ~700K reviews and 1,198 products, it shows the platform doesn't use the skin-type data it collects, then closes the gap with an ingredient-OCR → skin-fit scoring pipeline surfaced as a Chrome extension.",
       links: [
         { label: "Demo", href: "https://www.youtube.com/watch?v=NTmTXhBoTvY" },
         { label: "Report", href: "/projects/musinsa-fit-report.pdf" },

@@ -34,8 +34,11 @@ const linkIcons: Record<string, string> = {
 
     <!-- Card grid -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-      {siteConfig.projects.map((project) => (
-        <div class="project-card group flex flex-col rounded-2xl border border-gray-100 bg-white overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1" style="box-shadow: 0 2px 16px rgba(0,0,0,0.06);">
+      {siteConfig.projects.map((project, idx) => (
+        <div
+          class={`project-card group flex flex-col rounded-2xl border border-gray-100 bg-white overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1${idx >= 3 ? " project-extra" : ""}`}
+          style={`box-shadow: 0 2px 16px rgba(0,0,0,0.06);${idx >= 3 ? " display: none;" : ""}`}
+        >
 
           <!-- Thumbnail: crossfade on hover -->
           <div class="img-stage relative overflow-hidden bg-gray-100" style="height: 200px;">
@@ -132,6 +135,21 @@ const linkIcons: Record<string, string> = {
       ))}
     </div>
 
+    {siteConfig.projects.length > 3 && (
+      <div class="flex justify-center mt-10">
+        <button
+          id="projects-toggle"
+          aria-expanded="false"
+          class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-gray-200 bg-white text-sm font-sans font-semibold text-gray-600 shadow-sm transition-colors hover:text-gray-900 hover:border-gray-300"
+        >
+          <span id="projects-toggle-label">Show more</span>
+          <svg id="projects-toggle-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="transition: transform 0.25s ease;">
+            <path d="M6 9l6 6 6-6"/>
+          </svg>
+        </button>
+      </div>
+    )}
+
   </section>
 )}
 
@@ -164,5 +182,20 @@ const linkIcons: Record<string, string> = {
       });
       current = 0;
     });
+  });
+
+  /* ── 프로젝트 펼쳐보기 / 접기 ─────────────────────────── */
+  const projToggle = document.getElementById("projects-toggle");
+  const projExtras = Array.from(document.querySelectorAll<HTMLElement>(".project-extra"));
+  const projLabel  = document.getElementById("projects-toggle-label");
+  const projIcon   = document.getElementById("projects-toggle-icon");
+  let projOpen = false;
+
+  projToggle?.addEventListener("click", () => {
+    projOpen = !projOpen;
+    projExtras.forEach((el) => { el.style.display = projOpen ? "flex" : "none"; });
+    if (projLabel) projLabel.textContent = projOpen ? "Show less" : "Show more";
+    if (projIcon)  projIcon.style.transform = projOpen ? "rotate(180deg)" : "";
+    projToggle.setAttribute("aria-expanded", String(projOpen));
   });
 </script>
