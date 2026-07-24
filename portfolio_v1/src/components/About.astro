@@ -1,6 +1,11 @@
 ---
 import { siteConfig } from "../config";
 const bioEn = siteConfig.aboutMe ?? "";
+const bioKo = siteConfig.aboutMeKo ?? "";
+const hasKo = Boolean(bioKo.trim());
+
+const badgeBase = "inline-block text-xs font-sans font-bold text-gray-500 uppercase border border-gray-300 bg-white rounded-full px-3 py-1 mb-8";
+const labelBase = "text-xs font-sans font-bold text-gray-400 uppercase mb-3";
 ---
 
 <section
@@ -9,25 +14,31 @@ const bioEn = siteConfig.aboutMe ?? "";
 >
   <div class="max-w-6xl mx-auto">
     <!-- Small label -->
-    <span
-      class="inline-block text-xs font-sans font-bold tracking-[0.18em] text-gray-500 uppercase border border-gray-300 bg-white rounded-full px-3 py-1 mb-8"
-    >
-      About
-    </span>
+    <span class={`${badgeBase} tracking-[0.18em]`}>About</span>
 
-    <!-- Bio text -->
+    <!-- Bio text — language picked by the header toggle -->
     {siteConfig.aboutMe && (
       <div
         id="about-bio"
         class="about-bio mb-6"
+        data-lang-en
         set:html={bioEn}
+      />
+    )}
+
+    {hasKo && (
+      <div
+        id="about-bio-ko"
+        class="about-bio mb-6"
+        data-lang-ko
+        set:html={bioKo}
       />
     )}
 
     <!-- Skills -->
     {siteConfig.skills && siteConfig.skills.length > 0 && (
       <div class="mt-6">
-        <p class="text-xs font-sans font-bold tracking-[0.15em] text-gray-400 uppercase mb-3">Research Interests</p>
+        <p class={`${labelBase} tracking-[0.15em]`}>Research Interests</p>
         <div class="flex flex-wrap gap-2">
           {siteConfig.skills.map((skill) => (
             <span class="inline-block text-xs font-sans font-medium text-gray-600 bg-gray-100 border border-gray-200 rounded-full px-3 py-1 hover:bg-gray-200 transition-colors">

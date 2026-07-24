@@ -60,6 +60,16 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
     <!-- Divider -->
     <div class="nav-divider w-px h-5 bg-gray-200 mx-1 shrink-0"></div>
 
+    <!-- Language toggle -->
+    <button
+      id="lang-toggle"
+      data-label="한국어로 보기"
+      class="nav-icon flex items-center justify-center rounded-xl text-gray-400 hover:text-gray-700 hover:bg-gray-100/80 text-[11px] font-sans font-bold tracking-[0.06em]"
+      aria-label="Toggle language"
+    >
+      <span id="lang-current">EN</span>
+    </button>
+
     <!-- Night mode toggle -->
     <button
       id="night-toggle"
@@ -149,4 +159,28 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
   }
 
   nightBtn.addEventListener("click", () => applyDark(!dark));
+
+  /* ── Language (drives [data-lang-en] / [data-lang-ko] blocks) ── */
+  const LANG_KEY = "site-lang";
+  const langBtn     = document.getElementById("lang-toggle");
+  const langCurrent = document.getElementById("lang-current");
+
+  function applyLang(lang: string) {
+    document.documentElement.dataset.lang = lang;
+    if (langCurrent) langCurrent.textContent = lang.toUpperCase();
+    if (langBtn) {
+      langBtn.dataset.label = lang === "ko" ? "View in English" : "한국어로 보기";
+      if (navLabel.textContent !== pageLabel) navLabel.textContent = langBtn.dataset.label;
+    }
+    try { localStorage.setItem(LANG_KEY, lang); } catch {}
+    window.dispatchEvent(new CustomEvent("langchange", { detail: lang }));
+  }
+
+  let storedLang = "en";
+  try { storedLang = localStorage.getItem(LANG_KEY) ?? "en"; } catch {}
+  applyLang(storedLang === "ko" ? "ko" : "en");
+
+  langBtn?.addEventListener("click", () => {
+    applyLang(document.documentElement.dataset.lang === "ko" ? "en" : "ko");
+  });
 </script>

@@ -122,8 +122,17 @@ import sampleImg from "../assets/image.png";
   #typing-cursor { animation: blink 0.8s infinite; }
 </style>
 
-<script define:vars={{ titleEn: siteConfig.title }}>
+<script define:vars={{ titleEn: siteConfig.title, titleKo: siteConfig.titleKo }}>
   const el = document.getElementById("typing-text");
+
+  const COPY = {
+    en: { greeting: "HELLO 👋",    prefix: "I'm", suffix: "",       title: titleEn },
+    ko: { greeting: "안녕하세요 👋", prefix: "저는", suffix: "입니다", title: titleKo || titleEn },
+  };
+
+  const greetingEl = document.getElementById("hero-greeting");
+  const prefixEl   = document.getElementById("hero-prefix");
+  const suffixEl   = document.getElementById("hero-suffix");
 
   let typingTimer = null;
 
@@ -138,5 +147,24 @@ import sampleImg from "../assets/image.png";
     }, 60);
   }
 
-  setTimeout(() => typeTitle(titleEn), 600);
+  /* Static copy swaps immediately; the title re-types so the effect is kept. */
+  function applyHeroLang(lang, retype) {
+    const c = COPY[lang] ?? COPY.en;
+    if (greetingEl) greetingEl.textContent = c.greeting;
+    if (prefixEl)   prefixEl.textContent   = c.prefix;
+    if (suffixEl)   suffixEl.textContent   = c.suffix;
+    if (retype) typeTitle(c.title);
+  }
+
+  /* The inline <head> script has already set data-lang, so this is correct on first paint. */
+  let heroLang = document.documentElement.dataset.lang === "ko" ? "ko" : "en";
+  applyHeroLang(heroLang, false);
+  setTimeout(() => applyHeroLang(heroLang, true), 600);
+
+  window.addEventListener("langchange", (e) => {
+    const next = e.detail === "ko" ? "ko" : "en";
+    if (next === heroLang) return;
+    heroLang = next;
+    applyHeroLang(heroLang, true);
+  });
 </script>

@@ -93,6 +93,13 @@ h1, h2, h3 {
 .about-bio strong { font-weight: 700; }
 html.dark .about-bio { color: #9ab5c8; }
 
+/* ── Language switching (header #lang-toggle sets html[data-lang]) ──
+   Only the hidden side gets a display rule, so the visible side keeps
+   whatever display its own classes give it (block, inline-block, …).
+   No data-lang attribute yet (pre-JS) counts as English.                */
+html:not([data-lang="ko"]) [data-lang-ko] { display: none; }
+html[data-lang="ko"] [data-lang-en] { display: none; }
+
 /* ── Fade-in sections ──────────────────────────────────── */
 .fade-in-section {
   opacity: 0;
