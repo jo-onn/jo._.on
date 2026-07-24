@@ -1,7 +1,7 @@
 export const siteConfig = {
   name: "jo._.on",
-  title: "Junior AI Researcher / Engineer",
-  titleKo: "주니어 AI 연구원 / 엔지니어",
+  title: "Data Analyst / AI Engineer · Researcher",
+  titleKo: "데이터 분석가/ AI 엔지니어 ·  연구자",
   description: "AI와 의료 데이터의 교차점에서 연구하는 개발자 jo._.on의 포트폴리오입니다.",
   accentColor: "#2a3c6e",
   social: {
@@ -50,7 +50,8 @@ export const siteConfig = {
     <p>자세한 내용은 <a href='resume.pdf' target='_blank'>CV</a>에서 확인하실 수 있습니다.</p>
   `,
   skills: [
-    "Python", "Deep Learning","Computer Vision", "Medical Imaging", "Machine Learning",
+    "Python", "SQL", "Data Analysis", "Machine Learning",
+    "Deep Learning", "Computer Vision", "Medical Imaging",
   ],
   projects: [
     {
@@ -169,11 +170,13 @@ export const siteConfig = {
     {
       school: "KyungHee University",
       lab : "Aims Lab",
-      degree: "B.S. in Software Convergence",
-      dateRange: "2020.03 - 2026",
+      degree: ["B.S. in Software Convergence", "B.S in Physical Education"],
+      dateRange: "2020.03 - 2026.12",
       link: "https://www.khu.ac.kr",
       achievements: [
-        "GPA 3.91 / 4.5 졸업 예정"],
+        "GPA 3.91 / 4.5 졸업 예정",
+        "KHUDA 경희대학교 데이터분석 & AI 학회",
+        "AIMS Lab 학부연구생 (2025.08 - 2026.07)",]
     },
   ],
   awards: [

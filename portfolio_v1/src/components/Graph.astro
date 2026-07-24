@@ -5,23 +5,28 @@ import clinicalNlpImg    from "../assets/clinical-nlp.png";
 
 // Simple Icons CDN: https://cdn.simpleicons.org/{slug}/{hex-color}
 const iconUrlMap: Record<string, string> = {
-  "Python":          "https://cdn.simpleicons.org/python/3776AB",
-  "PyTorch":         "https://cdn.simpleicons.org/pytorch/EE4C2C",
-  "FastAPI":         "https://cdn.simpleicons.org/fastapi/009688",
-  "Docker":          "https://cdn.simpleicons.org/docker/2496ED",
-  "Git":             "https://cdn.simpleicons.org/git/F05032",
-  "Computer Vision": "https://cdn.simpleicons.org/opencv/5C3EE8",
-  "Medical Imaging": medicalImagingImg.src,
-  "Clinical NLP":    clinicalNlpImg.src,
-  "GitHub":          "https://cdn.simpleicons.org/github/181717",
-  "Figma":           "https://cdn.simpleicons.org/figma/F24E1E",
-  "CSS":             "https://cdn.simpleicons.org/css3/1572B6",
-  "Tailwind":        "https://cdn.simpleicons.org/tailwindcss/06B6D4",
+  "Python":           "https://cdn.simpleicons.org/python/3776AB",
+  "SQL":              "https://cdn.simpleicons.org/postgresql/4169E1",
+  "Data Analysis":    "https://cdn.simpleicons.org/pandas/150458",
+  "Machine Learning": "https://cdn.simpleicons.org/scikitlearn/F7931E",
+  "PyTorch":          "https://cdn.simpleicons.org/pytorch/EE4C2C",
+  "LangChain":        "https://cdn.simpleicons.org/langchain/1C3C3C",
+  "FastAPI":          "https://cdn.simpleicons.org/fastapi/009688",
+  "Docker":           "https://cdn.simpleicons.org/docker/2496ED",
+  "Git":              "https://cdn.simpleicons.org/git/F05032",
+  "Notion":           "https://cdn.simpleicons.org/notion/000000",
+  "Computer Vision":  "https://cdn.simpleicons.org/opencv/5C3EE8",
+  "Medical Imaging":  medicalImagingImg.src,
+  "Clinical NLP":     clinicalNlpImg.src,
+  "GitHub":           "https://cdn.simpleicons.org/github/181717",
+  "Figma":            "https://cdn.simpleicons.org/figma/F24E1E",
+  "CSS":              "https://cdn.simpleicons.org/css3/1572B6",
+  "Tailwind":         "https://cdn.simpleicons.org/tailwindcss/06B6D4",
 };
 
 const emojiFallback: Record<string, string> = {};
 
-const extraSkills = ["GitHub", "Figma", "CSS", "Tailwind"];
+const extraSkills = ["GitHub", "PyTorch", "FastAPI", "LangChain", "Notion"];
 
 const items = [
   ...siteConfig.skills,
