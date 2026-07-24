@@ -1,8 +1,8 @@
 export const siteConfig = {
   name: "jo._.on",
   title: "Data Analyst / AI Engineer · Researcher",
-  titleKo: "데이터 분석가/ AI 엔지니어 ·  연구자",
-  description: "AI와 의료 데이터의 교차점에서 연구하는 개발자 jo._.on의 포트폴리오입니다.",
+  titleKo: "데이터 분석가 / AI 엔지니어 · 연구자",
+  description: "AI와 데이터의 교차점에 있는 jo._.on의 포트폴리오입니다.",
   accentColor: "#2a3c6e",
   social: {
     email: "leejoon2067@gmail.com",
@@ -10,10 +10,10 @@ export const siteConfig = {
     github: "https://github.com/jo-onn",
     cv: "/resume.pdf",
   },  sectionDescriptions: {
-    about:      "AI와 의료 데이터의 교차점에서 연구하는 주니어 AI 엔지니어입니다.",
+    about:      "AI와 데이터의 교차점에서 연구하는 주니어 AI 엔지니어입니다.",
     experience: "AI 스타트업과 대학 연구실에서 쌓아온 실무 경험들입니다.",
     projects:   "직접 설계하고 구현해본 AI·서비스 프로젝트들입니다.",
-    education:  "소프트웨어 융합과 의료 AI를 중심으로 공부해온 학업 배경입니다.",
+    education:  "소프트웨어융합과 데이터 분석을 중심으로 공부해온 학업 배경입니다.",
     blog:       "공부하고 느낀 것들을 글로 정리한 공간입니다.",
   },
   // sectionSubtitles: {
@@ -39,15 +39,16 @@ export const siteConfig = {
   },
   aboutMe: `
     <p>HI, I'm <strong>JOON</strong> 👋</p>
-    <p>I am currently a Graduate student in <strong>Software Convergence & Physical Education</strong> at <a href='https://www.khu.ac.kr' target='_blank'>Kyung-Hee University</a>, Korea. Advised by <a href='https://scholar.google.com/citations?user=p79efpQAAAAJ&hl=en' target='_blank'>Prof. Won-Hee Lee</a>. My research focused on <strong>Artificial Intelligence</strong> in <strong>medical image analysis</strong> and <strong>Anomaly Detection</strong>. 🤗🤗</p>
-    <p>I have also gained engineering experience through an internship at <a href='https://www.futureworklab.co.kr' target='_blank'>futureworkLab</a> as an AI Software Engineer & Research Intern, where I worked on the LinkBrain Project. More details can be found in my <a href='resume.pdf' target='_blank'>CV</a>.</p>
+    <p>It started with a question about <strong>runner's high</strong>. Chasing it is how I ended up double-majoring in <strong>Physical Education</strong> and <strong>Software Convergence</strong> at <a href='https://www.khu.ac.kr' target='_blank'>Kyung-Hee University</a> — and, eventually, how I ended up in data.</p>
+    <p>I've worked both sides of a problem: <strong>analyzing data</strong> to find where the real gap is, and <strong>building the thing</strong> that closes it. What I took from it is that a model disconnected from a real problem stays a model.</p>
+    <p>So the part I care about is the link between them — reading the context of an industry, following where the data points, and putting it in language the people who decide can act on. That's what draws me to <strong>data analysis</strong> and <strong>AX/DX consulting</strong>. More in my <a href='resume.pdf' target='_blank'>CV</a>.</p>
   `,
+  // NOTE: 현재 렌더링되지 않음. 국문 지원 추가 시 aboutMe와 동일한 내용으로 사용.
   aboutMeKo: `
     <p>안녕하세요, 저는 <strong>이준혁</strong>입니다 👋</p>
-    <p>현재 <a href='https://www.khu.ac.kr' target='_blank'>경희대학교</a>에 재학 중이며, 소프트웨어융합학과 <a href='https://scholar.google.com/citations?user=p79efpQAAAAJ&hl=en' target='_blank'>이원희 교수님</a>의 지도 아래 연구를 진행하고 있습니다.</p>
-    <p>저는 <strong>의료 영상 분석</strong>과 <strong>이상 탐지</strong> 분야에서의 <strong>인공지능</strong> 활용 연구에 관심이 많습니다. 🤗🤗 </p>
-    <p>스타트업 <a href='https://www.futureworklab.co.kr' target='_blank'>futureworkLab</a>에서 AI 소프트웨어 엔지니어 인턴으로 근무하며 LinkBrain 프로젝트에 참여한 실무 경험도 있습니다.</p>
-    <p>자세한 내용은 <a href='resume.pdf' target='_blank'>CV</a>에서 확인하실 수 있습니다.</p>
+    <p><strong>러너스 하이</strong>라는 현상에 대한 호기심에서 출발했습니다. 그 질문을 따라가다 <a href='https://www.khu.ac.kr' target='_blank'>경희대학교</a>에서 <strong>체육학</strong>과 <strong>소프트웨어융합학</strong>을 함께 전공하게 되었고, 결국 데이터까지 닿았습니다.</p>
+    <p>그 뒤로는 문제의 양쪽을 모두 다뤄왔습니다. <strong>데이터를 분석해</strong> 진짜 공백이 어디인지 찾고, 그 공백을 메우는 <strong>결과물을 직접 만드는</strong> 일입니다. 그 과정에서 얻은 확신은, 현장의 문제와 연결되지 않은 모델은 결국 모델로 남는다는 것이었습니다.</p>
+    <p>그래서 제가 관심을 두는 지점은 둘 사이의 연결입니다. 산업의 맥락을 읽고, 데이터가 가리키는 곳을 따라가고, 그것을 의사결정하는 사람이 실행할 수 있는 언어로 옮기는 일입니다. <strong>데이터 분석</strong>과 <strong>AX/DX 컨설팅</strong>에 관심을 두는 이유이기도 합니다. 자세한 내용은 <a href='resume.pdf' target='_blank'>CV</a>에서 확인하실 수 있습니다.</p>
   `,
   skills: [
     "Python", "SQL", "Data Analysis", "Machine Learning",
@@ -170,11 +171,11 @@ export const siteConfig = {
     {
       school: "KyungHee University",
       lab : "Aims Lab",
-      degree: ["B.S. in Software Convergence", "B.S in Physical Education"],
-      dateRange: "2020.03 - 2026.12",
+      degree: ["B.S. in Software Convergence", "B.S. in Physical Education"],
+      dateRange: "2020.03 - 2026.12 (졸업 예정)",
       link: "https://www.khu.ac.kr",
       achievements: [
-        "GPA 3.91 / 4.5 졸업 예정",
+        "GPA 3.91 / 4.5 ",
         "KHUDA 경희대학교 데이터분석 & AI 학회",
         "AIMS Lab 학부연구생 (2025.08 - 2026.07)",]
     },

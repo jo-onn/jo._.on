@@ -55,7 +55,7 @@ const hasEducation = siteConfig.education && siteConfig.education.length > 0;
                     )}
                   </div>
                   <p class="text-[11px] font-sans font-bold tracking-[0.12em] text-gray-400 uppercase mt-0.5">
-                    {edu.degree}
+                    {Array.isArray(edu.degree) ? edu.degree.join(" · ") : edu.degree}
                   </p>
                   {edu.achievements && edu.achievements.length > 0 && (
                     <ul class="mt-2 flex flex-col gap-1">
