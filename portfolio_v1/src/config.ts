@@ -40,13 +40,13 @@ export const siteConfig = {
   aboutMe: `
     <p>HI, I'm <strong>JOON HYUK LEE</strong> 👋</p>
     <p>I've worked both sides of a problem: <strong>analyzing data</strong> to find where the real gap is, and <strong>building the thing</strong> that closes it. What I took from it is that a model disconnected from a real problem stays a model.</p>
-    <p>So the part I care about is the link between them — reading the context of an industry, following where the data points, and putting it in language the people who decide can act on. More in my <a href='resume.pdf' target='_blank'>CV</a>.</p>
+    <p>So the part I care about is the link between them — reading the context of an industry, following where the data points, and putting it in language the people who decide can act on. More in my <a href='resume.pdf' target='_blank'>Résumé</a>.</p>
   `,
   // NOTE: 현재 렌더링되지 않음. 국문 지원 추가 시 aboutMe와 동일한 내용으로 사용.
   aboutMeKo: `
     <p>안녕하세요, <strong>이준혁</strong>입니다 👋</p>
     <p><strong>데이터를 분석해</strong> 진짜 공백이 어디인지 찾고, 그 공백을 메우는 <strong>결과물을 직접 만드는</strong> 일을 좋아합니다. 그 과정에서 얻은 확신은, 현장의 문제와 연결되지 않은 모델은 결국 모델로만 남는다는 것이었습니다.</p>
-    <p>그래서 제가 관심을 두는 지점은 둘 사이의 연결입니다. 산업의 맥락을 읽고, 데이터가 가리키는 곳을 따라가고, 그것을 의사결정하는 사람이 실행할 수 있는 언어로 옮기는 일입니다. 자세한 내용은 제 <a href='resume.pdf' target='_blank'>CV</a>에서 확인하실 수 있습니다.</p>
+    <p>그래서 제가 관심을 두는 지점은 둘 사이의 연결입니다. 산업의 맥락을 읽고, 데이터가 가리키는 곳을 따라가고, 그것을 의사결정하는 사람이 실행할 수 있는 언어로 옮기는 일입니다. 자세한 내용은 제 <a href='resume.pdf' target='_blank'>Résumé</a>에서 확인하실 수 있습니다.</p>
   `,
   skills: [
     "Python", "SQL", "Data Analysis", "Machine Learning",

@@ -2,149 +2,101 @@
 import { siteConfig } from "../config";
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+
+const navLinks = [
+  { label: "About",     href: `${base}/#about` },
+  { label: "Skills",    href: `${base}/#skills` },
+  { label: "Projects",  href: `${base}/#projects` },
+  { label: "Education", href: `${base}/#education` },
+  { label: "Awards",    href: `${base}/#awards` },
+];
 ---
 
-<header class="fixed top-5 left-1/2 -translate-x-1/2 z-50 flex flex-col items-center">
+<header class="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-4xl">
   <nav
     id="main-nav"
-    class="flex items-center gap-0.5 bg-white/85 backdrop-blur-md border border-gray-200 rounded-2xl px-2 py-2 shadow-md"
+    class="flex items-center justify-between bg-white/55 backdrop-blur-xl border border-white/40 rounded-2xl pl-5 pr-2 py-2 shadow-md"
   >
-    <!-- Home -->
+    <!-- Logo / name -->
     <a
       href={`${base}/`}
-      data-label="Home"
-      class="nav-icon flex items-center justify-center rounded-xl text-gray-400 hover:text-gray-700 hover:bg-gray-100/80"
-      aria-label="Home"
+      class="shrink-0 text-[15px] font-bold tracking-tight text-gray-900 hover:opacity-70 transition-opacity"
     >
-      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M5 12l-2 0l9 -9l9 9l-2 0"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7"/><path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6"/>
-      </svg>
+      jo._.on
     </a>
 
-    <!-- Blog (coming soon) -->
-    <button
-      id="blog-btn"
-      data-label="Blog"
-      class="nav-icon flex items-center justify-center rounded-xl text-gray-400 hover:text-gray-700 hover:bg-gray-100/80"
-      aria-label="Blog"
-    >
-      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M6 4h11a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-11a1 1 0 0 1 -1 -1v-14a1 1 0 0 1 1 -1m3 0v18"/><path d="M13 8l2 0"/><path d="M13 12l2 0"/>
-      </svg>
-    </button>
+    <!-- Center: section links -->
+    <div class="hidden md:flex items-center gap-0.5">
+      {navLinks.map((l) => (
+        <a
+          href={l.href}
+          class="px-3 py-1.5 rounded-lg text-sm font-medium text-gray-500 hover:text-gray-900 hover:bg-gray-100/80 transition-colors"
+        >
+          {l.label}
+        </a>
+      ))}
+    </div>
 
-    <!-- Resume -->
-    {siteConfig.social.cv ? (
-      <a
-        href={siteConfig.social.cv.startsWith("/") ? `${base}${siteConfig.social.cv}` : siteConfig.social.cv}
-        data-label="Resume"
-        class="nav-icon flex items-center justify-center rounded-xl text-gray-400 hover:text-gray-700 hover:bg-gray-100/80"
-        aria-label="Resume"
+    <!-- Right: socials + toggles -->
+    <div class="flex items-center gap-0.5 shrink-0">
+      {siteConfig.social.github && (
+        <a href={siteConfig.social.github} target="_blank" rel="noopener noreferrer" class="nav-btn" aria-label="GitHub">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.604-3.369-1.342-3.369-1.342-.454-1.154-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.268 2.75 1.026A9.578 9.578 0 0 1 12 6.836a9.59 9.59 0 0 1 2.504.337c1.909-1.294 2.747-1.026 2.747-1.026.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.741 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+        </a>
+      )}
+      {siteConfig.social.linkedin && (
+        <a href={siteConfig.social.linkedin} target="_blank" rel="noopener noreferrer" class="nav-btn" aria-label="LinkedIn">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5C4.98 4.881 3.87 6 2.5 6S.02 4.881.02 3.5C.02 2.12 1.13 1 2.5 1s2.48 1.12 2.48 2.5zM.24 8h4.52v13H.24V8zm7.5 0h4.33v1.78h.06c.6-1.14 2.07-2.34 4.26-2.34 4.56 0 5.4 3 5.4 6.9V21h-4.52v-6.75c0-1.61-.03-3.68-2.24-3.68-2.24 0-2.58 1.75-2.58 3.56V21H7.74V8z"/></svg>
+        </a>
+      )}
+      {siteConfig.social.email && (
+        <a href={`mailto:${siteConfig.social.email}`} class="nav-btn" aria-label="Email">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z"/><path d="M3 7l9 6l9 -6"/></svg>
+        </a>
+      )}
+
+      <div class="nav-divider w-px h-5 bg-gray-200 mx-1.5"></div>
+
+      <!-- Language toggle -->
+      <button
+        id="lang-toggle"
+        class="nav-btn text-[11px] font-sans font-bold tracking-[0.06em]"
+        aria-label="Toggle language"
       >
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M14 3v4a1 1 0 0 0 1 1h4"/><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z"/><path d="M9 12h4"/><path d="M9 16h6"/>
+        <span id="lang-current">EN</span>
+      </button>
+
+      <!-- Night mode toggle -->
+      <button id="night-toggle" class="nav-btn" aria-label="Toggle dark mode">
+        <svg id="icon-moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z"/>
         </svg>
-      </a>
-    ) : (
-      <span
-        data-label="Resume"
-        class="nav-icon flex items-center justify-center rounded-xl text-gray-200 cursor-not-allowed"
-        aria-label="Resume (coming soon)"
-      >
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M14 3v4a1 1 0 0 0 1 1h4"/><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z"/><path d="M9 12h4"/><path d="M9 16h6"/>
+        <svg id="icon-sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
+          <path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"/><path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7"/>
         </svg>
-      </span>
-    )}
-
-    <!-- Divider -->
-    <div class="nav-divider w-px h-5 bg-gray-200 mx-1 shrink-0"></div>
-
-    <!-- Language toggle -->
-    <button
-      id="lang-toggle"
-      data-label="한국어로 보기"
-      class="nav-icon flex items-center justify-center rounded-xl text-gray-400 hover:text-gray-700 hover:bg-gray-100/80 text-[11px] font-sans font-bold tracking-[0.06em]"
-      aria-label="Toggle language"
-    >
-      <span id="lang-current">EN</span>
-    </button>
-
-    <!-- Night mode toggle -->
-    <button
-      id="night-toggle"
-      class="w-9 h-9 flex items-center justify-center rounded-xl transition-all duration-200 text-gray-400 hover:text-gray-700 hover:bg-gray-100/80"
-      aria-label="Toggle dark mode"
-    >
-      <svg id="icon-moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z"/>
-      </svg>
-      <svg id="icon-sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
-        <path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"/><path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7"/>
-      </svg>
-    </button>
+      </button>
+    </div>
   </nav>
-
-  <!-- Active page label pill -->
-  <div
-    id="nav-label"
-    class="mt-1.5 px-3 py-0.5 bg-white border border-gray-200 rounded-full text-xs font-mono text-gray-500 shadow-sm"
-  >
-    Home
-  </div>
 </header>
 
 <style>
-  .nav-icon {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    transition: transform 0.18s ease, background-color 0.18s ease, color 0.18s ease;
+  .nav-btn {
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    color: #9ca3af;
+    transition: color 0.18s ease, background-color 0.18s ease;
   }
-  .nav-icon:hover {
-    transform: scale(1.22);
-    background-color: #f3f4f6;
+  .nav-btn:hover {
     color: #1f2937;
+    background-color: #f3f4f6;
   }
 </style>
 
 <script>
-  const navIcons = Array.from(document.querySelectorAll<HTMLElement>(".nav-icon"));
-  const navLabel = document.getElementById("nav-label")!;
-  let pageLabel = "Home";
-
-  /* ── Label on hover ──────────────────────────────────── */
-  navIcons.forEach((icon) => {
-    icon.addEventListener("mouseenter", () => {
-      if (icon.dataset.label) navLabel.textContent = icon.dataset.label;
-    });
-    icon.addEventListener("mouseleave", () => {
-      navLabel.textContent = pageLabel;
-    });
-  });
-
-  /* ── Blog coming soon ───────────────────────────────── */
-  let comingSoonTimer: ReturnType<typeof setTimeout> | null = null;
-  document.getElementById("blog-btn")?.addEventListener("click", () => {
-    if (comingSoonTimer) clearTimeout(comingSoonTimer);
-    navLabel.textContent = "Coming soon! 🚧";
-    comingSoonTimer = setTimeout(() => {
-      navLabel.textContent = pageLabel;
-    }, 2000);
-  });
-
-  /* ── Active page highlight ───────────────────────────── */
-  const path = window.location.pathname;
-
-  function setActive(label: string) {
-    pageLabel = label;
-    navLabel.textContent = label;
-  }
-
-  if (path.includes("/blog")) setActive("Blog");
-  else if (path.includes("/resume") || path.includes("/cv")) setActive("Resume");
-  else setActive("Home");
-
   /* ── Night mode ──────────────────────────────────────── */
   const nightBtn = document.getElementById("night-toggle")!;
   const iconMoon = document.getElementById("icon-moon")!;
@@ -168,10 +120,6 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
   function applyLang(lang: string) {
     document.documentElement.dataset.lang = lang;
     if (langCurrent) langCurrent.textContent = lang.toUpperCase();
-    if (langBtn) {
-      langBtn.dataset.label = lang === "ko" ? "View in English" : "한국어로 보기";
-      if (navLabel.textContent !== pageLabel) navLabel.textContent = langBtn.dataset.label;
-    }
     try { localStorage.setItem(LANG_KEY, lang); } catch {}
     window.dispatchEvent(new CustomEvent("langchange", { detail: lang }));
   }

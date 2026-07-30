@@ -9,11 +9,13 @@
 body {
   font-family: 'Manrope', sans-serif;
   scroll-behavior: smooth;
-  background-color: #faf7f4;
+  background-color: #f7f5fb;
   background-image:
-    radial-gradient(ellipse 60% 55% at 0% 0%,   rgba(210,230,240,0.50) 0%, transparent 70%),
-    radial-gradient(ellipse 55% 50% at 100% 0%,  rgba(255,210,185,0.55) 0%, transparent 70%),
-    radial-gradient(ellipse 40% 40% at 50% 100%, rgba(255,220,200,0.25) 0%, transparent 70%);
+    radial-gradient(ellipse 34% 52% at 30% 4%,  rgba(245,231,201,0.62) 0%, transparent 66%),
+    radial-gradient(ellipse 32% 50% at 40% 1%,  rgba(243,208,172,0.55) 0%, transparent 64%),
+    radial-gradient(ellipse 34% 54% at 50% 6%,  rgba(235,199,205,0.55) 0%, transparent 66%),
+    radial-gradient(ellipse 32% 50% at 60% 1%,  rgba(214,203,232,0.60) 0%, transparent 64%),
+    radial-gradient(ellipse 36% 54% at 70% 4%,  rgba(199,204,235,0.62) 0%, transparent 66%);
   background-attachment: fixed;
 }
 
@@ -41,8 +43,8 @@ html.dark .text-gray-400     { color: #486070 !important; }
 
 /* ── Dark mode: header nav ─────────────────────────────── */
 html.dark #main-nav {
-  background: rgba(10,25,40,0.88) !important;
-  border-color: #1a3040 !important;
+  background: rgba(10,25,40,0.55) !important;
+  border-color: rgba(90,128,160,0.25) !important;
 }
 html.dark .nav-icon:hover,
 html.dark .nav-icon.bg-gray-100 {
