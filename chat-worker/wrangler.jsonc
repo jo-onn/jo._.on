@@ -1,0 +1,34 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "jo-on-chat",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-11-01",
+  // No nodejs_compat: @anthropic-ai/sdk runs on the Workers fetch runtime as-is.
+
+  // Shared chat logic lives in ../portfolio_v2/src/lib/chat and imports
+  // "@/data/site" (a Next.js path alias). Point the bundler at the same file
+  // so portfolio_v2/src/data/site.ts stays the single source of truth.
+  "alias": {
+    "@/data/site": "../portfolio_v2/src/data/site.ts"
+  },
+
+  // Plain (non-secret) settings. ANTHROPIC_API_KEY is a secret:
+  //   npx wrangler secret put ANTHROPIC_API_KEY
+  // Locally, .dev.vars overrides these (see .dev.vars.example).
+  "vars": {
+    "ALLOWED_ORIGINS": "https://jo-onn.github.io,http://localhost:3000,http://127.0.0.1:3000",
+    "CHAT_MOCK": "0"
+  },
+
+  // Workers Rate Limiting binding: 10 requests per 60 s per client IP
+  // (counted per Cloudflare location; period must be 10 or 60).
+  "ratelimits": [
+    {
+      "name": "CHAT_RATE_LIMITER",
+      "namespace_id": "2067",
+      "simple": { "limit": 10, "period": 60 }
+    }
+  ],
+
+  "observability": { "enabled": true }
+}
