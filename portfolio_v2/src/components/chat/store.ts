@@ -1,7 +1,7 @@
 // Chat state lives at module level, not in AskChat, because HashModal unmounts
 // its children when it closes. Keeping it here means closing and reopening the
 // modal keeps the conversation (and an in-flight answer keeps streaming).
-// Messages are mirrored to sessionStorage so a reload in the same tab keeps them.
+// Nothing is persisted: every page load starts a fresh conversation.
 
 import type { Lang } from "@/lib/lang";
 
@@ -13,7 +13,7 @@ export const CHAT_ENDPOINT = process.env.NEXT_PUBLIC_CHAT_ENDPOINT || "/api/chat
 export const MAX_INPUT = 1000;
 /** Max messages sent to the API per request. */
 export const MAX_HISTORY = 12;
-const STORAGE_KEY = "ask-chat:v1";
+const LEGACY_STORAGE_KEY = "ask-chat:v1";
 const DEFAULT_RETRY_SECONDS = 30;
 
 export type Role = "user" | "assistant";
@@ -64,27 +64,9 @@ function set(patch: Partial<ChatState>) {
 
 function load() {
   loaded = true;
+  // Earlier versions kept the chat in sessionStorage; drop any leftover copy.
   try {
-    const raw = sessionStorage.getItem(STORAGE_KEY);
-    if (!raw) return;
-    const parsed: unknown = JSON.parse(raw);
-    if (!Array.isArray(parsed)) return;
-    const messages = parsed.filter(
-      (m): m is ChatMessage =>
-        !!m &&
-        typeof m === "object" &&
-        typeof m.id === "string" &&
-        (m.role === "user" || m.role === "assistant") &&
-        typeof m.content === "string",
-    );
-    state = { ...EMPTY, messages };
-  } catch {}
-}
-
-function persist() {
-  try {
-    if (state.messages.length) sessionStorage.setItem(STORAGE_KEY, JSON.stringify(state.messages));
-    else sessionStorage.removeItem(STORAGE_KEY);
+    sessionStorage.removeItem(LEGACY_STORAGE_KEY);
   } catch {}
 }
 
@@ -188,7 +170,6 @@ async function run(lang: Lang) {
     fail({ kind: "failed" });
   } finally {
     if (controller === ctrl) controller = null;
-    persist();
   }
 }
 
@@ -197,7 +178,6 @@ export function sendQuestion(text: string, lang: Lang): boolean {
   const content = text.trim().slice(0, MAX_INPUT);
   if (!content || state.streaming) return false;
   set({ messages: [...state.messages, { id: uid(), role: "user", content }], error: null });
-  persist();
   void run(lang);
   return true;
 }
@@ -225,7 +205,6 @@ export function stopStreaming() {
   });
   controller?.abort();
   controller = null;
-  persist();
 }
 
 /** Start over: abort anything in flight and clear the conversation. */
@@ -233,7 +212,6 @@ export function resetChat() {
   controller?.abort();
   controller = null;
   set({ messages: [], streaming: false, error: null });
-  persist();
 }
 
 // ── hand-off from AskTrigger: a question to send once the modal opens ───

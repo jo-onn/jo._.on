@@ -2,7 +2,7 @@
 // Kept separate from v1's config so the two sites can evolve independently.
 
 export const site = {
-  name: { first: "JOON HYUK", last: "LEE" },
+  name: { first: "JOON HYUK", last: "LEE", ko: "이준혁" },
   handle: "jo._.on",
   tagline: "Data Analyst / AX & AI Business Strategy",
   taglineKo: "데이터 분석가 / AX·AI 사업전략 기획",
