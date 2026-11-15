@@ -8,12 +8,20 @@ import { HashModal } from "@/components/HashModal";
 import { StoryTimeline } from "@/components/StoryTimeline";
 import { LangToggle } from "@/components/LangToggle";
 import { T } from "@/components/T";
+import { ProjectsCover } from "@/components/ProjectsCover";
+import { DrawOnView } from "@/components/DrawOnView";
 import { AskChat, AskTrigger } from "@/components/chat";
 import { WorkGallery } from "@/components/projects/WorkGallery";
 import { withBase } from "@/lib/base";
 
 const eyebrow = "text-[11px] font-semibold tracking-[0.22em] uppercase";
 const display = "font-extrabold tracking-tight leading-[0.92]";
+
+// Cover slideshow order: start with the configured cover, then the rest.
+const coverImages = [
+  site.projects.cover,
+  ...site.projects.list.map((p) => p.image).filter((src) => src !== site.projects.cover),
+].map(withBase);
 
 export default function Home() {
   return (
@@ -117,12 +125,9 @@ export default function Home() {
 
         {/* Selected projects (tall, image cover) */}
         <Tile index={3} href="#projects" ariaLabel="Selected projects" bare className="bg-card lg:col-span-3 lg:row-span-2 min-h-[360px] lg:min-h-[500px]">
-          <Image
-            src={withBase(site.projects.cover)}
-            alt=""
-            fill
+          <ProjectsCover
+            images={coverImages}
             sizes="(min-width: 1024px) 25vw, (min-width: 768px) 50vw, 100vw"
-            className="object-cover object-[50%_30%] opacity-80 transition-transform duration-700 group-hover:scale-105"
           />
           {/* Theme-neutral scrim so the cover reads the same in light and dark */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/45 to-black/10" />
@@ -145,10 +150,10 @@ export default function Home() {
         {/* Résumé */}
         <Tile index={4} href={withBase(site.resume)} external ariaLabel="Résumé (PDF, opens in a new tab)" className="bg-warm text-warm-ink min-h-[180px] gap-6 lg:col-span-3 lg:min-h-[240px] flex flex-col justify-between">
           <div className="flex items-start justify-between">
-            <span className="grid h-11 w-11 place-items-center rounded-xl bg-warm-ink text-warm">
+            <span className="grid h-11 w-11 place-items-center rounded-xl bg-warm-ink text-warm resume-icon">
               <FileText className="h-5 w-5" />
             </span>
-            <ArrowUpRight className="h-5 w-5 opacity-60 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+            <ArrowUpRight className="h-5 w-5 opacity-60 transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:opacity-100" />
           </div>
           <div>
             <h2 className={`${display} text-5xl lg:text-[clamp(1.9rem,3.2vw,3rem)]`}>RÉSUMÉ</h2>
@@ -309,7 +314,7 @@ function JourneyCurve() {
     { x: 333.7, y: 59.1 },
   ];
   return (
-    <div className="relative mt-6 mb-12 flex-1 min-h-[180px]">
+    <DrawOnView className="relative mt-6 mb-12 flex-1 min-h-[180px]">
       <svg viewBox="0 0 380 220" preserveAspectRatio="none" className="absolute inset-0 h-full w-full" aria-hidden="true">
         <defs>
           <linearGradient id="journey-fill" x1="0" y1="0" x2="0" y2="1">
@@ -322,14 +327,14 @@ function JourneyCurve() {
             <stop offset="100%" stopColor="var(--accent-to)" />
           </linearGradient>
         </defs>
-        <path d="M0 210 C 120 200, 220 160, 380 20 L 380 220 L 0 220 Z" fill="url(#journey-fill)" />
-        <path d="M0 210 C 120 200, 220 160, 380 20" fill="none" stroke="url(#journey-stroke)" strokeWidth="2.5" vectorEffect="non-scaling-stroke" />
+        <path className="draw-fill" d="M0 210 C 120 200, 220 160, 380 20 L 380 220 L 0 220 Z" fill="url(#journey-fill)" />
+        <path className="draw-stroke" pathLength={1} d="M0 210 C 120 200, 220 160, 380 20" fill="none" stroke="url(#journey-stroke)" strokeWidth="2.5" vectorEffect="non-scaling-stroke" />
       </svg>
       {site.journey.map((j, i) => (
         <div
           key={j.year}
-          className="absolute"
-          style={{ left: `${(pts[i].x / 380) * 100}%`, top: `${(pts[i].y / 220) * 100}%` }}
+          className="draw-point absolute"
+          style={{ left: `${(pts[i].x / 380) * 100}%`, top: `${(pts[i].y / 220) * 100}%`, transitionDelay: `${0.35 + i * 0.35}s` }}
         >
           {/* dot centred on the curve */}
           <span className="absolute h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-accent bg-bg" />
@@ -340,6 +345,6 @@ function JourneyCurve() {
           </span>
         </div>
       ))}
-    </div>
+    </DrawOnView>
   );
 }

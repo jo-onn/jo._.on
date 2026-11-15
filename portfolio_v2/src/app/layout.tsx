@@ -23,7 +23,7 @@ export const viewport: Viewport = {
 
 // Applies the saved theme and language before first paint
 // (see Next docs: preventing-flash-before-hydration).
-const prefsScript = `(function(){try{var d=document.documentElement,t=localStorage.getItem("theme"),l=localStorage.getItem("lang");if(t==="light"||t==="dark")d.setAttribute("data-theme",t);if(l==="ko"||l==="en"){d.setAttribute("data-lang",l);d.setAttribute("lang",l)}}catch(e){}})()`;
+const prefsScript = `(function(){var d=document.documentElement;d.classList.add("js");try{var t=localStorage.getItem("theme"),l=localStorage.getItem("lang");if(t==="light"||t==="dark")d.setAttribute("data-theme",t);if(l==="ko"||l==="en"){d.setAttribute("data-lang",l);d.setAttribute("lang",l)}}catch(e){}})()`;
 
 // Cloudflare Web Analytics (cookie-less visitor stats). The token is public by
 // design (it ships in the page); it comes from the CF_BEACON_TOKEN repository
