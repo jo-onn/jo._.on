@@ -65,11 +65,10 @@ export default function Home() {
               <Image src={withBase(site.photo)} alt={`${site.name.first} ${site.name.last}`} fill sizes="170px" className="object-contain" priority />
             </div>
             <p className="mt-3 flex items-center gap-1.5 text-center text-xs leading-tight text-muted">
-              <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-live" />
               <span>
                 <T
-                  en={<>Now at <span className="whitespace-nowrap font-semibold text-fg">{site.now.org}</span></>}
-                  ko={<>현재 <span className="font-semibold text-fg">{site.now.orgKo}</span></>}
+                  en={<>Now at <span className="whitespace-nowrap font-semibold text-fg"><Image src={withBase(site.now.logo.symbol)} alt="" width={363} height={182} className="mr-1 inline-block h-2.5 w-auto align-[-1px]" />{site.now.org}</span></>}
+                  ko={<>현재 <span className="whitespace-nowrap font-semibold text-fg"><Image src={withBase(site.now.logo.symbol)} alt="" width={363} height={182} className="mr-1 inline-block h-2.5 w-auto align-[-1px]" />{site.now.orgKo}</span></>}
                 />
               </span>
             </p>
@@ -341,7 +340,12 @@ function JourneyCurve() {
           {/* label sits up-left of the dot, clear of the rising line */}
           <span className={`absolute ${i === 0 ? "top-3 left-2 text-left" : "bottom-3 right-1 text-right"}`}>
             <span className="block text-[11px] font-bold tabular-nums text-muted">{j.year}</span>
-            <span className="block whitespace-nowrap text-xs font-semibold"><T en={j.label} ko={j.labelKo} /></span>
+            <span className="block whitespace-nowrap text-xs font-semibold">
+              {i === site.journey.length - 1 && (
+                <Image src={withBase(site.now.logo.symbol)} alt="" width={363} height={182} className="mr-1 inline-block h-2.5 w-auto align-[-1px]" />
+              )}
+              <T en={j.label} ko={j.labelKo} />
+            </span>
           </span>
         </div>
       ))}

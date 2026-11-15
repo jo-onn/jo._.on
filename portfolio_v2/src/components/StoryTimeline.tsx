@@ -21,6 +21,7 @@ export type StoryItem = {
   body: readonly string[];
   bodyKo?: readonly string[];
   image?: string;
+  logo?: { light: string; dark: string; alt: string };
 };
 
 /** "The Story" timeline: year markers on a rail, one card per chapter. */
@@ -63,7 +64,7 @@ export function StoryTimeline({ items }: { items: readonly StoryItem[] }) {
                   </span>
                   {ko && s.headlineKo ? s.headlineKo : s.headline}
                 </h3>
-                <div className={`mt-5 grid gap-6 ${s.image ? "md:grid-cols-[1fr_260px]" : ""}`}>
+                <div className={`mt-5 grid gap-6 ${s.image || s.logo ? "md:grid-cols-[1fr_260px]" : ""}`}>
                   <div className="space-y-4 text-[15px] leading-relaxed text-muted md:text-base">
                     {(ko && s.bodyKo ? s.bodyKo : s.body).map((para) => (
                       <p key={para}>{para}</p>
@@ -72,6 +73,12 @@ export function StoryTimeline({ items }: { items: readonly StoryItem[] }) {
                   {s.image && (
                     <div className="relative aspect-square overflow-hidden rounded-2xl border border-line bg-fg/5">
                       <Image src={withBase(s.image)} alt="" fill sizes="260px" className="object-cover object-top" />
+                    </div>
+                  )}
+                  {s.logo && (
+                    <div className="grid aspect-[4/3] place-items-center rounded-2xl border border-line bg-fg/[0.03] p-6 md:aspect-square md:p-8">
+                      <Image src={withBase(s.logo.light)} alt={s.logo.alt} width={672} height={182} sizes="220px" className="only-light h-auto w-full max-w-[220px]" />
+                      <Image src={withBase(s.logo.dark)} alt={s.logo.alt} width={672} height={182} sizes="220px" className="only-dark h-auto w-full max-w-[220px]" />
                     </div>
                   )}
                 </div>

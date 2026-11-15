@@ -138,6 +138,12 @@ body {
   letter-spacing: 0.02em;
 }
 
+/* Theme-specific images (e.g. logos with dark text): show the matching one. */
+[data-theme="light"] .only-dark,
+:root:not([data-theme="light"]) .only-light {
+  display: none !important;
+}
+
 /* Theme toggle icon follows the attribute, so no React state is needed. */
 [data-theme="light"] .icon-moon,
 :root:not([data-theme="light"]) .icon-sun {
