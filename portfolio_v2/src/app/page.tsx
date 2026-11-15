@@ -60,7 +60,7 @@ export default function Home() {
             </div>
           </div>
           </div>
-          <div className="flex w-24 shrink-0 flex-col items-center self-start sm:w-32 lg:w-[clamp(104px,9.5vw,150px)]">
+          <div className="flex w-20 shrink-0 flex-col items-center self-start sm:w-28 lg:w-[clamp(92px,8vw,124px)]">
             <div className="relative aspect-square w-full">
               <Image src={withBase(site.photo)} alt={`${site.name.first} ${site.name.last}`} fill sizes="170px" className="object-contain" priority />
             </div>
