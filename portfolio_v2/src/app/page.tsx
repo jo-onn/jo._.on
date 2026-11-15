@@ -300,7 +300,7 @@ function JourneyCurve() {
     { x: 333.7, y: 59.1 },
   ];
   return (
-    <div className="relative mt-6 flex-1 min-h-[180px]">
+    <div className="relative mt-6 mb-12 flex-1 min-h-[180px]">
       <svg viewBox="0 0 380 220" preserveAspectRatio="none" className="absolute inset-0 h-full w-full" aria-hidden="true">
         <defs>
           <linearGradient id="journey-fill" x1="0" y1="0" x2="0" y2="1">
