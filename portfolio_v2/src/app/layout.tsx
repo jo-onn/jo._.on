@@ -15,6 +15,11 @@ export const metadata: Metadata = {
 // (see Next docs: preventing-flash-before-hydration).
 const prefsScript = `(function(){try{var d=document.documentElement,t=localStorage.getItem("theme"),l=localStorage.getItem("lang");if(t==="light"||t==="dark")d.setAttribute("data-theme",t);if(l==="ko"||l==="en"){d.setAttribute("data-lang",l);d.setAttribute("lang",l)}}catch(e){}})()`;
 
+// Cloudflare Web Analytics (cookie-less visitor stats). The token is public by
+// design (it ships in the page); it comes from the CF_BEACON_TOKEN repository
+// variable at build time. No token → no script.
+const cfBeaconToken = process.env.NEXT_PUBLIC_CF_BEACON_TOKEN;
+
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
@@ -30,6 +35,13 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <noscript>
           <style>{`.tile{opacity:1!important;transform:none!important}`}</style>
         </noscript>
+        {cfBeaconToken && (
+          <script
+            defer
+            src="https://static.cloudflareinsights.com/beacon.min.js"
+            data-cf-beacon={JSON.stringify({ token: cfBeaconToken })}
+          />
+        )}
       </head>
       <body className="min-h-full font-sans">{children}</body>
     </html>

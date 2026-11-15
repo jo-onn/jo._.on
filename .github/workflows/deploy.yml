@@ -41,6 +41,7 @@ jobs:
         env:
           PAGES_BASE_PATH: /jo._.on
           NEXT_PUBLIC_CHAT_ENDPOINT: ${{ vars.CHAT_ENDPOINT }}
+          NEXT_PUBLIC_CF_BEACON_TOKEN: ${{ vars.CF_BEACON_TOKEN }}
 
       # ── v1 → /v1 ───────────────────────────────────────────────────
       - run: npm install
