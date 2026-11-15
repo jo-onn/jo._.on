@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { ArrowRight, ArrowUpRight, FileText, FlaskConical, Mail, PenLine, Route, Send } from "lucide-react";
+import { ArrowRight, ArrowUpRight, FileText, FlaskConical, Mail, PenLine, Route, Send, Sparkles } from "lucide-react";
 import { site } from "@/data/site";
 import { Tile } from "@/components/Tile";
 import { SeoulClock } from "@/components/SeoulClock";
@@ -8,6 +8,8 @@ import { HashModal } from "@/components/HashModal";
 import { StoryTimeline } from "@/components/StoryTimeline";
 import { LangToggle } from "@/components/LangToggle";
 import { T } from "@/components/T";
+import { ProjectsCover } from "@/components/ProjectsCover";
+import { DrawOnView } from "@/components/DrawOnView";
 import { AskChat, AskTrigger } from "@/components/chat";
 import { WorkGallery } from "@/components/projects/WorkGallery";
 import { withBase } from "@/lib/base";
@@ -15,10 +17,17 @@ import { withBase } from "@/lib/base";
 const eyebrow = "text-[11px] font-semibold tracking-[0.22em] uppercase";
 const display = "font-extrabold tracking-tight leading-[0.92]";
 
+// Cover slideshow order: start with the configured cover, then the rest.
+const coverImages = [
+  site.projects.cover,
+  ...site.projects.list.map((p) => p.image).filter((src) => src !== site.projects.cover),
+].map(withBase);
+
 export default function Home() {
   return (
-    <main className="mx-auto max-w-[1400px] px-4 pb-10 pt-20 md:px-8 md:pt-24">
-      <div data-modal-background className="fixed right-4 top-4 z-50 flex gap-2 md:right-6 md:top-6">
+    <main className="safe-x mx-auto max-w-[1400px] pb-10 pt-20 md:pt-24">
+      {/* Phones: scrolls away with the page so it never sits on top of a tile. */}
+      <div data-modal-background className="safe-corner absolute z-50 flex gap-2 md:fixed">
         <LangToggle />
         <ThemeToggle />
       </div>
@@ -51,36 +60,42 @@ export default function Home() {
             </div>
           </div>
           </div>
-          <div className="flex w-24 shrink-0 flex-col items-center self-start sm:w-32 lg:w-[clamp(104px,9.5vw,150px)]">
+          <div className="flex w-20 shrink-0 flex-col items-center self-start sm:w-28 lg:w-[clamp(92px,8vw,124px)]">
             <div className="relative aspect-square w-full">
               <Image src={withBase(site.photo)} alt={`${site.name.first} ${site.name.last}`} fill sizes="170px" className="object-contain" priority />
             </div>
             <p className="mt-3 flex items-center gap-1.5 text-center text-xs leading-tight text-muted">
-              <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-live" />
               <span>
                 <T
-                  en={<>Now at <span className="whitespace-nowrap font-semibold text-fg">{site.now.org}</span></>}
-                  ko={<>현재 <span className="font-semibold text-fg">{site.now.orgKo}</span></>}
+                  en={<>Now at <span className="whitespace-nowrap font-semibold text-fg"><Image src={withBase(site.now.logo.symbol)} alt="" width={363} height={182} className="mr-1 inline-block h-2.5 w-auto align-[-1px]" />{site.now.org}</span></>}
+                  ko={<>현재 <span className="whitespace-nowrap font-semibold text-fg"><Image src={withBase(site.now.logo.symbol)} alt="" width={363} height={182} className="mr-1 inline-block h-2.5 w-auto align-[-1px]" />{site.now.orgKo}</span></>}
                 />
               </span>
             </p>
           </div>
         </Tile>
 
-        {/* Ask jo._.on — the v2 headline feature */}
-        <Tile index={1} className="ask-tile md:col-span-2 lg:col-span-7 lg:min-h-[240px] flex flex-col justify-end">
-          <div>
-            <h2 className={`${display} text-4xl lg:text-[clamp(2rem,3.4vw,3rem)]`}>{site.chat.title}</h2>
+        {/* Ask jo._.on — the v2 headline feature. No card: like the name block it
+            sits on the page; the aurora lives on the prompt field as a ring/glow. */}
+        <Tile plain index={1} className="md:col-span-2 lg:col-span-7 lg:min-h-[240px] flex flex-col justify-end px-1 py-2 lg:pl-4">
+          <div data-ask-block>
+            <h2 className={`${display} flex items-center gap-2.5 text-[1.75rem] lg:text-[clamp(1.5rem,2.3vw,2.125rem)]`}>
+              <span className="ask-tile hidden h-8 w-8 shrink-0 place-items-center rounded-xl text-ask-ink sm:grid lg:h-9 lg:w-9" aria-hidden="true">
+                <Sparkles className="h-4 w-4" />
+              </span>
+              <span className="min-w-0">{site.chat.title}</span>
+            </h2>
             <AskTrigger
               aria-label="Ask about jo._.on — open chat"
-              className="mt-5 flex items-center gap-2 rounded-full bg-white/55 py-2 pl-5 pr-2 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.6)] backdrop-blur outline-none transition-colors hover:bg-white/70 focus-visible:ring-2 focus-visible:ring-ask-ink/50"
+              className="ask-field group/ask mt-5 flex min-h-14 items-center gap-2 rounded-full py-2 pl-5 pr-2 text-fg"
             >
-              <span className="flex-1 truncate text-sm opacity-70"><T en={site.chat.placeholder} ko={site.chat.placeholderKo} /></span>
-              <span className="grid h-9 w-9 place-items-center rounded-full bg-ask-ink text-white">
-                <Send className="h-4 w-4" />
+              <span className="flex-1 truncate text-[15px] text-muted transition-colors group-hover/ask:text-fg"><T en={site.chat.placeholder} ko={site.chat.placeholderKo} /></span>
+              <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-fg text-bg transition-transform duration-300 group-hover/ask:-rotate-12 motion-reduce:transition-none motion-reduce:group-hover/ask:rotate-0">
+                <Send className="h-4 w-4" aria-hidden="true" />
               </span>
             </AskTrigger>
-            {/* Chips send their text as the question, so render one set per language */}
+            {/* Chips send their text as the question, so render one set per language.
+                On phones they scroll sideways in one row instead of wrapping. */}
             {([
               ["en", site.chat.suggestions],
               ["ko", site.chat.suggestionsKo],
@@ -88,13 +103,14 @@ export default function Home() {
               <div
                 key={lang}
                 {...(lang === "en" ? { "data-lang-en": "" } : { "data-lang-ko": "" })}
-                className="mt-3 hidden flex-wrap gap-2 md:flex"
+                data-allow-overflow
+                className="no-scrollbar -mx-5 mt-3 flex gap-2 overflow-x-auto px-5 py-1 md:mx-0 md:flex-wrap md:overflow-visible md:px-0"
               >
                 {list.map((q) => (
                   <AskTrigger
                     key={q}
                     question={q}
-                    className="rounded-full border border-ask-ink/15 bg-white/30 px-3 py-1 text-xs font-medium outline-none transition-colors hover:bg-white/50 focus-visible:ring-2 focus-visible:ring-ask-ink/50"
+                    className="inline-flex min-h-11 shrink-0 items-center whitespace-nowrap rounded-full border border-line px-4 text-[13px] font-medium text-muted transition-colors hover:border-fg/30 hover:text-fg active:bg-fg/5 md:min-h-9 md:px-3.5"
                   >
                     {q}
                   </AskTrigger>
@@ -108,12 +124,9 @@ export default function Home() {
 
         {/* Selected projects (tall, image cover) */}
         <Tile index={3} href="#projects" ariaLabel="Selected projects" bare className="bg-card lg:col-span-3 lg:row-span-2 min-h-[360px] lg:min-h-[500px]">
-          <Image
-            src={withBase(site.projects.cover)}
-            alt=""
-            fill
+          <ProjectsCover
+            images={coverImages}
             sizes="(min-width: 1024px) 25vw, (min-width: 768px) 50vw, 100vw"
-            className="object-cover object-[50%_30%] opacity-80 transition-transform duration-700 group-hover:scale-105"
           />
           {/* Theme-neutral scrim so the cover reads the same in light and dark */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/45 to-black/10" />
@@ -134,12 +147,12 @@ export default function Home() {
         </Tile>
 
         {/* Résumé */}
-        <Tile index={4} href={withBase(site.resume)} external ariaLabel="Résumé (PDF, opens in a new tab)" className="bg-warm text-warm-ink min-h-[180px] gap-6 lg:col-span-3 lg:min-h-[240px] flex flex-col justify-between">
+        <Tile index={4} href={withBase(site.resume)} external ariaLabel="Résumé (PDF, opens in a new tab)" className="resume-card text-fg min-h-[180px] gap-6 lg:col-span-3 lg:min-h-[240px] flex flex-col justify-between">
           <div className="flex items-start justify-between">
-            <span className="grid h-11 w-11 place-items-center rounded-xl bg-warm-ink text-warm">
+            <span className="ask-tile grid h-11 w-11 place-items-center rounded-xl resume-icon">
               <FileText className="h-5 w-5" />
             </span>
-            <ArrowUpRight className="h-5 w-5 opacity-60 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+            <ArrowUpRight className="h-5 w-5 opacity-60 transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:opacity-100" />
           </div>
           <div>
             <h2 className={`${display} text-5xl lg:text-[clamp(1.9rem,3.2vw,3rem)]`}>RÉSUMÉ</h2>
@@ -150,7 +163,7 @@ export default function Home() {
         {/* My journey (big) */}
         <Tile index={5} href="#journey" ariaLabel="My journey — read the story" className="bg-card md:col-span-2 lg:col-span-4 lg:row-span-2 min-h-[360px] lg:min-h-[500px] flex flex-col">
           <div className="flex items-start justify-between">
-            <span className="grid h-11 w-11 place-items-center rounded-xl bg-accent text-accent-ink">
+            <span className="grid h-11 w-11 place-items-center rounded-xl bg-accent-grad text-accent-ink">
               <Route className="h-5 w-5" />
             </span>
             <span className={`rounded-full border border-line px-3 py-1 text-muted ${eyebrow} tracking-[0.16em]`}>
@@ -160,7 +173,7 @@ export default function Home() {
           <h2 className={`${display} mt-8 text-5xl lg:text-[clamp(2.4rem,4vw,3.75rem)]`}>
             MY
             <br />
-            <span className="text-accent">JOURNEY</span>
+            <span className="text-accent-grad">JOURNEY</span>
           </h2>
           <JourneyCurve />
           <span className={`mt-auto inline-flex w-fit items-center gap-2 rounded-full border border-line px-3 py-1.5 text-muted ${eyebrow} tracking-[0.16em]`}>
@@ -220,7 +233,7 @@ export default function Home() {
       </div>
 
       {/* ── Detail modals (opened via #hash links on the tiles) ── */}
-      <HashModal id="ask" title={["ASK ABOUT", "JO._.ON"]}>
+      <HashModal id="ask" title={["ASK ABOUT", "JO._.ON"]} fill>
         <AskChat />
       </HashModal>
 
@@ -267,7 +280,7 @@ function SocialLink({ href, label, children }: { href: string; label: string; ch
       aria-label={label}
       target={external ? "_blank" : undefined}
       rel={external ? "noopener noreferrer" : undefined}
-      className="grid h-9 w-9 place-items-center rounded-full border border-line text-muted transition-colors hover:border-fg/40 hover:text-fg"
+      className="grid h-11 w-11 place-items-center rounded-full border border-line text-muted transition-colors hover:border-fg/40 hover:text-fg active:bg-fg/5 md:h-9 md:w-9"
     >
       {children}
     </a>
@@ -300,32 +313,42 @@ function JourneyCurve() {
     { x: 333.7, y: 59.1 },
   ];
   return (
-    <div className="relative mt-6 mb-12 flex-1 min-h-[180px]">
+    <DrawOnView className="relative mt-6 mb-12 flex-1 min-h-[180px]">
       <svg viewBox="0 0 380 220" preserveAspectRatio="none" className="absolute inset-0 h-full w-full" aria-hidden="true">
         <defs>
           <linearGradient id="journey-fill" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0%" stopColor="var(--accent)" stopOpacity="0.28" />
             <stop offset="100%" stopColor="var(--accent)" stopOpacity="0" />
           </linearGradient>
+          <linearGradient id="journey-stroke" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stopColor="var(--accent-from)" />
+            <stop offset="55%" stopColor="var(--accent)" />
+            <stop offset="100%" stopColor="var(--accent-to)" />
+          </linearGradient>
         </defs>
-        <path d="M0 210 C 120 200, 220 160, 380 20 L 380 220 L 0 220 Z" fill="url(#journey-fill)" />
-        <path d="M0 210 C 120 200, 220 160, 380 20" fill="none" stroke="var(--accent)" strokeWidth="2.5" vectorEffect="non-scaling-stroke" />
+        <path className="draw-fill" d="M0 210 C 120 200, 220 160, 380 20 L 380 220 L 0 220 Z" fill="url(#journey-fill)" />
+        <path className="draw-stroke" pathLength={1} d="M0 210 C 120 200, 220 160, 380 20" fill="none" stroke="url(#journey-stroke)" strokeWidth="2.5" vectorEffect="non-scaling-stroke" />
       </svg>
       {site.journey.map((j, i) => (
         <div
           key={j.year}
-          className="absolute"
-          style={{ left: `${(pts[i].x / 380) * 100}%`, top: `${(pts[i].y / 220) * 100}%` }}
+          className="draw-point absolute"
+          style={{ left: `${(pts[i].x / 380) * 100}%`, top: `${(pts[i].y / 220) * 100}%`, transitionDelay: `${0.35 + i * 0.35}s` }}
         >
           {/* dot centred on the curve */}
           <span className="absolute h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-accent bg-bg" />
           {/* label sits up-left of the dot, clear of the rising line */}
           <span className={`absolute ${i === 0 ? "top-3 left-2 text-left" : "bottom-3 right-1 text-right"}`}>
             <span className="block text-[11px] font-bold tabular-nums text-muted">{j.year}</span>
-            <span className="block whitespace-nowrap text-xs font-semibold"><T en={j.label} ko={j.labelKo} /></span>
+            <span className="block whitespace-nowrap text-xs font-semibold">
+              {i === site.journey.length - 1 && (
+                <Image src={withBase(site.now.logo.symbol)} alt="" width={363} height={182} className="mr-1 inline-block h-2.5 w-auto align-[-1px]" />
+              )}
+              <T en={j.label} ko={j.labelKo} />
+            </span>
           </span>
         </div>
       ))}
-    </div>
+    </DrawOnView>
   );
 }

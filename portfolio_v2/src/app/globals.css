@@ -9,12 +9,20 @@
   --line: #26262b;
   --fg: #f3f3f5;
   --muted: #8d8d96;
-  --accent: #c9d4ff;      /* Ask jo._.on tile */
+  --accent: #8c9cf5;      /* solid accent: small text, borders, rings */
+  --accent-from: #b4c0ff;  /* gradient: display words, chips, active pills */
+  --accent-to: #5b63e6;
   --accent-ink: #141c45;
   --warm: #ffd76a;        /* Résumé tile */
   --warm-ink: #2a2000;
   --live: #9ef0b5;
   --ask-ink: #1d1b3a;
+  /* Aurora (v1 background) — used as an accent ring/glow on the Ask field */
+  --aurora-a: #ffc9ae;
+  --aurora-b: #d9c6f5;
+  --aurora-c: #a9cff0;
+  --aurora-glow: 0.35;
+  --field: #141416;
 }
 
 [data-theme="light"] {
@@ -24,12 +32,20 @@
   --line: #e3e3e9;
   --fg: #111114;
   --muted: #6b6b75;
-  --accent: #24316b;
+  --accent: #1c2657;
+  --accent-from: #2f3f9e;
+  --accent-to: #121a45;
   --accent-ink: #eef1ff;
   --warm: #ffd76a;
   --warm-ink: #2a2000;
   --live: #1fae5b;
   --ask-ink: #1d1b3a;
+  /* Deeper aurora so the ring still reads on the pale page */
+  --aurora-a: #f29a7a;
+  --aurora-b: #a98be0;
+  --aurora-c: #6fa6dc;
+  --aurora-glow: 0.3;
+  --field: #ffffff;
 }
 
 @theme inline {
@@ -61,6 +77,52 @@ html {
 body {
   background: var(--bg);
   color: var(--fg);
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Default keyboard focus ring for anything that doesn't draw its own
+   (utilities like outline-none + ring-* still win: this is the base layer). */
+@layer base {
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+}
+
+/* Notch / home-indicator aware gutters (viewport-fit=cover in layout.tsx). */
+.safe-x {
+  padding-left: max(1rem, env(safe-area-inset-left));
+  padding-right: max(1rem, env(safe-area-inset-right));
+}
+@media (min-width: 768px) {
+  .safe-x {
+    padding-left: max(2rem, env(safe-area-inset-left));
+    padding-right: max(2rem, env(safe-area-inset-right));
+  }
+}
+.safe-corner {
+  top: max(1rem, env(safe-area-inset-top));
+  right: max(1rem, env(safe-area-inset-right));
+}
+@media (min-width: 768px) {
+  .safe-corner {
+    top: max(1.5rem, env(safe-area-inset-top));
+    right: max(1.5rem, env(safe-area-inset-right));
+  }
+}
+/* Bottom sheet body: clear the home indicator on phones. */
+@media (max-width: 767px) {
+  .modal-body {
+    padding-bottom: max(1.25rem, calc(env(safe-area-inset-bottom) + 0.75rem));
+  }
+}
+
+/* Horizontal scrollers (tab bars, chip rows) without a visible scrollbar. */
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
 }
 
 /* Language: both versions are rendered; show the one matching <html data-lang>. */
@@ -74,6 +136,12 @@ body {
 }
 [data-lang="ko"] [data-lang-ko] {
   letter-spacing: 0.02em;
+}
+
+/* Theme-specific images (e.g. logos with dark text): show the matching one. */
+[data-theme="light"] .only-dark,
+:root:not([data-theme="light"]) .only-light {
+  display: none !important;
 }
 
 /* Theme toggle icon follows the attribute, so no React state is needed. */
@@ -110,11 +178,143 @@ body {
   }
 }
 
-/* ── Ask tile: aurora gradient carried over from v1's background ───────── */
+/* Reduced motion: no movement anywhere, state changes are instant. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ── Ask field: a prompt bar sitting straight on the page ─────────────────
+   Aurora gradient as a 1.5px ring (padding-box/border-box trick) plus a soft
+   glow behind it that warms up on hover/focus. */
+.ask-field {
+  --glow: var(--aurora-glow);
+  border: 1.5px solid transparent;
+  background:
+    linear-gradient(var(--field), var(--field)) padding-box,
+    linear-gradient(110deg, var(--aurora-a), var(--aurora-b) 50%, var(--aurora-c)) border-box;
+  box-shadow:
+    -14px 4px 32px -14px color-mix(in oklab, var(--aurora-a) calc(var(--glow) * 100%), transparent),
+    0 10px 36px -16px color-mix(in oklab, var(--aurora-b) calc(var(--glow) * 100%), transparent),
+    14px 4px 32px -14px color-mix(in oklab, var(--aurora-c) calc(var(--glow) * 100%), transparent);
+  transition:
+    transform 0.2s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.35s ease;
+}
+.ask-field:hover,
+.ask-field:focus-visible {
+  --glow: calc(var(--aurora-glow) * 2.2);
+}
+.ask-field:focus-visible {
+  outline: 2px solid var(--fg);
+  outline-offset: 4px;
+}
+.ask-field:active {
+  transform: scale(0.99);
+}
+@media (prefers-reduced-motion: reduce) {
+  .ask-field:active {
+    transform: none;
+  }
+}
+
+/* Streaming caret in the chat: a crisp blink instead of a fade. */
+@keyframes caret-blink {
+  0%, 45% { opacity: 1; }
+  50%, 95% { opacity: 0; }
+  100% { opacity: 1; }
+}
+.chat-caret {
+  animation: caret-blink 1s step-end infinite;
+}
+
+/* ── Aurora swatch (chat avatar / empty state icon) ─────────────────────── */
 .ask-tile {
   color: var(--ask-ink);
   background:
     radial-gradient(120% 140% at 0% 0%, #ffd9c4 0%, transparent 55%),
     radial-gradient(120% 140% at 100% 100%, #c6e2f5 0%, transparent 55%),
     linear-gradient(120deg, #f6d6dc 0%, #e4d6f3 50%, #d3e0f7 100%);
+}
+
+/* ── Accent gradient (navy → indigo) ──────────────────────────────────── */
+:root {
+  --accent-grad: linear-gradient(120deg, var(--accent-from) 0%, var(--accent) 50%, var(--accent-to) 100%);
+}
+/* Large display words only — small text stays solid for legibility. */
+.text-accent-grad {
+  background-image: var(--accent-grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+/* Surfaces that carry text use only the from→accent half, so accent-ink keeps
+   ≥ 4.5:1 contrast across the whole fill (the deep end is for display text). */
+.bg-accent-grad {
+  background-image: linear-gradient(120deg, var(--accent-from) 0%, var(--accent) 100%);
+  background-color: var(--accent);
+}
+
+/* ── Résumé icon: tilt + pop on hover ─────────────────────────────────── */
+.resume-icon {
+  transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.group:hover .resume-icon,
+.group:focus-visible .resume-icon {
+  transform: rotate(-12deg) scale(1.12);
+}
+
+/* ── Journey curve draws itself when scrolled into view ───────────────── */
+/* Only when JS is on (.js set before paint) and not yet in view. */
+.draw-stroke {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset 1.5s cubic-bezier(0.65, 0, 0.35, 1);
+}
+.draw-fill {
+  transition: opacity 0.9s ease 0.6s;
+}
+.draw-point {
+  transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.js .draw-on-view:not(.in-view) .draw-stroke {
+  stroke-dashoffset: 1;
+}
+.js .draw-on-view:not(.in-view) .draw-fill {
+  opacity: 0;
+}
+.js .draw-on-view:not(.in-view) .draw-point {
+  opacity: 0;
+  transform: translateY(6px);
+}
+
+/* ── Résumé card: same aurora treatment as the Ask input ─────────────────
+   Solid field fill + aurora gradient border + soft aurora glow. Declared
+   after the hover-spotlight rules so its own border/glow win on hover. */
+.tile.resume-card {
+  --glow: var(--aurora-glow);
+  border: 1.5px solid transparent;
+  background:
+    linear-gradient(var(--field), var(--field)) padding-box,
+    linear-gradient(130deg, var(--aurora-a), var(--aurora-b) 50%, var(--aurora-c)) border-box;
+  box-shadow:
+    -18px 8px 44px -22px color-mix(in oklab, var(--aurora-a) calc(var(--glow) * 100%), transparent),
+    0 16px 48px -24px color-mix(in oklab, var(--aurora-b) calc(var(--glow) * 100%), transparent),
+    18px 8px 44px -22px color-mix(in oklab, var(--aurora-c) calc(var(--glow) * 100%), transparent);
+}
+@media (hover: hover) and (pointer: fine) {
+  .bento .tile.resume-card:hover {
+    --glow: calc(var(--aurora-glow) * 2.2);
+    border-color: transparent;
+    box-shadow:
+      -18px 8px 44px -18px color-mix(in oklab, var(--aurora-a) calc(var(--glow) * 100%), transparent),
+      0 18px 52px -20px color-mix(in oklab, var(--aurora-b) calc(var(--glow) * 100%), transparent),
+      18px 8px 44px -18px color-mix(in oklab, var(--aurora-c) calc(var(--glow) * 100%), transparent);
+  }
 }

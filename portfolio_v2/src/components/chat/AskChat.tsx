@@ -169,13 +169,15 @@ export function AskChat() {
   const last = messages[messages.length - 1];
 
   return (
-    <div className="flex h-[min(60vh,600px)] min-h-[360px] flex-col">
+    // Phones: fills the bottom sheet (input pinned to the bottom, above the
+    // keyboard). Larger screens: a fixed-height panel as before.
+    <div className="flex min-h-0 flex-1 flex-col md:h-[min(60vh,600px)] md:min-h-[360px] md:flex-none">
       {!empty && (
-        <div className="-mt-4 mb-3 flex justify-end md:-mt-6">
+        <div className="-mt-2 mb-3 flex justify-end md:-mt-6">
           <button
             type="button"
             onClick={newChat}
-            className={`inline-flex items-center gap-1.5 rounded-full border border-line px-3.5 py-1.5 text-xs font-semibold text-muted transition-colors hover:border-fg/30 hover:text-fg ${ring}`}
+            className={`inline-flex min-h-11 items-center gap-1.5 rounded-full border border-line px-3.5 py-1.5 text-xs font-semibold text-muted transition-colors hover:border-fg/30 hover:text-fg active:bg-fg/5 md:min-h-0 ${ring}`}
           >
             <SquarePen className="h-3.5 w-3.5" aria-hidden="true" />
             {t.newChat}
@@ -216,7 +218,7 @@ export function AskChat() {
       </div>
 
       <form onSubmit={submit} className="mt-4">
-        <div className="flex items-end gap-2 rounded-[26px] border border-line bg-bg/60 py-2 pl-5 pr-2 transition-colors focus-within:border-accent/60">
+        <div className="flex items-end gap-2 rounded-[26px] border border-line bg-bg/60 py-1.5 pl-5 pr-1.5 transition-[border-color,box-shadow] focus-within:border-accent/60 focus-within:shadow-[0_0_0_4px_color-mix(in_oklab,var(--accent)_14%,transparent)] md:py-2 md:pr-2">
           <label htmlFor={inputId} className="sr-only">
             {t.inputLabel}
           </label>
@@ -230,7 +232,7 @@ export function AskChat() {
             rows={1}
             placeholder={placeholderFor(lang, t.placeholder)}
             aria-describedby={hintId}
-            className="field-sizing-content max-h-40 min-h-10 flex-1 resize-none bg-transparent py-2 text-[15px] leading-6 text-fg outline-none placeholder:text-muted"
+            className="field-sizing-content max-h-40 min-h-11 flex-1 resize-none bg-transparent py-2.5 text-base leading-6 text-fg outline-none placeholder:text-muted md:min-h-10 md:py-2 md:text-[15px]"
           />
           {streaming ? (
             <button
@@ -238,7 +240,7 @@ export function AskChat() {
               onClick={stopStreaming}
               aria-label={t.stop}
               title={t.stop}
-              className={`grid h-10 w-10 shrink-0 place-items-center rounded-full border border-line bg-card text-fg transition-colors hover:bg-card-hover ${ring}`}
+              className={`grid h-11 w-11 shrink-0 place-items-center rounded-full border border-line bg-card text-fg transition-[background-color,scale] hover:bg-card-hover active:scale-95 md:h-10 md:w-10 ${ring}`}
             >
               <Square className="h-3.5 w-3.5 fill-current" aria-hidden="true" />
             </button>
@@ -248,7 +250,7 @@ export function AskChat() {
               disabled={!canSend}
               aria-label={t.send}
               title={t.send}
-              className={`grid h-10 w-10 shrink-0 place-items-center rounded-full bg-accent text-accent-ink transition-opacity disabled:cursor-not-allowed disabled:opacity-35 ${ring}`}
+              className={`grid h-11 w-11 shrink-0 place-items-center rounded-full bg-accent-grad text-accent-ink transition-[opacity,scale] enabled:active:scale-95 disabled:cursor-not-allowed disabled:opacity-35 md:h-10 md:w-10 ${ring}`}
             >
               <ArrowUp className="h-[18px] w-[18px]" aria-hidden="true" />
             </button>
@@ -287,7 +289,7 @@ function EmptyState({ t, suggestions, onPick }: { t: Strings; suggestions: reado
               <button
                 type="button"
                 onClick={() => onPick(s)}
-                className={`rounded-full border border-line bg-bg/40 px-4 py-2 text-sm font-medium text-fg transition-colors hover:border-accent/60 hover:bg-card-hover ${ring}`}
+                className={`min-h-11 rounded-full border border-line bg-bg/40 px-4 py-2 text-sm font-medium text-fg transition-[border-color,background-color,scale] hover:border-accent/60 hover:bg-card-hover active:scale-[0.97] md:min-h-0 ${ring}`}
               >
                 {s}
               </button>
@@ -301,15 +303,20 @@ function EmptyState({ t, suggestions, onPick }: { t: Strings; suggestions: reado
 
 function Bubble({ m, t, live }: { m: ChatMessage; t: Strings; live: boolean }) {
   const reduce = useReducedMotion();
+  // Messages rise in from their own side; reduced motion shows them as-is.
   const anim = reduce
     ? {}
-    : { initial: { opacity: 0, y: 8 }, animate: { opacity: 1, y: 0 }, transition: { duration: 0.25, ease: [0.22, 1, 0.36, 1] as const } };
+    : {
+        initial: { opacity: 0, y: 10, scale: 0.98 },
+        animate: { opacity: 1, y: 0, scale: 1 },
+        transition: { duration: 0.3, ease: [0.22, 1, 0.36, 1] as const },
+      };
 
   if (m.role === "user") {
     return (
-      <motion.li className="flex justify-end" {...anim}>
+      <motion.li className="flex origin-bottom-right justify-end" {...anim}>
         <span className="sr-only">{t.you}: </span>
-        <p className="max-w-[85%] whitespace-pre-wrap break-words break-keep rounded-[22px] rounded-br-md bg-accent px-4 py-2.5 text-[15px] leading-relaxed text-accent-ink">
+        <p className="max-w-[85%] whitespace-pre-wrap break-words break-keep rounded-[22px] rounded-br-md bg-accent-grad px-4 py-2.5 text-[15px] leading-relaxed text-accent-ink">
           {m.content}
         </p>
       </motion.li>
@@ -318,7 +325,7 @@ function Bubble({ m, t, live }: { m: ChatMessage; t: Strings; live: boolean }) {
 
   const waiting = live && !m.content;
   return (
-    <motion.li className="flex items-start gap-2.5" {...anim}>
+    <motion.li className="flex origin-top-left items-start gap-2.5" {...anim}>
       <span className="ask-tile mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-full" aria-hidden="true">
         <Sparkles className="h-3.5 w-3.5" />
       </span>
@@ -342,7 +349,7 @@ function Bubble({ m, t, live }: { m: ChatMessage; t: Strings; live: boolean }) {
             {live && (
               <span
                 aria-hidden="true"
-                className="ml-0.5 inline-block h-[1.05em] w-[2px] translate-y-[3px] animate-pulse rounded-full bg-accent motion-reduce:animate-none"
+                className="chat-caret ml-0.5 inline-block h-[1.05em] w-[2px] translate-y-[3px] rounded-full bg-accent motion-reduce:animate-none"
               />
             )}
           </p>

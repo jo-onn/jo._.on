@@ -21,6 +21,7 @@ export type StoryItem = {
   body: readonly string[];
   bodyKo?: readonly string[];
   image?: string;
+  logo?: { light: string; dark: string; alt: string };
 };
 
 /** "The Story" timeline: year markers on a rail, one card per chapter. */
@@ -35,7 +36,7 @@ export function StoryTimeline({ items }: { items: readonly StoryItem[] }) {
         <button
           type="button"
           onClick={() => setOldestFirst((v) => !v)}
-          className="inline-flex items-center gap-2 rounded-full border border-line px-4 py-2 text-[11px] font-bold uppercase tracking-[0.18em] transition-colors hover:bg-fg/5"
+          className="inline-flex min-h-11 items-center gap-2 rounded-full border border-line px-4 py-2 text-[11px] font-bold uppercase tracking-[0.18em] transition-colors hover:bg-fg/5 active:bg-fg/10 md:min-h-0"
         >
           <ArrowDownUp className="h-3.5 w-3.5" />
           {ko ? (oldestFirst ? "오래된 순" : "최신 순") : oldestFirst ? "Oldest first" : "Newest first"}
@@ -52,8 +53,8 @@ export function StoryTimeline({ items }: { items: readonly StoryItem[] }) {
             <li key={s.headline} className="relative pb-10 pl-10 last:pb-0 md:pl-16">
               {showYear && (
                 <>
-                  <span className="absolute left-0 top-3 h-[19px] w-[19px] rounded-full bg-accent md:h-6 md:w-6" />
-                  <p className="mb-5 text-4xl font-extrabold tabular-nums tracking-tight text-accent md:text-5xl">{s.year}</p>
+                  <span className="absolute left-0 top-3 h-[19px] w-[19px] rounded-full bg-accent-grad md:h-6 md:w-6" />
+                  <p className="mb-5 text-4xl font-extrabold tabular-nums tracking-tight text-accent-grad md:text-5xl">{s.year}</p>
                 </>
               )}
               <article className="rounded-[24px] border border-line p-5 md:p-8">
@@ -63,7 +64,7 @@ export function StoryTimeline({ items }: { items: readonly StoryItem[] }) {
                   </span>
                   {ko && s.headlineKo ? s.headlineKo : s.headline}
                 </h3>
-                <div className={`mt-5 grid gap-6 ${s.image ? "md:grid-cols-[1fr_260px]" : ""}`}>
+                <div className={`mt-5 grid gap-6 ${s.image || s.logo ? "md:grid-cols-[1fr_260px]" : ""}`}>
                   <div className="space-y-4 text-[15px] leading-relaxed text-muted md:text-base">
                     {(ko && s.bodyKo ? s.bodyKo : s.body).map((para) => (
                       <p key={para}>{para}</p>
@@ -72,6 +73,12 @@ export function StoryTimeline({ items }: { items: readonly StoryItem[] }) {
                   {s.image && (
                     <div className="relative aspect-square overflow-hidden rounded-2xl border border-line bg-fg/5">
                       <Image src={withBase(s.image)} alt="" fill sizes="260px" className="object-cover object-top" />
+                    </div>
+                  )}
+                  {s.logo && (
+                    <div className="grid aspect-[4/3] place-items-center rounded-2xl border border-line bg-fg/[0.03] p-6 md:aspect-square md:p-8">
+                      <Image src={withBase(s.logo.light)} alt={s.logo.alt} width={672} height={182} sizes="220px" className="only-light h-auto w-full max-w-[220px]" />
+                      <Image src={withBase(s.logo.dark)} alt={s.logo.alt} width={672} height={182} sizes="220px" className="only-dark h-auto w-full max-w-[220px]" />
                     </div>
                   )}
                 </div>

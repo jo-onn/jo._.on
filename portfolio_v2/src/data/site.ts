@@ -21,6 +21,13 @@ export const site = {
   now: {
     org: "NAVER Cloud",
     orgKo: "네이버클라우드",
+    // Theme-aware logo (dark variant has light text) + the mark alone for small spots.
+    logo: {
+      light: "/brand/naver-cloud-platform.png",
+      dark: "/brand/naver-cloud-platform-dark.png",
+      symbol: "/brand/naver-cloud-symbol.png",
+      alt: "NAVER Cloud Platform",
+    },
     role: "Healthcare AI Business Strategy Intern",
     timeZone: "Asia/Seoul",
     zoneLabel: "SEOUL / KST",
@@ -303,6 +310,11 @@ export const site = {
     {
       year: "2026",
       icon: "handshake",
+      logo: {
+        light: "/brand/naver-cloud-platform.png",
+        dark: "/brand/naver-cloud-platform-dark.png",
+        alt: "NAVER Cloud Platform",
+      },
       headline: "Crossing to the other side of the gap",
       headlineKo: "간극의 반대편으로 건너가다",
       bodyKo: [

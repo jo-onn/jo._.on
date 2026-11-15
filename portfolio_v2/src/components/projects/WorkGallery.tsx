@@ -33,7 +33,13 @@ export function WorkGallery() {
 
   return (
     <LayoutGroup id="work-gallery">
-      <div role="tablist" aria-label="Filter projects" className="-mx-1 mb-8 flex flex-wrap gap-1.5 md:mb-10">
+      {/* Phones: one row that scrolls sideways (bleeds to the sheet edges). */}
+      <div
+        role="tablist"
+        aria-label="Filter projects"
+        data-allow-overflow
+        className="no-scrollbar -mx-5 mb-6 flex snap-x scroll-px-5 gap-1.5 overflow-x-auto px-5 py-1 md:-mx-1 md:mb-10 md:flex-wrap md:overflow-visible md:px-1"
+      >
         {tabs.map(({ id, en, ko, Icon }) => {
           const active = id === tab;
           return (
@@ -42,15 +48,18 @@ export function WorkGallery() {
               type="button"
               role="tab"
               aria-selected={active}
-              onClick={() => setTab(id)}
-              className={`relative inline-flex items-center gap-2 rounded-full px-4 py-2.5 text-sm font-semibold outline-none transition-colors focus-visible:ring-2 focus-visible:ring-accent/50 ${
+              onClick={(e) => {
+                setTab(id);
+                e.currentTarget.scrollIntoView({ block: "nearest", inline: "nearest", behavior: reduce ? "auto" : "smooth" });
+              }}
+              className={`relative inline-flex min-h-11 shrink-0 snap-start items-center gap-2 whitespace-nowrap rounded-full px-4 py-2.5 text-sm font-semibold outline-none transition-[color,scale] focus-visible:ring-2 focus-visible:ring-accent/50 focus-visible:ring-inset active:scale-[0.97] ${
                 active ? "text-accent-ink" : "text-muted hover:text-fg"
               }`}
             >
               {active && (
                 <motion.span
                   layoutId="work-gallery-pill"
-                  className="absolute inset-0 rounded-full bg-accent"
+                  className="absolute inset-0 rounded-full bg-accent-grad"
                   transition={spring}
                   aria-hidden="true"
                 />
@@ -88,7 +97,7 @@ function GalleryCard({ p }: { p: Project }) {
   return (
     <Link
       href={projectHref(p)}
-      className="group flex h-full flex-col rounded-[28px] border border-line bg-bg/40 p-3 outline-none transition-[translate,border-color,box-shadow] duration-300 hover:-translate-y-1 hover:border-accent/60 hover:shadow-[0_18px_50px_-14px_color-mix(in_oklab,var(--accent)_35%,transparent)] focus-visible:border-accent/60 focus-visible:ring-2 focus-visible:ring-accent/40 motion-reduce:transition-none motion-reduce:hover:translate-y-0"
+      className="group flex h-full flex-col rounded-[28px] border border-line bg-bg/40 p-3 outline-none transition-[translate,scale,border-color,box-shadow] duration-300 hover:-translate-y-1 active:scale-[0.985] hover:border-accent/60 hover:shadow-[0_18px_50px_-14px_color-mix(in_oklab,var(--accent)_35%,transparent)] focus-visible:border-accent/60 focus-visible:ring-2 focus-visible:ring-accent/40 motion-reduce:transition-none motion-reduce:hover:translate-y-0"
     >
       <div className="relative aspect-[4/3] overflow-hidden rounded-[20px] bg-fg/5">
         <Image
