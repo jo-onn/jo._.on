@@ -8,6 +8,7 @@ import { HashModal } from "@/components/HashModal";
 import { StoryTimeline } from "@/components/StoryTimeline";
 import { LangToggle } from "@/components/LangToggle";
 import { T } from "@/components/T";
+import { AskChat, AskTrigger } from "@/components/chat";
 
 const eyebrow = "text-[11px] font-semibold tracking-[0.22em] uppercase";
 const display = "font-extrabold tracking-tight leading-[0.92]";
@@ -68,19 +69,36 @@ export default function Home() {
         <Tile index={1} className="ask-tile md:col-span-2 lg:col-span-7 lg:min-h-[240px] flex flex-col justify-end">
           <div>
             <h2 className={`${display} text-4xl lg:text-[clamp(2rem,3.4vw,3rem)]`}>{site.chat.title}</h2>
-            <div className="mt-5 flex items-center gap-2 rounded-full bg-white/55 py-2 pl-5 pr-2 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.6)] backdrop-blur">
+            <AskTrigger
+              aria-label="Ask about jo._.on — open chat"
+              className="mt-5 flex items-center gap-2 rounded-full bg-white/55 py-2 pl-5 pr-2 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.6)] backdrop-blur outline-none transition-colors hover:bg-white/70 focus-visible:ring-2 focus-visible:ring-ask-ink/50"
+            >
               <span className="flex-1 truncate text-sm opacity-70"><T en={site.chat.placeholder} ko={site.chat.placeholderKo} /></span>
               <span className="grid h-9 w-9 place-items-center rounded-full bg-ask-ink text-white">
                 <Send className="h-4 w-4" />
               </span>
-            </div>
-            <div className="mt-3 hidden flex-wrap gap-2 md:flex">
-              {site.chat.suggestions.map((s, i) => (
-                <span key={s} className="rounded-full border border-ask-ink/15 bg-white/30 px-3 py-1 text-xs font-medium">
-                  <T en={s} ko={site.chat.suggestionsKo[i]} />
-                </span>
-              ))}
-            </div>
+            </AskTrigger>
+            {/* Chips send their text as the question, so render one set per language */}
+            {([
+              ["en", site.chat.suggestions],
+              ["ko", site.chat.suggestionsKo],
+            ] as const).map(([lang, list]) => (
+              <div
+                key={lang}
+                {...(lang === "en" ? { "data-lang-en": "" } : { "data-lang-ko": "" })}
+                className="mt-3 hidden flex-wrap gap-2 md:flex"
+              >
+                {list.map((q) => (
+                  <AskTrigger
+                    key={q}
+                    question={q}
+                    className="rounded-full border border-ask-ink/15 bg-white/30 px-3 py-1 text-xs font-medium outline-none transition-colors hover:bg-white/50 focus-visible:ring-2 focus-visible:ring-ask-ink/50"
+                  >
+                    {q}
+                  </AskTrigger>
+                ))}
+              </div>
+            ))}
           </div>
         </Tile>
 
@@ -200,6 +218,10 @@ export default function Home() {
       </div>
 
       {/* ── Detail modals (opened via #hash links on the tiles) ── */}
+      <HashModal id="ask" title={["ASK ABOUT", "JO._.ON"]}>
+        <AskChat />
+      </HashModal>
+
       <HashModal id="projects" title={["SELECTED", "PROJECTS"]}>
         <div className="grid gap-5 md:grid-cols-2">
           {site.projects.list.map((p) => (
