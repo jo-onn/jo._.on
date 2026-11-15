@@ -276,7 +276,7 @@ export function AskChat() {
 
 function EmptyState({ t, suggestions, onPick }: { t: Strings; suggestions: readonly string[]; onPick: (q: string) => void }) {
   return (
-    <div className="flex min-h-full flex-col items-start justify-end gap-5 pb-2">
+    <div className="flex min-h-full flex-col items-start justify-center gap-5 py-4">
       <span className="ask-tile grid h-12 w-12 place-items-center rounded-2xl" aria-hidden="true">
         <Sparkles className="h-5 w-5" />
       </span>

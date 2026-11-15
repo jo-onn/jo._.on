@@ -41,10 +41,10 @@
   --live: #1fae5b;
   --ask-ink: #1d1b3a;
   /* Deeper aurora so the ring still reads on the pale page */
-  --aurora-a: #f29a7a;
-  --aurora-b: #a98be0;
-  --aurora-c: #6fa6dc;
-  --aurora-glow: 0.3;
+  --aurora-a: #e47f5a;
+  --aurora-b: #8e6fd8;
+  --aurora-c: #4e8ed2;
+  --aurora-glow: 0.42;
   --field: #ffffff;
 }
 
@@ -161,7 +161,8 @@ body {
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .bento:has(.tile:hover) .tile:not(:hover) {
+  /* The Ask block (chat entry) never dims, so the prompt always reads clearly. */
+  .bento:has(.tile:hover) .tile:not(:hover):not(:has([data-ask-block])) {
     filter: opacity(0.75) saturate(0.85);
   }
   .bento .tile:not(.tile-plain):hover {
@@ -317,4 +318,9 @@ body {
       0 18px 52px -20px color-mix(in oklab, var(--aurora-b) calc(var(--glow) * 100%), transparent),
       18px 8px 44px -18px color-mix(in oklab, var(--aurora-c) calc(var(--glow) * 100%), transparent);
   }
+}
+
+/* Light theme: a slightly thicker aurora ring so the prompt stands out on the pale page. */
+[data-theme="light"] .ask-field {
+  border-width: 2px;
 }
