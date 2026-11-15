@@ -4,7 +4,7 @@ import Image from "next/image";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 
-const INTERVAL_MS = 3200;
+const INTERVAL_MS = 1800;
 
 /**
  * Cover for the Selected Projects tile: cycles through the project images with
@@ -54,7 +54,7 @@ export function ProjectsCover({ images, sizes }: { images: string[]; sizes: stri
           initial={{ opacity: 0, scale: 1.08 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ opacity: { duration: 0.9, ease: "easeOut" }, scale: { duration: 3.6, ease: [0.22, 1, 0.36, 1] } }}
+          transition={{ opacity: { duration: 0.6, ease: "easeOut" }, scale: { duration: 2.2, ease: [0.22, 1, 0.36, 1] } }}
         >
           <Image
             src={src}
