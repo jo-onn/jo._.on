@@ -26,6 +26,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: prefsScript }} />
+        {/* Without JS the tiles would stay at their pre-animation opacity:0 */}
+        <noscript>
+          <style>{`.tile{opacity:1!important;transform:none!important}`}</style>
+        </noscript>
       </head>
       <body className="min-h-full font-sans">{children}</body>
     </html>

@@ -15,12 +15,12 @@ const display = "font-extrabold tracking-tight leading-[0.92]";
 export default function Home() {
   return (
     <main className="mx-auto max-w-[1400px] px-4 pb-10 pt-20 md:px-8 md:pt-24">
-      <div className="fixed right-4 top-4 z-50 flex gap-2 md:right-6 md:top-6">
+      <div data-modal-background className="fixed right-4 top-4 z-50 flex gap-2 md:right-6 md:top-6">
         <LangToggle />
         <ThemeToggle />
       </div>
 
-      <div className="bento grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-12 md:gap-5">
+      <div data-modal-background className="bento grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-12 md:gap-5">
         {/* ── Row 1 ─────────────────────────────────────────── */}
 
         {/* Name + one-liner — no card, type sits straight on the page */}
@@ -56,7 +56,7 @@ export default function Home() {
               <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-live" />
               <span>
                 <T
-                  en={<>Now at <span className="font-semibold text-fg">{site.now.org}</span></>}
+                  en={<>Now at <span className="whitespace-nowrap font-semibold text-fg">{site.now.org}</span></>}
                   ko={<>현재 <span className="font-semibold text-fg">{site.now.orgKo}</span></>}
                 />
               </span>
@@ -69,7 +69,7 @@ export default function Home() {
           <div>
             <h2 className={`${display} text-4xl lg:text-[clamp(2rem,3.4vw,3rem)]`}>{site.chat.title}</h2>
             <div className="mt-5 flex items-center gap-2 rounded-full bg-white/55 py-2 pl-5 pr-2 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.6)] backdrop-blur">
-              <span className="flex-1 truncate text-sm opacity-55"><T en={site.chat.placeholder} ko={site.chat.placeholderKo} /></span>
+              <span className="flex-1 truncate text-sm opacity-70"><T en={site.chat.placeholder} ko={site.chat.placeholderKo} /></span>
               <span className="grid h-9 w-9 place-items-center rounded-full bg-ask-ink text-white">
                 <Send className="h-4 w-4" />
               </span>
@@ -87,22 +87,23 @@ export default function Home() {
         {/* ── Row 2 ─────────────────────────────────────────── */}
 
         {/* Selected projects (tall, image cover) */}
-        <Tile index={3} href="#projects" bare className="bg-card lg:col-span-3 lg:row-span-2 min-h-[360px] lg:min-h-[500px]">
+        <Tile index={3} href="#projects" ariaLabel="Selected projects" bare className="bg-card lg:col-span-3 lg:row-span-2 min-h-[360px] lg:min-h-[500px]">
           <Image
             src={site.projects.cover}
             alt=""
             fill
-            sizes="(min-width: 768px) 25vw, 100vw"
-            className="object-cover object-top opacity-60 transition-transform duration-700 group-hover:scale-105"
+            sizes="(min-width: 1024px) 25vw, (min-width: 768px) 50vw, 100vw"
+            className="object-cover object-[50%_30%] opacity-80 transition-transform duration-700 group-hover:scale-105"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-bg via-bg/70 to-bg/10" />
-          <div className="relative flex h-full flex-col justify-between p-6 md:p-7">
-            <span className={`w-fit rounded-full bg-fg/10 px-3 py-1.5 backdrop-blur ${eyebrow} tracking-[0.16em]`}>
+          {/* Theme-neutral scrim so the cover reads the same in light and dark */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/45 to-black/10" />
+          <div className="relative flex h-full flex-col justify-between p-6 text-white md:p-7">
+            <span className={`w-fit rounded-full bg-white/15 px-3 py-1.5 backdrop-blur ${eyebrow} tracking-[0.16em]`}>
               <span className="mr-2 inline-block h-1.5 w-1.5 rounded-full bg-live align-middle" />
               <T en="Featured works" ko="대표 작업" />
             </span>
             <div>
-              <p className="mb-2 text-sm text-muted"><T en={`${String(site.projects.list.length).padStart(2, "0")} projects`} ko={`프로젝트 ${site.projects.list.length}개`} /></p>
+              <p className="mb-2 text-sm text-white/70"><T en={`${String(site.projects.list.length).padStart(2, "0")} projects`} ko={`프로젝트 ${site.projects.list.length}개`} /></p>
               <h2 className={`${display} text-5xl lg:text-[clamp(1.9rem,3.2vw,3rem)]`}>
                 SELECTED
                 <br />
@@ -113,7 +114,7 @@ export default function Home() {
         </Tile>
 
         {/* Résumé */}
-        <Tile index={4} href={site.resume} external className="bg-warm text-warm-ink lg:col-span-3 lg:min-h-[240px] flex flex-col justify-between">
+        <Tile index={4} href={site.resume} external ariaLabel="Résumé (PDF, opens in a new tab)" className="bg-warm text-warm-ink min-h-[180px] gap-6 lg:col-span-3 lg:min-h-[240px] flex flex-col justify-between">
           <div className="flex items-start justify-between">
             <span className="grid h-11 w-11 place-items-center rounded-xl bg-warm-ink text-warm">
               <FileText className="h-5 w-5" />
@@ -127,7 +128,7 @@ export default function Home() {
         </Tile>
 
         {/* My journey (big) */}
-        <Tile index={5} href="#journey" className="bg-card lg:col-span-4 lg:row-span-2 min-h-[360px] lg:min-h-[500px] flex flex-col">
+        <Tile index={5} href="#journey" ariaLabel="My journey — read the story" className="bg-card md:col-span-2 lg:col-span-4 lg:row-span-2 min-h-[360px] lg:min-h-[500px] flex flex-col">
           <div className="flex items-start justify-between">
             <span className="grid h-11 w-11 place-items-center rounded-xl bg-accent text-accent-ink">
               <Route className="h-5 w-5" />
@@ -148,7 +149,7 @@ export default function Home() {
         </Tile>
 
         {/* Blog (coming soon) */}
-        <Tile index={6} href={site.social.tistory} external className="bg-card lg:col-span-2 lg:min-h-[240px] flex flex-col justify-between">
+        <Tile index={6} href={site.social.tistory} external ariaLabel="Blog on Tistory (opens in a new tab)" className="bg-card lg:col-span-2 lg:min-h-[240px] flex flex-col justify-between">
           <span className="grid h-11 w-11 place-items-center rounded-full border border-line">
             <PenLine className="h-5 w-5" />
           </span>
@@ -162,11 +163,11 @@ export default function Home() {
         </Tile>
 
         {/* Research */}
-        <Tile index={7} href="#research" className="bg-card lg:col-span-3 lg:min-h-[240px] flex flex-col justify-between">
+        <Tile index={7} href="#research" ariaLabel="Research and papers" className="bg-card lg:col-span-3 lg:min-h-[240px] flex flex-col justify-between">
           <div className="flex items-center justify-between">
-            <span className={`flex items-center gap-2 text-muted ${eyebrow}`}>
+            <h2 className={`flex items-center gap-2 text-muted ${eyebrow}`}>
               <FlaskConical className="h-4 w-4" /> <T en="Research" ko="연구" />
-            </span>
+            </h2>
             <ArrowUpRight className="h-4 w-4 text-muted transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
           </div>
           <ul className="mt-4 space-y-3">
@@ -185,7 +186,7 @@ export default function Home() {
         </Tile>
 
         {/* Now + Seoul clock */}
-        <Tile index={8} className="bg-card lg:col-span-2 lg:min-h-[240px] flex flex-col justify-between">
+        <Tile index={8} className="bg-card md:col-span-2 lg:col-span-2 lg:min-h-[240px] flex flex-col justify-between">
           <div className="flex items-start justify-between">
             <span className={`text-muted ${eyebrow}`}>{site.now.zoneLabel}</span>
             <span className="relative mt-1 flex h-3 w-3">
@@ -325,7 +326,7 @@ function JourneyCurve() {
           {/* dot centred on the curve */}
           <span className="absolute h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-accent bg-bg" />
           {/* label sits up-left of the dot, clear of the rising line */}
-          <span className={`absolute bottom-3 ${i === 0 ? "-left-1 text-left" : "right-1 text-right"}`}>
+          <span className={`absolute ${i === 0 ? "top-3 left-2 text-left" : "bottom-3 right-1 text-right"}`}>
             <span className="block text-[11px] font-bold tabular-nums text-muted">{j.year}</span>
             <span className="block whitespace-nowrap text-xs font-semibold"><T en={j.label} ko={j.labelKo} /></span>
           </span>

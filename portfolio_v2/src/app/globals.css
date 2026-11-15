@@ -51,6 +51,8 @@
 
 html {
   color-scheme: dark;
+  /* Keep layout steady when a modal locks body scroll */
+  scrollbar-gutter: stable;
 }
 [data-theme="light"] {
   color-scheme: light;
