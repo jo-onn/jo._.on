@@ -70,7 +70,7 @@ html.dark .dot-bg {
 
 /* ── Section headings & eyebrows: Carlito (Calibri-like) ─ */
 h1, h2, h3 {
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: 'Playfair Display', 'Pretendard', Georgia, serif;
 }
 .eyebrow {
   font-family: 'Manrope', sans-serif;
