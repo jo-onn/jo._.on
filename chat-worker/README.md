@@ -95,10 +95,10 @@ curl -i -X POST https://jo-on-chat.<서브도메인>.workers.dev/ \
 
 ### 6. 사이트에 Worker 주소 연결하기
 
-사이트는 빌드할 때 `NEXT_PUBLIC_CHAT_ENDPOINT` 환경변수로 챗봇 주소를 받습니다.
+사이트는 빌드할 때 `NEXT_PUBLIC_CHAT_ENDPOINT` 환경변수로 챗봇 주소를 받습니다. 배포 워크플로(`.github/workflows/deploy.yml`)가 저장소 변수 `CHAT_ENDPOINT` 값을 이 환경변수로 넘겨 줍니다.
 
 1. GitHub 저장소 → **Settings → Secrets and variables → Actions → Variables** 탭 → **New repository variable**
-2. Name: `NEXT_PUBLIC_CHAT_ENDPOINT`, Value: `https://jo-on-chat.<서브도메인>.workers.dev` (4단계에서 나온 주소)
+2. Name: `CHAT_ENDPOINT`, Value: `https://jo-on-chat.<서브도메인>.workers.dev` (4단계에서 나온 주소)
 3. GitHub Actions에서 사이트 배포 워크플로를 다시 실행합니다. 빌드할 때 값이 들어가므로 **값을 바꾸면 다시 빌드해야 합니다**.
 
 ## 설정값 정리
@@ -109,7 +109,7 @@ curl -i -X POST https://jo-on-chat.<서브도메인>.workers.dev/ \
 | `ALLOWED_ORIGINS` | var | `wrangler.jsonc` → `vars` | 쉼표로 구분한 허용 Origin 목록 |
 | `CHAT_MOCK` | var | `wrangler.jsonc` → `vars` | `"1"`이면 모델을 호출하지 않고 목업 답변 |
 | `CHAT_RATE_LIMITER` | 바인딩 | `wrangler.jsonc` → `ratelimits` | IP당 10회/60초 |
-| `NEXT_PUBLIC_CHAT_ENDPOINT` | GitHub 저장소 variable | 사이트 빌드 | Worker 주소 |
+| `CHAT_ENDPOINT` | GitHub 저장소 variable | 사이트 빌드 (→ `NEXT_PUBLIC_CHAT_ENDPOINT`) | Worker 주소 |
 
 `vars`를 바꾼 뒤에는 `npm run deploy`로 다시 배포해야 반영됩니다.
 챗봇을 잠시 끄고 싶으면 `CHAT_MOCK`을 `"1"`로 바꿔 배포하세요. 그러면 비용이 나가지 않습니다.
