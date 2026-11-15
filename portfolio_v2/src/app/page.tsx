@@ -60,15 +60,17 @@ export default function Home() {
             </div>
           </div>
           </div>
-          <div className="flex w-20 shrink-0 flex-col items-center self-start sm:w-28 lg:w-[clamp(92px,8vw,124px)]">
-            <div className="relative aspect-square w-full">
+          {/* Column width follows the "Now at …" line so it never overflows the
+              page edge on phones; the photo keeps its own size. */}
+          <div className="flex shrink-0 flex-col items-center self-start">
+            <div className="relative aspect-square w-20 sm:w-28 lg:w-[clamp(92px,8vw,124px)]">
               <Image src={withBase(site.photo)} alt={`${site.name.first} ${site.name.last}`} fill sizes="170px" className="object-contain" priority />
             </div>
             <p className="mt-3 flex items-center gap-1.5 text-center text-xs leading-tight text-muted">
               <span>
                 <T
-                  en={<>Now at <span className="whitespace-nowrap font-semibold text-fg"><Image src={withBase(site.now.logo.symbol)} alt="" width={363} height={182} className="mr-1 inline-block h-2.5 w-auto align-[-1px]" />{site.now.org}</span></>}
-                  ko={<>현재 <span className="whitespace-nowrap font-semibold text-fg"><Image src={withBase(site.now.logo.symbol)} alt="" width={363} height={182} className="mr-1 inline-block h-2.5 w-auto align-[-1px]" />{site.now.orgKo}</span></>}
+                  en={<><span className="block">Now at</span><span className="whitespace-nowrap font-semibold text-fg"><Image src={withBase(site.now.logo.symbol)} alt="" width={363} height={182} className="mr-1 inline-block h-2.5 w-auto align-[-1px]" />{site.now.org}</span></>}
+                  ko={<><span className="block">현재</span><span className="whitespace-nowrap font-semibold text-fg"><Image src={withBase(site.now.logo.symbol)} alt="" width={363} height={182} className="mr-1 inline-block h-2.5 w-auto align-[-1px]" />{site.now.orgKo}</span></>}
                 />
               </span>
             </p>
