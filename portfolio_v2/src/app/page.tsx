@@ -72,9 +72,9 @@ export default function Home() {
             sits on the page; the aurora lives on the prompt field as a ring/glow. */}
         <Tile plain index={1} className="md:col-span-2 lg:col-span-7 lg:min-h-[240px] flex flex-col justify-end px-1 py-2 lg:pl-4">
           <div data-ask-block>
-            <h2 className={`${display} flex items-center gap-3 text-4xl lg:text-[clamp(2rem,3.4vw,3rem)]`}>
-              <span className="ask-tile hidden h-9 w-9 shrink-0 place-items-center rounded-xl text-ask-ink sm:grid lg:h-11 lg:w-11 lg:rounded-2xl" aria-hidden="true">
-                <Sparkles className="h-4 w-4 lg:h-5 lg:w-5" />
+            <h2 className={`${display} flex items-center gap-2.5 text-[1.75rem] lg:text-[clamp(1.5rem,2.3vw,2.125rem)]`}>
+              <span className="ask-tile hidden h-8 w-8 shrink-0 place-items-center rounded-xl text-ask-ink sm:grid lg:h-9 lg:w-9" aria-hidden="true">
+                <Sparkles className="h-4 w-4" />
               </span>
               <span className="min-w-0">{site.chat.title}</span>
             </h2>
