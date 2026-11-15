@@ -9,6 +9,7 @@ export const siteConfig = {
     linkedin: "https://www.linkedin.com/in/jo-on/",
     github: "https://github.com/jo-onn",
     cv: "/resume.pdf",
+    tistory: "https://jhklee-coder.tistory.com/",
   },  sectionDescriptions: {
     about:      "의료 AI를 만드는 일에서, 현장에 닿게 하는 일로.",
     experience: "AI 스타트업과 대학 연구실에서 쌓아온 실무 경험들입니다.",
@@ -122,17 +123,10 @@ export const siteConfig = {
   ],
   experience: [
     {
-      company: "Kyung-Hee University",
-      title: "Physical Education & Software Convergence",
-      dateRange: "Mar 2020 — Feb 2026",
-      link: "https://www.khu.ac.kr",
-      bullets: [
-        "Double major in Physical Education & Software Convergence.",
-      ],
-    },
-    {
       company: "FutureWorkLab",
-      title: "AI Engineer · Research 인턴",
+      companyKo: "퓨처워크랩 (FutureWorkLab)",
+      title: "AI Engineer · Research Intern",
+      titleKo: "AI 엔지니어 · 리서치 인턴",
       dateRange: "Dec 2024 — Aug 2025",
       link: "https://futureworklab.co",
       bullets: [
@@ -142,20 +136,35 @@ export const siteConfig = {
         "Built entity-extraction and critique nodes (critique_entity) to keep the knowledge graph high-quality; refactored prompts and fixed link/memo storage bugs.",
         "Coordinated specs across PM & engineers — issues in Linear, pipeline/policy/research docs in Notion.",
       ],
+      bulletsKo: [
+        "링크·메모를 지식 그래프로 자동 구조화하고 AI 검색을 제공하는 그래프 기반 '세컨드 브레인' 서비스 <strong>LinkBrain</strong>의 초기 PoC 단계에 참여했습니다.",
+        "<strong>LangGraph</strong> 기반 에이전트 파이프라인을 설계·구현했습니다. 질의 의도 라우팅 노드(user_query_analysis)와 도메인별로 분기되는 계층형 카테고리 흐름(main → sub → subsub → critique)을 만들었습니다.",
+        "KG-BERT의 구조 정보 부족을 보완하기 위해 GNN과 BERT를 결합한 지식 그래프 링크 예측(<strong>GnBERT</strong>)을 연구했습니다.",
+        "지식 그래프 품질 유지를 위한 엔티티 추출·검증 노드(critique_entity)를 구축하고, 프롬프트 리팩터링과 링크·메모 저장 버그 수정을 진행했습니다.",
+        "PM·엔지니어 간 스펙을 조율하며 이슈는 Linear로, 파이프라인·정책·리서치 문서는 Notion으로 관리했습니다.",
+      ],
     },
     {
       company: "AIMS Lab, Kyung-Hee University",
-      title: "학부연구생",
+      companyKo: "경희대학교 AIMS Lab",
+      title: "Undergraduate Researcher",
+      titleKo: "학부연구생",
       dateRange: "Aug 2025 — Jul 2026",
       link: "https://sites.google.com/view/khu-aims/home/",
       bullets: [
         "Comparative study of quantitative attention-measurement models from wearable-sensor data.",
         "Deep-learning model comparison analysis on brain CT data.",
       ],
+      bulletsKo: [
+        "웨어러블 센서 데이터 기반 정량적 집중도 측정 모델 비교 연구를 수행했습니다.",
+        "뇌 CT 데이터에 대한 딥러닝 모델 비교 분석을 수행했습니다.",
+      ],
     },
     {
       company: "Seoul National University Hospital, BMI Lab",
-      title: "인턴 연구원 · 서울대학교병원 융합의학기술원 BMI Lab",
+      companyKo: "서울대학교병원 융합의학기술원 BMI Lab",
+      title: "Research Intern",
+      titleKo: "인턴 연구원",
       dateRange: "Mar 2026 — Aug 2026",
       link: "https://snuh-bmilab.ai.kr/",
       bullets: [
@@ -164,15 +173,27 @@ export const siteConfig = {
         "Reproduced the full DINO pipeline (ViT-B/14) on ImageNet-1k, matching paper numbers (kNN top-1 82.4%, linear probing 79.2%), then ran from-scratch training.",
         "Proposed a hierarchical patch → bag (MIL) → slide style-embedding structure with stain/scanner conditional tokens; reviewed DINOv2 (iBOT, KoLeo, Sinkhorn-Knopp).",
       ],
+      bulletsKo: [
+        "병리 전체 슬라이드 이미지(WSI)에서 염색·스캐너 차이에 강건한 특징을 추출하기 위해 <strong>DINO</strong> 기반 자기지도학습 ViT 인코더를 검증했습니다.",
+        "라벨이 부족하고 다운스트림 과제가 정해지지 않은 병리 데이터에 대조학습(Contrastive SSL)보다 자기증류(DINO)가 적합한 근거를 정리하고, centering/sharpening·teacher-student EMA·multi-crop을 분석했습니다.",
+        "ImageNet-1k에서 DINO 전체 파이프라인(ViT-B/14)을 재현해 논문 수치(kNN top-1 82.4%, linear probing 79.2%)를 확인한 뒤 처음부터 학습을 진행했습니다.",
+        "염색·스캐너 조건 토큰을 둔 patch → bag(MIL) → slide 계층형 스타일 임베딩 구조를 제안하고, DINOv2(iBOT, KoLeo, Sinkhorn-Knopp)를 리뷰했습니다.",
+      ],
     },
     {
       company: "NAVER Cloud",
-      title: "Healthcare AI Business Strategy 인턴",
+      companyKo: "네이버클라우드",
+      title: "Healthcare AI Business Strategy Intern",
+      titleKo: "헬스케어 AI 사업전략 인턴",
       dateRange: "Sep 2026 — Current",
       link: "https://www.ncloud.com",
       bullets: [
         "Support healthcare AI business strategy — sizing the market and mapping government programs and budget flows.",
         "Build the sales pipeline and partner process that carry a medical AI service from first contact to contract.",
+      ],
+      bulletsKo: [
+        "헬스케어 AI 사업 전략을 지원하며 시장 규모를 추정하고 정부 사업·예산 흐름을 정리하고 있습니다.",
+        "의료 AI 서비스가 첫 접촉에서 계약까지 이어지도록 영업 파이프라인과 파트너 협업 체계를 만들고 있습니다.",
       ],
     },
   ],
