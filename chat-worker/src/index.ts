@@ -144,23 +144,35 @@ async function handleChat(request: Request, env: Env, origin: string): Promise<R
       : jsonError(500, "server_error", origin);
   }
 
+  // Set once the stream is closed, errored or cancelled by the client. A pull()
+  // that was already awaiting the next chunk when the visitor left must not
+  // touch the controller afterwards ("This ReadableStream is closed").
+  let finished = false;
   const stream = new ReadableStream<Uint8Array>({
     start(controller) {
-      if (first.done) controller.close();
-      else controller.enqueue(encoder.encode(first.value));
+      if (first.done) {
+        finished = true;
+        controller.close();
+      } else controller.enqueue(encoder.encode(first.value));
     },
     async pull(controller) {
       try {
         const { value, done } = await answer.next();
-        if (done) controller.close();
-        else controller.enqueue(encoder.encode(value));
+        if (finished) return;
+        if (done) {
+          finished = true;
+          controller.close();
+        } else controller.enqueue(encoder.encode(value));
       } catch (err) {
+        if (finished) return; // client already gone; nothing to report
+        finished = true;
         // Headers already sent; error the body so the client sees a failed read.
         logError(err);
         controller.error(new Error("upstream_error"));
       }
     },
     async cancel() {
+      finished = true;
       upstream.abort();
       await answer.return(undefined);
     },
