@@ -8,9 +8,11 @@ import { T } from "@/components/T";
 import { LangToggle } from "@/components/LangToggle";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { categoryLabel, getProject, projectHref, projects } from "@/components/projects/data";
+import { withBase } from "@/lib/base";
 
-// Every project is prerendered at build time. With cacheComponents on, an
-// unlisted slug is rendered on demand and hits notFound() below → 404.
+// Every project is prerendered at build time (static export). Unlisted slugs
+// have no file on the host, which then serves the exported 404 page.
+
 export function generateStaticParams() {
   return projects.map((p) => ({ slug: p.slug }));
 }
@@ -90,7 +92,7 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
       </header>
 
       <div className="relative mt-10 aspect-[16/10] overflow-hidden rounded-[28px] border border-line bg-card md:mt-12">
-        <Image src={p.image} alt="" fill priority sizes="(min-width: 896px) 832px, 100vw" className="object-cover object-top" />
+        <Image src={withBase(p.image)} alt="" fill priority sizes="(min-width: 896px) 832px, 100vw" className="object-cover object-top" />
       </div>
 
       <section className="mt-12 md:mt-16">
@@ -141,7 +143,7 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
           return (
             <a
               key={l.label}
-              href={l.href}
+              href={withBase(l.href)}
               target="_blank"
               rel="noopener noreferrer"
               className={`group inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-semibold transition-colors ${

@@ -1,13 +1,24 @@
 name: Deploy to GitHub Pages
 
+# One Pages artifact, two sites:
+#   https://jo-onn.github.io/jo._.on/     → portfolio_v2 (Next.js static export)
+#   https://jo-onn.github.io/jo._.on/v1/  → portfolio_v1 (Astro, archived)
+# The v2 chatbot runs on a separate Cloudflare Worker (see chat-worker/);
+# its URL comes from the repository variable CHAT_ENDPOINT.
+
 on:
   push:
     branches: [master]
+  workflow_dispatch:
 
 permissions:
   contents: read
   pages: write
   id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
 
 jobs:
   build:
@@ -16,16 +27,43 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: npm
-          cache-dependency-path: portfolio_v1/package-lock.json
+          cache-dependency-path: |
+            portfolio_v1/package-lock.json
+            portfolio_v2/package-lock.json
+
+      # ── v2 → site root ─────────────────────────────────────────────
+      - run: npm ci
+        working-directory: portfolio_v2
+      - run: npm run build
+        working-directory: portfolio_v2
+        env:
+          PAGES_BASE_PATH: /jo._.on
+          NEXT_PUBLIC_CHAT_ENDPOINT: ${{ vars.CHAT_ENDPOINT }}
+
+      # ── v1 → /v1 ───────────────────────────────────────────────────
       - run: npm install
         working-directory: portfolio_v1
       - run: npm run build
         working-directory: portfolio_v1
+        env:
+          ASTRO_BASE: /jo._.on/v1
+
+      - name: Assemble site
+        run: |
+          mkdir -p site
+          cp -R portfolio_v2/out/. site/
+          mkdir -p site/v1
+          cp -R portfolio_v1/dist/. site/v1/
+          touch site/.nojekyll
+      - name: Warn if the chatbot endpoint is not configured
+        if: ${{ vars.CHAT_ENDPOINT == '' }}
+        run: echo "::warning::Repository variable CHAT_ENDPOINT is empty — the Ask chat will show an error until it is set."
+
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: portfolio_v1/dist/
+          path: site/
 
   deploy:
     needs: build

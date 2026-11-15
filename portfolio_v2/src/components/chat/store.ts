@@ -6,7 +6,9 @@
 import type { Lang } from "@/lib/lang";
 
 /** The chat API endpoint (contract: POST { messages, lang } → streamed text/plain). */
-export const CHAT_ENDPOINT = "/api/chat";
+// Static site → the chat runs on a separate Cloudflare Worker (see /chat-worker).
+// Set NEXT_PUBLIC_CHAT_ENDPOINT at build time; "/api/chat" is only a dev fallback.
+export const CHAT_ENDPOINT = process.env.NEXT_PUBLIC_CHAT_ENDPOINT || "/api/chat";
 /** Max characters per question (enforced in the input). */
 export const MAX_INPUT = 1000;
 /** Max messages sent to the API per request. */

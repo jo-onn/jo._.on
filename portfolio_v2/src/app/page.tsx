@@ -10,6 +10,7 @@ import { LangToggle } from "@/components/LangToggle";
 import { T } from "@/components/T";
 import { AskChat, AskTrigger } from "@/components/chat";
 import { WorkGallery } from "@/components/projects/WorkGallery";
+import { withBase } from "@/lib/base";
 
 const eyebrow = "text-[11px] font-semibold tracking-[0.22em] uppercase";
 const display = "font-extrabold tracking-tight leading-[0.92]";
@@ -52,7 +53,7 @@ export default function Home() {
           </div>
           <div className="flex w-24 shrink-0 flex-col items-center self-start sm:w-32 lg:w-[clamp(104px,9.5vw,150px)]">
             <div className="relative aspect-square w-full">
-              <Image src={site.photo} alt={`${site.name.first} ${site.name.last}`} fill sizes="170px" className="object-contain" priority />
+              <Image src={withBase(site.photo)} alt={`${site.name.first} ${site.name.last}`} fill sizes="170px" className="object-contain" priority />
             </div>
             <p className="mt-3 flex items-center gap-1.5 text-center text-xs leading-tight text-muted">
               <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-live" />
@@ -108,7 +109,7 @@ export default function Home() {
         {/* Selected projects (tall, image cover) */}
         <Tile index={3} href="#projects" ariaLabel="Selected projects" bare className="bg-card lg:col-span-3 lg:row-span-2 min-h-[360px] lg:min-h-[500px]">
           <Image
-            src={site.projects.cover}
+            src={withBase(site.projects.cover)}
             alt=""
             fill
             sizes="(min-width: 1024px) 25vw, (min-width: 768px) 50vw, 100vw"
@@ -133,7 +134,7 @@ export default function Home() {
         </Tile>
 
         {/* Résumé */}
-        <Tile index={4} href={site.resume} external ariaLabel="Résumé (PDF, opens in a new tab)" className="bg-warm text-warm-ink min-h-[180px] gap-6 lg:col-span-3 lg:min-h-[240px] flex flex-col justify-between">
+        <Tile index={4} href={withBase(site.resume)} external ariaLabel="Résumé (PDF, opens in a new tab)" className="bg-warm text-warm-ink min-h-[180px] gap-6 lg:col-span-3 lg:min-h-[240px] flex flex-col justify-between">
           <div className="flex items-start justify-between">
             <span className="grid h-11 w-11 place-items-center rounded-xl bg-warm-ink text-warm">
               <FileText className="h-5 w-5" />
@@ -236,7 +237,7 @@ export default function Home() {
           {site.research.map((r) => (
             <a
               key={r.venue}
-              href={r.href}
+              href={withBase(r.href)}
               target="_blank"
               rel="noopener noreferrer"
               className="group flex flex-col rounded-[24px] border border-line bg-bg/40 p-6 transition-colors hover:border-accent/60"

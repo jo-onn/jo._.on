@@ -7,6 +7,7 @@ import { AnimatePresence, LayoutGroup, motion, useReducedMotion } from "motion/r
 import { ArrowUpRight, Bot, FlaskConical, LayoutGrid, Package, Sparkles } from "lucide-react";
 import { T } from "@/components/T";
 import { categoryLabel, projectHref, projects, type Category, type Project } from "./data";
+import { withBase } from "@/lib/base";
 
 type TabId = "picks" | "all" | Category;
 
@@ -91,7 +92,7 @@ function GalleryCard({ p }: { p: Project }) {
     >
       <div className="relative aspect-[4/3] overflow-hidden rounded-[20px] bg-fg/5">
         <Image
-          src={p.image}
+          src={withBase(p.image)}
           alt=""
           fill
           sizes="(min-width: 1024px) 300px, (min-width: 640px) 45vw, 100vw"

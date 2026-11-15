@@ -35,7 +35,7 @@ export const site = {
   },
 
   projects: {
-    cover: "/projects/musinsa-fit-1.png",
+    cover: "/projects/musinsa-fit-1.webp",
     list: [
       {
         // ── Work Gallery + detail page (/projects/<slug>) ──
@@ -76,7 +76,7 @@ export const site = {
           "뇌 CT의 두개내출혈 탐지를 위해 딥러닝 이상 탐지 기법 11종을 체계적으로 비교했고, 자기지도학습보다 재구성 기반 방법이 우세함을 확인했습니다.",
         year: "2026",
         badges: ["Paper", "MIDL 2026"],
-        image: "/projects/brain-ct-1.png",
+        image: "/projects/brain-ct-1.webp",
         description:
           "A systematic benchmark of 11 deep-learning anomaly detection methods for intracranial hemorrhage in brain CT, favoring reconstruction-based over self-supervised approaches.",
         skills: ["PyTorch", "Medical Imaging", "Anomaly Detection"],
@@ -121,7 +121,7 @@ export const site = {
           "리뷰 약 70만 건과 제품 1,198개를 분석해 플랫폼이 수집한 피부 타입 데이터를 활용하지 못하고 있음을 보이고, 성분 OCR → 피부 적합도 점수 파이프라인을 크롬 확장 프로그램으로 구현했습니다.",
         year: "2026",
         badges: ["Project"],
-        image: "/projects/musinsa-fit-1.png",
+        image: "/projects/musinsa-fit-1.webp",
         description:
           "From ~700K reviews and 1,198 products, shows the platform doesn't use the skin-type data it collects — then closes the gap with an ingredient-OCR → skin-fit scoring pipeline shipped as a Chrome extension.",
         skills: ["Python", "FastAPI", "Data Analysis", "Chrome Extension"],
@@ -169,7 +169,7 @@ export const site = {
           "웨어러블 생체신호(HR, RRI, EDA, 피부 온도)를 함께 활용해 학습자의 집중도를 예측하는 머신러닝 파이프라인으로, 단일 센서 접근의 한계를 넘었습니다.",
         year: "2025",
         badges: ["Paper", "KSC 2025"],
-        image: "/projects/ksc-1.png",
+        image: "/projects/ksc-1.webp",
         description:
           "An ML pipeline predicting learner attention from multimodal wearable biosignals — HR, RRI, EDA and skin temperature — beyond single-sensor approaches.",
         skills: ["Python", "Machine Learning", "Time Series"],
@@ -213,7 +213,7 @@ export const site = {
         descriptionKo: "LangGraph 기반 AI 에이전트가 텃밭 분양과 단계별 재배 가이드를 제공하는 도시농업 플랫폼입니다.",
         year: "2024",
         badges: ["KHUTHON 2024 · Grand Prize"],
-        image: "/projects/cifarm-1.png",
+        image: "/projects/cifarm-1.webp",
         description:
           "An urban-farming platform where a LangGraph-based AI agent handles plot matching and step-by-step growing guides.",
         skills: ["LangChain", "LangGraph", "FastAPI"],
@@ -268,7 +268,7 @@ export const site = {
         "At FutureWorkLab I joined LinkBrain at its earliest PoC stage — a 'second brain' that turns links and memos into a knowledge graph.",
         "I designed the LangGraph agent pipeline end to end and researched GNN + BERT link prediction. That same year, an AI farming-coach agent won the KHUTHON grand prize.",
       ],
-      image: "/projects/cifarm-1.png",
+      image: "/projects/cifarm-1.webp",
     },
     {
       year: "2025",
@@ -283,7 +283,7 @@ export const site = {
         "In AIMS Lab I moved from building products to asking research questions: can wearable biosignals tell us when a learner is paying attention?",
         "The multimodal HR, EDA and skin-temperature pipeline became a KSC 2025 poster — and the start of my work with medical data.",
       ],
-      image: "/projects/ksc-1.png",
+      image: "/projects/ksc-1.webp",
     },
     {
       year: "2026",
@@ -298,7 +298,7 @@ export const site = {
         "A benchmark of 11 anomaly-detection methods on brain CT turned into a MIDL 2026 submission.",
         "At SNUH's BMI Lab I reproduced DINO on ImageNet and validated self-supervised encoders for pathology slides — and saw how far a strong model still is from a hospital workflow.",
       ],
-      image: "/projects/brain-ct-1.png",
+      image: "/projects/brain-ct-1.webp",
     },
     {
       year: "2026",

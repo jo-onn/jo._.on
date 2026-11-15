@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { Activity, ArrowDownUp, Bot, Handshake, Microscope, type LucideIcon } from "lucide-react";
 import { useLang } from "@/lib/lang";
+import { withBase } from "@/lib/base";
 
 const ICONS: Record<string, LucideIcon> = {
   bot: Bot,
@@ -70,7 +71,7 @@ export function StoryTimeline({ items }: { items: readonly StoryItem[] }) {
                   </div>
                   {s.image && (
                     <div className="relative aspect-square overflow-hidden rounded-2xl border border-line bg-fg/5">
-                      <Image src={s.image} alt="" fill sizes="260px" className="object-cover object-top" />
+                      <Image src={withBase(s.image)} alt="" fill sizes="260px" className="object-cover object-top" />
                     </div>
                   )}
                 </div>
