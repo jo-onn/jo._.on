@@ -1,0 +1,11 @@
+# Copy to .dev.vars for `npm run dev` (local only; .dev.vars is gitignored).
+# Values here override "vars" in wrangler.jsonc during local development.
+
+# 1 = canned streamed reply, no Anthropic call (recommended locally).
+CHAT_MOCK=1
+
+# Only needed if you set CHAT_MOCK=0 locally to test a real call (costs money).
+# In production this is a secret: `npx wrangler secret put ANTHROPIC_API_KEY`.
+# ANTHROPIC_API_KEY=sk-ant-...
+
+# ALLOWED_ORIGINS=https://jo-onn.github.io,http://localhost:3000,http://127.0.0.1:3000

@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2023"],
+    "module": "ES2022",
+    "moduleResolution": "bundler",
+    "types": ["@cloudflare/workers-types"],
+    "strict": true,
+    "noEmit": true,
+    "isolatedModules": true,
+    "skipLibCheck": true,
+    // Shared chat modules in ../portfolio_v2 import "@/data/site" (the Next.js
+    // path alias). Resolve it to the same file; wrangler.jsonc mirrors this
+    // with "alias" for the bundler.
+    "paths": {
+      "@/*": ["../portfolio_v2/src/*"]
+    }
+  },
+  "include": ["src/**/*.ts"]
+}
