@@ -42,10 +42,12 @@ type Props = {
   id: string;
   /** Two-tone title: first line plain, second line in the accent colour. */
   title: [string, string];
+  /** Put both title words on one line ("WORK GALLERY") instead of stacking them. */
+  inlineTitle?: boolean;
   children: ReactNode;
 };
 
-export function HashModal({ id, title, children }: Props) {
+export function HashModal({ id, title, inlineTitle = false, children }: Props) {
   const hash = useSyncExternalStore(subscribe, getHash, getServerHash);
   const open = hash === id;
   const reduce = useReducedMotion();
@@ -125,7 +127,7 @@ export function HashModal({ id, title, children }: Props) {
             <div className="overflow-y-auto overscroll-contain p-6 md:p-12">
               <h2 id={titleId} className="mb-8 pr-12 text-5xl font-extrabold leading-[0.92] tracking-tight md:mb-10 md:text-6xl">
                 {title[0]}
-                <br />
+                {inlineTitle ? " " : <br />}
                 <span className="text-accent">{title[1]}</span>
               </h2>
 

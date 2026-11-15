@@ -9,6 +9,7 @@ import { StoryTimeline } from "@/components/StoryTimeline";
 import { LangToggle } from "@/components/LangToggle";
 import { T } from "@/components/T";
 import { AskChat, AskTrigger } from "@/components/chat";
+import { WorkGallery } from "@/components/projects/WorkGallery";
 
 const eyebrow = "text-[11px] font-semibold tracking-[0.22em] uppercase";
 const display = "font-extrabold tracking-tight leading-[0.92]";
@@ -222,38 +223,8 @@ export default function Home() {
         <AskChat />
       </HashModal>
 
-      <HashModal id="projects" title={["SELECTED", "PROJECTS"]}>
-        <div className="grid gap-5 md:grid-cols-2">
-          {site.projects.list.map((p) => (
-            <article key={p.name} className="overflow-hidden rounded-[24px] border border-line bg-bg/40">
-              <div className="relative aspect-[16/9] bg-fg/5">
-                <Image src={p.image} alt="" fill sizes="(min-width: 768px) 480px, 100vw" className="object-cover object-top" />
-              </div>
-              <div className="p-5 md:p-6">
-                <div className="flex flex-wrap items-center gap-2 text-xs">
-                  <span className="tabular-nums text-muted">{p.year}</span>
-                  {p.badges.map((b) => (
-                    <span key={b} className="rounded-full bg-accent/15 px-2.5 py-0.5 font-semibold text-accent">{b}</span>
-                  ))}
-                </div>
-                <h3 className="mt-3 text-lg font-bold leading-snug"><T en={p.name} ko={p.nameKo} /></h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted"><T en={p.description} ko={p.descriptionKo} /></p>
-                <div className="mt-4 flex flex-wrap gap-1.5">
-                  {p.skills.map((sk) => (
-                    <span key={sk} className="rounded-md border border-line px-2 py-0.5 text-[11px] text-muted">{sk}</span>
-                  ))}
-                </div>
-                <div className="mt-4 flex gap-4 border-t border-line pt-4">
-                  {p.links.map((l) => (
-                    <a key={l.label} href={l.href} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-sm font-semibold hover:underline underline-offset-4">
-                      {l.label} <ArrowUpRight className="h-3.5 w-3.5" />
-                    </a>
-                  ))}
-                </div>
-              </div>
-            </article>
-          ))}
-        </div>
+      <HashModal id="projects" title={["WORK", "GALLERY"]} inlineTitle>
+        <WorkGallery />
       </HashModal>
 
       <HashModal id="journey" title={["THE", "STORY"]}>
