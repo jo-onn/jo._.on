@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useState } from "react";
 import { Activity, ArrowDownUp, Bot, Handshake, Microscope, type LucideIcon } from "lucide-react";
+import { useLang } from "@/lib/lang";
 
 const ICONS: Record<string, LucideIcon> = {
   bot: Bot,
@@ -15,13 +16,16 @@ export type StoryItem = {
   year: string;
   icon: string;
   headline: string;
+  headlineKo?: string;
   body: readonly string[];
+  bodyKo?: readonly string[];
   image?: string;
 };
 
 /** "The Story" timeline: year markers on a rail, one card per chapter. */
 export function StoryTimeline({ items }: { items: readonly StoryItem[] }) {
   const [oldestFirst, setOldestFirst] = useState(true);
+  const ko = useLang() === "ko";
   const ordered = oldestFirst ? items : [...items].reverse();
 
   return (
@@ -33,7 +37,7 @@ export function StoryTimeline({ items }: { items: readonly StoryItem[] }) {
           className="inline-flex items-center gap-2 rounded-full border border-line px-4 py-2 text-[11px] font-bold uppercase tracking-[0.18em] transition-colors hover:bg-fg/5"
         >
           <ArrowDownUp className="h-3.5 w-3.5" />
-          {oldestFirst ? "Oldest first" : "Newest first"}
+          {ko ? (oldestFirst ? "오래된 순" : "최신 순") : oldestFirst ? "Oldest first" : "Newest first"}
         </button>
       </div>
 
@@ -56,11 +60,11 @@ export function StoryTimeline({ items }: { items: readonly StoryItem[] }) {
                   <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-accent/15 text-accent md:h-12 md:w-12">
                     <Icon className="h-5 w-5 md:h-6 md:w-6" />
                   </span>
-                  {s.headline}
+                  {ko && s.headlineKo ? s.headlineKo : s.headline}
                 </h3>
                 <div className={`mt-5 grid gap-6 ${s.image ? "md:grid-cols-[1fr_260px]" : ""}`}>
                   <div className="space-y-4 text-[15px] leading-relaxed text-muted md:text-base">
-                    {s.body.map((para) => (
+                    {(ko && s.bodyKo ? s.bodyKo : s.body).map((para) => (
                       <p key={para}>{para}</p>
                     ))}
                   </div>

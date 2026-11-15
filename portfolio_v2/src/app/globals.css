@@ -61,6 +61,19 @@ body {
   color: var(--fg);
 }
 
+/* Language: both versions are rendered; show the one matching <html data-lang>. */
+:root:not([data-lang="ko"]) [data-lang-ko],
+[data-lang="ko"] [data-lang-en] {
+  display: none !important;
+}
+/* Korean: break between words, and drop the wide tracking used on English eyebrows. */
+[data-lang="ko"] body {
+  word-break: keep-all;
+}
+[data-lang="ko"] [data-lang-ko] {
+  letter-spacing: 0.02em;
+}
+
 /* Theme toggle icon follows the attribute, so no React state is needed. */
 [data-theme="light"] .icon-moon,
 :root:not([data-theme="light"]) .icon-sun {
