@@ -52,8 +52,8 @@ export function StoryTimeline({ items }: { items: readonly StoryItem[] }) {
             <li key={s.headline} className="relative pb-10 pl-10 last:pb-0 md:pl-16">
               {showYear && (
                 <>
-                  <span className="absolute left-0 top-3 h-[19px] w-[19px] rounded-full bg-accent md:h-6 md:w-6" />
-                  <p className="mb-5 text-4xl font-extrabold tabular-nums tracking-tight text-accent md:text-5xl">{s.year}</p>
+                  <span className="absolute left-0 top-3 h-[19px] w-[19px] rounded-full bg-accent-grad md:h-6 md:w-6" />
+                  <p className="mb-5 text-4xl font-extrabold tabular-nums tracking-tight text-accent-grad md:text-5xl">{s.year}</p>
                 </>
               )}
               <article className="rounded-[24px] border border-line p-5 md:p-8">

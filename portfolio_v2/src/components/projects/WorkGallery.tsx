@@ -59,7 +59,7 @@ export function WorkGallery() {
               {active && (
                 <motion.span
                   layoutId="work-gallery-pill"
-                  className="absolute inset-0 rounded-full bg-accent"
+                  className="absolute inset-0 rounded-full bg-accent-grad"
                   transition={spring}
                   aria-hidden="true"
                 />

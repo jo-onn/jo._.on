@@ -196,7 +196,7 @@ export function HashModal({ id, title, inlineTitle = false, fill = false, childr
               >
                 {title[0]}
                 {inlineTitle ? " " : <br />}
-                <span className="text-accent">{title[1]}</span>
+                <span className="text-accent-grad">{title[1]}</span>
               </h2>
 
               {fill ? <div className="flex min-h-0 flex-1 flex-col">{children}</div> : children}

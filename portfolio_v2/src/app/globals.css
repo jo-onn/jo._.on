@@ -9,7 +9,9 @@
   --line: #26262b;
   --fg: #f3f3f5;
   --muted: #8d8d96;
-  --accent: #c9d4ff;      /* Ask jo._.on tile */
+  --accent: #8c9cf5;      /* solid accent: small text, borders, rings */
+  --accent-from: #b4c0ff;  /* gradient: display words, chips, active pills */
+  --accent-to: #5b63e6;
   --accent-ink: #141c45;
   --warm: #ffd76a;        /* Résumé tile */
   --warm-ink: #2a2000;
@@ -30,7 +32,9 @@
   --line: #e3e3e9;
   --fg: #111114;
   --muted: #6b6b75;
-  --accent: #24316b;
+  --accent: #1c2657;
+  --accent-from: #2f3f9e;
+  --accent-to: #121a45;
   --accent-ink: #eef1ff;
   --warm: #ffd76a;
   --warm-ink: #2a2000;
@@ -231,4 +235,22 @@ body {
     radial-gradient(120% 140% at 0% 0%, #ffd9c4 0%, transparent 55%),
     radial-gradient(120% 140% at 100% 100%, #c6e2f5 0%, transparent 55%),
     linear-gradient(120deg, #f6d6dc 0%, #e4d6f3 50%, #d3e0f7 100%);
+}
+
+/* ── Accent gradient (navy → indigo) ──────────────────────────────────── */
+:root {
+  --accent-grad: linear-gradient(120deg, var(--accent-from) 0%, var(--accent) 50%, var(--accent-to) 100%);
+}
+/* Large display words only — small text stays solid for legibility. */
+.text-accent-grad {
+  background-image: var(--accent-grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+/* Surfaces that carry text use only the from→accent half, so accent-ink keeps
+   ≥ 4.5:1 contrast across the whole fill (the deep end is for display text). */
+.bg-accent-grad {
+  background-image: linear-gradient(120deg, var(--accent-from) 0%, var(--accent) 100%);
+  background-color: var(--accent);
 }

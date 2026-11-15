@@ -159,7 +159,7 @@ export default function Home() {
         {/* My journey (big) */}
         <Tile index={5} href="#journey" ariaLabel="My journey — read the story" className="bg-card md:col-span-2 lg:col-span-4 lg:row-span-2 min-h-[360px] lg:min-h-[500px] flex flex-col">
           <div className="flex items-start justify-between">
-            <span className="grid h-11 w-11 place-items-center rounded-xl bg-accent text-accent-ink">
+            <span className="grid h-11 w-11 place-items-center rounded-xl bg-accent-grad text-accent-ink">
               <Route className="h-5 w-5" />
             </span>
             <span className={`rounded-full border border-line px-3 py-1 text-muted ${eyebrow} tracking-[0.16em]`}>
@@ -169,7 +169,7 @@ export default function Home() {
           <h2 className={`${display} mt-8 text-5xl lg:text-[clamp(2.4rem,4vw,3.75rem)]`}>
             MY
             <br />
-            <span className="text-accent">JOURNEY</span>
+            <span className="text-accent-grad">JOURNEY</span>
           </h2>
           <JourneyCurve />
           <span className={`mt-auto inline-flex w-fit items-center gap-2 rounded-full border border-line px-3 py-1.5 text-muted ${eyebrow} tracking-[0.16em]`}>
@@ -316,9 +316,14 @@ function JourneyCurve() {
             <stop offset="0%" stopColor="var(--accent)" stopOpacity="0.28" />
             <stop offset="100%" stopColor="var(--accent)" stopOpacity="0" />
           </linearGradient>
+          <linearGradient id="journey-stroke" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stopColor="var(--accent-from)" />
+            <stop offset="55%" stopColor="var(--accent)" />
+            <stop offset="100%" stopColor="var(--accent-to)" />
+          </linearGradient>
         </defs>
         <path d="M0 210 C 120 200, 220 160, 380 20 L 380 220 L 0 220 Z" fill="url(#journey-fill)" />
-        <path d="M0 210 C 120 200, 220 160, 380 20" fill="none" stroke="var(--accent)" strokeWidth="2.5" vectorEffect="non-scaling-stroke" />
+        <path d="M0 210 C 120 200, 220 160, 380 20" fill="none" stroke="url(#journey-stroke)" strokeWidth="2.5" vectorEffect="non-scaling-stroke" />
       </svg>
       {site.journey.map((j, i) => (
         <div

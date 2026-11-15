@@ -250,7 +250,7 @@ export function AskChat() {
               disabled={!canSend}
               aria-label={t.send}
               title={t.send}
-              className={`grid h-11 w-11 shrink-0 place-items-center rounded-full bg-accent text-accent-ink transition-[opacity,scale] enabled:active:scale-95 disabled:cursor-not-allowed disabled:opacity-35 md:h-10 md:w-10 ${ring}`}
+              className={`grid h-11 w-11 shrink-0 place-items-center rounded-full bg-accent-grad text-accent-ink transition-[opacity,scale] enabled:active:scale-95 disabled:cursor-not-allowed disabled:opacity-35 md:h-10 md:w-10 ${ring}`}
             >
               <ArrowUp className="h-[18px] w-[18px]" aria-hidden="true" />
             </button>
@@ -316,7 +316,7 @@ function Bubble({ m, t, live }: { m: ChatMessage; t: Strings; live: boolean }) {
     return (
       <motion.li className="flex origin-bottom-right justify-end" {...anim}>
         <span className="sr-only">{t.you}: </span>
-        <p className="max-w-[85%] whitespace-pre-wrap break-words break-keep rounded-[22px] rounded-br-md bg-accent px-4 py-2.5 text-[15px] leading-relaxed text-accent-ink">
+        <p className="max-w-[85%] whitespace-pre-wrap break-words break-keep rounded-[22px] rounded-br-md bg-accent-grad px-4 py-2.5 text-[15px] leading-relaxed text-accent-ink">
           {m.content}
         </p>
       </motion.li>

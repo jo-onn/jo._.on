@@ -83,8 +83,8 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
         </div>
         <h1 className="mt-5 text-[clamp(2.75rem,9vw,5.5rem)] font-extrabold uppercase leading-[0.92] tracking-tight">
           <T
-            en={<>{p.headline[0]}<br /><span className="text-accent">{p.headline[1]}</span></>}
-            ko={<>{p.headlineKo[0]}<br /><span className="text-accent">{p.headlineKo[1]}</span></>}
+            en={<>{p.headline[0]}<br /><span className="text-accent-grad">{p.headline[1]}</span></>}
+            ko={<>{p.headlineKo[0]}<br /><span className="text-accent-grad">{p.headlineKo[1]}</span></>}
           />
         </h1>
         <p className="mt-6 max-w-2xl text-lg leading-snug text-muted md:text-xl">
