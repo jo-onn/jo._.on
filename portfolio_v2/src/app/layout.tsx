@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { site } from "@/data/site";
 import "./globals.css";
@@ -9,6 +9,16 @@ const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"]
 export const metadata: Metadata = {
   title: `${site.handle} — ${site.tagline}`,
   description: site.description,
+};
+
+// viewport-fit=cover lets the page use env(safe-area-inset-*) on notched
+// phones; resizes-content makes Android Chrome shrink the layout above the
+// on-screen keyboard (iOS is handled in HashModal via visualViewport).
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  interactiveWidget: "resizes-content",
 };
 
 // Applies the saved theme and language before first paint

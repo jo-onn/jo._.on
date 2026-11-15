@@ -35,7 +35,7 @@ export function StoryTimeline({ items }: { items: readonly StoryItem[] }) {
         <button
           type="button"
           onClick={() => setOldestFirst((v) => !v)}
-          className="inline-flex items-center gap-2 rounded-full border border-line px-4 py-2 text-[11px] font-bold uppercase tracking-[0.18em] transition-colors hover:bg-fg/5"
+          className="inline-flex min-h-11 items-center gap-2 rounded-full border border-line px-4 py-2 text-[11px] font-bold uppercase tracking-[0.18em] transition-colors hover:bg-fg/5 active:bg-fg/10 md:min-h-0"
         >
           <ArrowDownUp className="h-3.5 w-3.5" />
           {ko ? (oldestFirst ? "오래된 순" : "최신 순") : oldestFirst ? "Oldest first" : "Newest first"}

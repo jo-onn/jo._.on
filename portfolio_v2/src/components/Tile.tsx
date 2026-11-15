@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion } from "motion/react";
-import type { ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 
 type Props = {
   children: ReactNode;
@@ -23,14 +23,24 @@ export function Tile({ children, className = "", index = 0, href, external, aria
     ? "tile tile-plain group relative"
     : `tile group relative overflow-hidden rounded-[28px] border border-line${bare ? "" : " p-6 md:p-7"}`;
   const reduce = useReducedMotion();
+  // Once the entrance has played, hover/press use a short transition without
+  // the stagger delay (otherwise the last tiles reacted ~0.5s late).
+  const [entered, setEntered] = useState(false);
   // Always pass the same initial/animate so server HTML and hydration agree;
   // reduced motion only shortens the transition to zero (otherwise tiles would
   // stay at the server-rendered opacity:0 when the user prefers reduced motion).
   const anim = {
     initial: { opacity: 0, y: 18 },
     animate: { opacity: 1, y: 0 },
-    transition: reduce ? { duration: 0 } : { duration: 0.55, delay: 0.06 * index, ease: [0.22, 1, 0.36, 1] as const },
+    transition: reduce
+      ? { duration: 0 }
+      : entered
+        ? { type: "spring" as const, stiffness: 420, damping: 30, mass: 0.6 }
+        : { duration: 0.55, delay: 0.06 * index, ease: [0.22, 1, 0.36, 1] as const },
+    onAnimationComplete: () => setEntered(true),
+    // Hover lift for pointers; a slight press on tap (touch) for link tiles.
     ...(plain || reduce ? {} : { whileHover: { y: -3 } }),
+    ...(href && !plain && !reduce ? { whileTap: { scale: 0.985 } } : {}),
   };
 
   if (href) {

@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { ArrowRight, ArrowUpRight, FileText, FlaskConical, Mail, PenLine, Route, Send } from "lucide-react";
+import { ArrowRight, ArrowUpRight, FileText, FlaskConical, Mail, PenLine, Route, Send, Sparkles } from "lucide-react";
 import { site } from "@/data/site";
 import { Tile } from "@/components/Tile";
 import { SeoulClock } from "@/components/SeoulClock";
@@ -17,8 +17,9 @@ const display = "font-extrabold tracking-tight leading-[0.92]";
 
 export default function Home() {
   return (
-    <main className="mx-auto max-w-[1400px] px-4 pb-10 pt-20 md:px-8 md:pt-24">
-      <div data-modal-background className="fixed right-4 top-4 z-50 flex gap-2 md:right-6 md:top-6">
+    <main className="safe-x mx-auto max-w-[1400px] pb-10 pt-20 md:pt-24">
+      {/* Phones: scrolls away with the page so it never sits on top of a tile. */}
+      <div data-modal-background className="safe-corner absolute z-50 flex gap-2 md:fixed">
         <LangToggle />
         <ThemeToggle />
       </div>
@@ -67,20 +68,27 @@ export default function Home() {
           </div>
         </Tile>
 
-        {/* Ask jo._.on — the v2 headline feature */}
-        <Tile index={1} className="ask-tile md:col-span-2 lg:col-span-7 lg:min-h-[240px] flex flex-col justify-end">
-          <div>
-            <h2 className={`${display} text-4xl lg:text-[clamp(2rem,3.4vw,3rem)]`}>{site.chat.title}</h2>
+        {/* Ask jo._.on — the v2 headline feature. No card: like the name block it
+            sits on the page; the aurora lives on the prompt field as a ring/glow. */}
+        <Tile plain index={1} className="md:col-span-2 lg:col-span-7 lg:min-h-[240px] flex flex-col justify-end px-1 py-2 lg:pl-4">
+          <div data-ask-block>
+            <h2 className={`${display} flex items-center gap-3 text-4xl lg:text-[clamp(2rem,3.4vw,3rem)]`}>
+              <span className="ask-tile hidden h-9 w-9 shrink-0 place-items-center rounded-xl text-ask-ink sm:grid lg:h-11 lg:w-11 lg:rounded-2xl" aria-hidden="true">
+                <Sparkles className="h-4 w-4 lg:h-5 lg:w-5" />
+              </span>
+              <span className="min-w-0">{site.chat.title}</span>
+            </h2>
             <AskTrigger
               aria-label="Ask about jo._.on — open chat"
-              className="mt-5 flex items-center gap-2 rounded-full bg-white/55 py-2 pl-5 pr-2 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.6)] backdrop-blur outline-none transition-colors hover:bg-white/70 focus-visible:ring-2 focus-visible:ring-ask-ink/50"
+              className="ask-field group/ask mt-5 flex min-h-14 items-center gap-2 rounded-full py-2 pl-5 pr-2 text-fg"
             >
-              <span className="flex-1 truncate text-sm opacity-70"><T en={site.chat.placeholder} ko={site.chat.placeholderKo} /></span>
-              <span className="grid h-9 w-9 place-items-center rounded-full bg-ask-ink text-white">
-                <Send className="h-4 w-4" />
+              <span className="flex-1 truncate text-[15px] text-muted transition-colors group-hover/ask:text-fg"><T en={site.chat.placeholder} ko={site.chat.placeholderKo} /></span>
+              <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-fg text-bg transition-transform duration-300 group-hover/ask:-rotate-12 motion-reduce:transition-none motion-reduce:group-hover/ask:rotate-0">
+                <Send className="h-4 w-4" aria-hidden="true" />
               </span>
             </AskTrigger>
-            {/* Chips send their text as the question, so render one set per language */}
+            {/* Chips send their text as the question, so render one set per language.
+                On phones they scroll sideways in one row instead of wrapping. */}
             {([
               ["en", site.chat.suggestions],
               ["ko", site.chat.suggestionsKo],
@@ -88,13 +96,14 @@ export default function Home() {
               <div
                 key={lang}
                 {...(lang === "en" ? { "data-lang-en": "" } : { "data-lang-ko": "" })}
-                className="mt-3 hidden flex-wrap gap-2 md:flex"
+                data-allow-overflow
+                className="no-scrollbar -mx-5 mt-3 flex gap-2 overflow-x-auto px-5 py-1 md:mx-0 md:flex-wrap md:overflow-visible md:px-0"
               >
                 {list.map((q) => (
                   <AskTrigger
                     key={q}
                     question={q}
-                    className="rounded-full border border-ask-ink/15 bg-white/30 px-3 py-1 text-xs font-medium outline-none transition-colors hover:bg-white/50 focus-visible:ring-2 focus-visible:ring-ask-ink/50"
+                    className="inline-flex min-h-11 shrink-0 items-center whitespace-nowrap rounded-full border border-line px-4 text-[13px] font-medium text-muted transition-colors hover:border-fg/30 hover:text-fg active:bg-fg/5 md:min-h-9 md:px-3.5"
                   >
                     {q}
                   </AskTrigger>
@@ -220,7 +229,7 @@ export default function Home() {
       </div>
 
       {/* ── Detail modals (opened via #hash links on the tiles) ── */}
-      <HashModal id="ask" title={["ASK ABOUT", "JO._.ON"]}>
+      <HashModal id="ask" title={["ASK ABOUT", "JO._.ON"]} fill>
         <AskChat />
       </HashModal>
 
@@ -267,7 +276,7 @@ function SocialLink({ href, label, children }: { href: string; label: string; ch
       aria-label={label}
       target={external ? "_blank" : undefined}
       rel={external ? "noopener noreferrer" : undefined}
-      className="grid h-9 w-9 place-items-center rounded-full border border-line text-muted transition-colors hover:border-fg/40 hover:text-fg"
+      className="grid h-11 w-11 place-items-center rounded-full border border-line text-muted transition-colors hover:border-fg/40 hover:text-fg active:bg-fg/5 md:h-9 md:w-9"
     >
       {children}
     </a>

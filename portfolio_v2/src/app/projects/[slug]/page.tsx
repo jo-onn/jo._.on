@@ -53,15 +53,16 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
   ].filter((f) => f.value);
 
   return (
-    <main className="mx-auto max-w-4xl px-4 pb-16 pt-20 md:px-8 md:pt-24">
-      <div className="fixed right-4 top-4 z-50 flex gap-2 md:right-6 md:top-6">
+    <main className="safe-x mx-auto max-w-4xl pb-16 pt-20 md:pt-24">
+      {/* Phones: scrolls away with the page instead of covering the text. */}
+      <div className="safe-corner absolute z-50 flex gap-2 md:fixed">
         <LangToggle />
         <ThemeToggle />
       </div>
 
       <Link
         href="/#projects"
-        className={`group inline-flex items-center gap-2 rounded-full border border-line px-4 py-2 text-muted transition-colors hover:border-accent/60 hover:text-fg ${eyebrow} tracking-[0.16em]`}
+        className={`group inline-flex min-h-11 items-center gap-2 rounded-full border border-line px-4 py-2 text-muted transition-colors hover:border-accent/60 hover:text-fg active:bg-fg/5 ${eyebrow} tracking-[0.16em]`}
       >
         <ArrowLeft className="h-3.5 w-3.5 transition-transform group-hover:-translate-x-0.5" />
         <T en="Work Gallery" ko="작업 갤러리" />
@@ -146,7 +147,7 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
               href={withBase(l.href)}
               target="_blank"
               rel="noopener noreferrer"
-              className={`group inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-semibold transition-colors ${
+              className={`group inline-flex min-h-11 items-center gap-2 rounded-full px-5 py-3 text-sm font-semibold transition-[color,background-color,border-color,opacity,scale] active:scale-[0.97] ${
                 i === 0
                   ? "bg-accent text-accent-ink hover:opacity-90"
                   : "border border-line bg-card hover:border-accent/60"
@@ -163,7 +164,7 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
       {next.slug !== p.slug && (
         <Link
           href={projectHref(next)}
-          className="group mt-16 flex items-center justify-between gap-4 rounded-[28px] border border-line bg-card p-6 transition-colors hover:border-accent/60 md:p-8"
+          className="group mt-16 flex items-center justify-between gap-4 rounded-[28px] border border-line bg-card p-6 transition-[border-color,scale] hover:border-accent/60 active:scale-[0.99] md:p-8"
         >
           <span>
             <span className={`block text-muted ${eyebrow}`}>
