@@ -147,9 +147,9 @@ export default function Home() {
         </Tile>
 
         {/* Résumé */}
-        <Tile index={4} href={withBase(site.resume)} external ariaLabel="Résumé (PDF, opens in a new tab)" className="bg-warm text-warm-ink min-h-[180px] gap-6 lg:col-span-3 lg:min-h-[240px] flex flex-col justify-between">
+        <Tile index={4} href={withBase(site.resume)} external ariaLabel="Résumé (PDF, opens in a new tab)" className="resume-card text-fg min-h-[180px] gap-6 lg:col-span-3 lg:min-h-[240px] flex flex-col justify-between">
           <div className="flex items-start justify-between">
-            <span className="grid h-11 w-11 place-items-center rounded-xl bg-warm-ink text-warm resume-icon">
+            <span className="ask-tile grid h-11 w-11 place-items-center rounded-xl resume-icon">
               <FileText className="h-5 w-5" />
             </span>
             <ArrowUpRight className="h-5 w-5 opacity-60 transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:opacity-100" />
