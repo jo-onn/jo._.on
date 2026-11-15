@@ -38,6 +38,38 @@ export const site = {
     cover: "/projects/musinsa-fit-1.png",
     list: [
       {
+        // ── Work Gallery + detail page (/projects/<slug>) ──
+        slug: "brain-ct-anomaly-detection",
+        category: "research",
+        featured: true,
+        headline: ["BRAIN CT", "ANOMALY DETECTION"],
+        headlineKo: ["뇌 CT", "이상 탐지"],
+        sections: [
+          {
+            heading: "Problem",
+            headingKo: "문제",
+            body: "Many deep-learning anomaly detection methods exist, but which family of them suits intracranial hemorrhage in brain CT needed to be checked systematically.",
+            bodyKo: "딥러닝 이상 탐지 기법은 많지만, 그중 어떤 계열이 뇌 CT의 두개내출혈 탐지에 맞는지는 체계적으로 확인해 볼 필요가 있었습니다.",
+          },
+          {
+            heading: "Approach",
+            headingKo: "접근",
+            body: "Benchmarked 11 deep-learning anomaly detection methods side by side on brain CT, comparing reconstruction-based and self-supervised approaches.",
+            bodyKo: "뇌 CT에서 딥러닝 이상 탐지 기법 11종을 나란히 비교하며 재구성 기반 방법과 자기지도학습 방법을 견주었습니다.",
+          },
+          {
+            heading: "Result",
+            headingKo: "결과",
+            body: "Reconstruction-based methods outperformed self-supervised ones for intracranial hemorrhage. The study was submitted to MIDL 2026.",
+            bodyKo: "두개내출혈 탐지에서는 재구성 기반 방법이 자기지도학습 방법보다 우수했고, 이 연구는 MIDL 2026에 투고되었습니다.",
+          },
+        ],
+        // TODO(user): fill in — each is shown on the detail page only once set (string instead of null).
+        role: null,
+        roleKo: null,
+        team: null,
+        teamKo: null,
+        period: null,
         name: "Deep-Learning Anomaly Detection for Intracranial Hemorrhage in Brain CT",
         nameKo: "뇌 CT 두개내출혈 딥러닝 이상 탐지 비교 연구",
         descriptionKo:
@@ -51,6 +83,38 @@ export const site = {
         links: [{ label: "Paper", href: "/projects/midl-2026-paper.pdf" }],
       },
       {
+        // ── Work Gallery + detail page (/projects/<slug>) ──
+        slug: "musinsa-skin-fit",
+        category: "product",
+        featured: true,
+        headline: ["MUSINSA", "SKIN-FIT"],
+        headlineKo: ["무신사", "SKIN-FIT"],
+        sections: [
+          {
+            heading: "Problem",
+            headingKo: "문제",
+            body: "Analyzing ~700K reviews across 1,198 products showed that the platform collects shoppers' skin-type data but doesn't use it.",
+            bodyKo: "제품 1,198개의 리뷰 약 70만 건을 분석한 결과, 플랫폼이 고객의 피부 타입 데이터를 수집하면서도 활용하지 않고 있었습니다.",
+          },
+          {
+            heading: "Approach",
+            headingKo: "접근",
+            body: "Built a pipeline that reads a product's ingredients with OCR and turns them into a skin-fit score.",
+            bodyKo: "제품 성분을 OCR로 읽어 피부 적합도 점수로 바꾸는 파이프라인을 만들었습니다.",
+          },
+          {
+            heading: "Result",
+            headingKo: "결과",
+            body: "Shipped the pipeline as a Chrome extension. The demo video and full report are linked below.",
+            bodyKo: "파이프라인을 크롬 확장 프로그램으로 구현했습니다. 데모 영상과 보고서는 아래 링크에서 볼 수 있습니다.",
+          },
+        ],
+        // TODO(user): fill in — each is shown on the detail page only once set (string instead of null).
+        role: null,
+        roleKo: null,
+        team: null,
+        teamKo: null,
+        period: null,
         name: "Musinsa SKIN-Fit — Ingredient-Based Skincare Recommendation",
         nameKo: "무신사 SKIN-Fit — 성분 기반 스킨케어 추천",
         descriptionKo:
@@ -67,6 +131,38 @@ export const site = {
         ],
       },
       {
+        // ── Work Gallery + detail page (/projects/<slug>) ──
+        slug: "biosignal-attention-prediction",
+        category: "research",
+        featured: false,
+        headline: ["BIOSIGNAL", "ATTENTION"],
+        headlineKo: ["생체신호", "집중도 예측"],
+        sections: [
+          {
+            heading: "Problem",
+            headingKo: "문제",
+            body: "Predicting a learner's attention from a single sensor has clear limits.",
+            bodyKo: "단일 센서만으로 학습자의 집중도를 예측하는 데에는 분명한 한계가 있습니다.",
+          },
+          {
+            heading: "Approach",
+            headingKo: "접근",
+            body: "Built a multimodal time-series ML pipeline that combines wearable biosignals: heart rate (HR), R-R intervals (RRI), electrodermal activity (EDA) and skin temperature.",
+            bodyKo: "웨어러블 생체신호인 심박(HR), R-R 간격(RRI), 피부전도(EDA), 피부 온도를 함께 쓰는 멀티모달 시계열 머신러닝 파이프라인을 만들었습니다.",
+          },
+          {
+            heading: "Result",
+            headingKo: "결과",
+            body: "Presented as a poster at KSC 2025.",
+            bodyKo: "KSC 2025에서 포스터로 발표했습니다.",
+          },
+        ],
+        // TODO(user): fill in — each is shown on the detail page only once set (string instead of null).
+        role: null,
+        roleKo: null,
+        team: null,
+        teamKo: null,
+        period: null,
         name: "Multimodal Biosignal-Based Attention Prediction",
         nameKo: "멀티모달 생체신호 기반 집중도 예측",
         descriptionKo:
@@ -80,6 +176,38 @@ export const site = {
         links: [{ label: "Poster", href: "/projects/ksc-2025-poster.pdf" }],
       },
       {
+        // ── Work Gallery + detail page (/projects/<slug>) ──
+        slug: "cifarm",
+        category: "ai-agent",
+        featured: true,
+        headline: ["CIFARM", "AI FARM COACH"],
+        headlineKo: ["CiFarm", "AI 도시농부 코치"],
+        sections: [
+          {
+            heading: "Idea",
+            headingKo: "아이디어",
+            body: "An urban-farming platform that matches people with urban farm plots and coaches them through growing.",
+            bodyKo: "사람들을 도시텃밭과 이어 주고 재배 과정을 코칭하는 도시농업 플랫폼입니다.",
+          },
+          {
+            heading: "Approach",
+            headingKo: "접근",
+            body: "A LangGraph-based AI agent handles plot matching and gives step-by-step growing guides, served with FastAPI.",
+            bodyKo: "LangGraph 기반 AI 에이전트가 텃밭 매칭과 단계별 재배 가이드를 맡고, FastAPI로 서비스했습니다.",
+          },
+          {
+            heading: "Result",
+            headingKo: "결과",
+            body: "Won the grand prize at KHUTHON 2024.",
+            bodyKo: "KHUTHON 2024에서 대상을 받았습니다.",
+          },
+        ],
+        // TODO(user): fill in — each is shown on the detail page only once set (string instead of null).
+        role: null,
+        roleKo: null,
+        team: null,
+        teamKo: null,
+        period: null,
         name: "CiFarm — Urban Farm Matching & AI Farming Coach",
         nameKo: "CiFarm — 도시텃밭 중개 및 AI 도시농부 코치",
         descriptionKo: "LangGraph 기반 AI 에이전트가 텃밭 분양과 단계별 재배 가이드를 제공하는 도시농업 플랫폼입니다.",
