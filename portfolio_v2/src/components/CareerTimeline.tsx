@@ -1,11 +1,12 @@
 import type { ReactNode } from "react";
-import { Briefcase, Download, FlaskConical, GraduationCap, Trophy, Users, Wrench, type LucideIcon } from "lucide-react";
+import { Briefcase, Download, FlaskConical, GraduationCap, Trophy, Users, type LucideIcon } from "lucide-react";
 import { site } from "@/data/site";
 import { T } from "@/components/T";
 import { withBase } from "@/lib/base";
 
 // "Career Timeline" modal (#resume): the résumé as a page.
-// Left: timelines (education / experience / research). Right: awards, activities, skills.
+// Kept deliberately light: just where / what / when. Details live in the PDF.
+// Left: timelines (education / experience / research). Right: awards and activities.
 // Server component — bilingual text goes through <T>, so it renders without JS.
 
 const sectionTitle = "text-sm font-extrabold uppercase tracking-[0.2em] md:text-base";
@@ -44,8 +45,8 @@ export function CareerTimeline() {
         </a>
       </div>
 
-      <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_340px] lg:gap-10">
-        <div className="space-y-14">
+      <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_320px] lg:gap-10">
+        <div className="space-y-12">
           <Section icon={GraduationCap} title={<T en="Education" ko="학력" />}>
             {site.education.map((e, i) => (
               <Entry
@@ -54,7 +55,6 @@ export function CareerTimeline() {
                 title={<T en={e.school} ko={e.schoolKo} />}
                 period={e.years}
                 sub={<T en={e.degree} ko={e.degreeKo} />}
-                chips={[<T key="s" en={e.status} ko={e.statusKo} />, e.note]}
               />
             ))}
           </Section>
@@ -67,8 +67,6 @@ export function CareerTimeline() {
                 title={<T en={e.company} ko={e.companyKo} />}
                 period={"periodKo" in e ? <T en={e.period} ko={e.periodKo} /> : e.period}
                 sub={<T en={e.role} ko={e.roleKo} />}
-                bullets={{ en: e.bullets, ko: e.bulletsKo }}
-                chips={e.tags}
               />
             ))}
           </Section>
@@ -81,67 +79,23 @@ export function CareerTimeline() {
                 title={<T en={e.company} ko={e.companyKo} />}
                 period={e.period}
                 sub={<T en={e.role} ko={e.roleKo} />}
-                bullets={{ en: e.bullets, ko: e.bulletsKo }}
-                chips={e.tags}
               />
             ))}
           </Section>
         </div>
 
-        <aside className="h-fit space-y-10 rounded-[28px] border border-line p-5 md:p-7">
+        {/* Compact rows — just what, where, when. */}
+        <aside className="h-fit space-y-9 rounded-[28px] border border-line p-5 md:p-7">
           <AsideSection icon={Trophy} title={<T en="Awards" ko="수상" />}>
             {site.awards.map((a) => (
-              <li key={a.title} className="rounded-2xl border border-line bg-bg/40 p-4">
-                <p className="text-[15px] font-bold leading-snug">
-                  <T en={a.label} ko={a.labelKo} />
-                </p>
-                <p className="mt-1 text-sm leading-snug text-muted">
-                  <T en={a.event} ko={a.eventKo} />
-                </p>
-                <p className="mt-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-muted">
-                  {"projectKo" in a ? <T en={a.project} ko={a.projectKo} /> : a.project} · {a.date}
-                </p>
-              </li>
+              <Row key={a.title} title={<T en={a.label} ko={a.labelKo} />} sub={<T en={a.event} ko={a.eventKo} />} date={a.date} />
             ))}
           </AsideSection>
 
           <AsideSection icon={Users} title={<T en="Activities" ko="대외활동" />}>
             {site.activities.map((a) => (
-              <li key={a.name} className="rounded-2xl border border-line bg-bg/40 p-4">
-                <div className="flex items-baseline justify-between gap-3">
-                  <p className="text-[15px] font-bold">
-                    <T en={a.name} ko={a.nameKo} />
-                  </p>
-                  <span className="shrink-0 text-[11px] font-semibold tabular-nums text-muted">{a.period}</span>
-                </div>
-                <p className="mt-1 text-sm leading-snug text-muted">
-                  <T en={a.role} ko={a.roleKo} />
-                </p>
-                <Bullets en={a.bullets} ko={a.bulletsKo} className="mt-2" />
-              </li>
+              <Row key={a.name} title={<T en={a.name} ko={a.nameKo} />} sub={<T en={a.role} ko={a.roleKo} />} date={a.period} />
             ))}
-          </AsideSection>
-
-          <AsideSection icon={Wrench} title={<T en="Skills & more" ko="역량 및 기타" />} list={false}>
-            <dl className="space-y-4">
-              {Object.entries(site.skills).map(([label, items]) => {
-                const ko = site.skillsKo[label as keyof typeof site.skillsKo];
-                return (
-                  <div key={label}>
-                    <dt className="text-[11px] font-bold uppercase tracking-[0.16em] text-muted">
-                      <T en={label} ko={ko.label} />
-                    </dt>
-                    <dd className="mt-2 flex flex-wrap gap-1.5">
-                      {items.map((item, i) => (
-                        <span key={item} className="rounded-md border border-line px-2 py-1 text-xs font-semibold">
-                          <T en={item} ko={ko.items[i]} />
-                        </span>
-                      ))}
-                    </dd>
-                  </div>
-                );
-              })}
-            </dl>
           </AsideSection>
         </aside>
       </div>
@@ -158,7 +112,7 @@ function Section({ icon: Icon, title, children }: { icon: LucideIcon; title: Rea
         </span>
         {title}
       </h3>
-      <ol className="relative mt-8 space-y-10">
+      <ol className="relative mt-7 space-y-7">
         {/* rail */}
         <span className="absolute bottom-1 left-[6px] top-2 w-px bg-line" aria-hidden="true" />
         {children}
@@ -167,21 +121,7 @@ function Section({ icon: Icon, title, children }: { icon: LucideIcon; title: Rea
   );
 }
 
-function Entry({
-  first,
-  title,
-  period,
-  sub,
-  bullets,
-  chips,
-}: {
-  first: boolean;
-  title: ReactNode;
-  period: ReactNode;
-  sub: ReactNode;
-  bullets?: { en: readonly string[]; ko: readonly string[] };
-  chips?: readonly ReactNode[];
-}) {
+function Entry({ first, title, period, sub }: { first: boolean; title: ReactNode; period: ReactNode; sub: ReactNode }) {
   return (
     <li className="relative pl-9 md:pl-11">
       <span
@@ -201,50 +141,31 @@ function Entry({
         </span>
       </div>
       <p className="mt-1.5 text-[15px] font-medium leading-snug text-muted">{sub}</p>
-      {bullets && <Bullets en={bullets.en} ko={bullets.ko} className="mt-3" />}
-      {chips && chips.length > 0 && (
-        <div className="mt-3 flex flex-wrap gap-1.5">
-          {chips.map((c, i) => (
-            <span key={i} className="rounded-md border border-line px-2.5 py-1 text-xs font-semibold">
-              {c}
-            </span>
-          ))}
-        </div>
-      )}
     </li>
   );
 }
 
-function Bullets({ en, ko, className = "" }: { en: readonly string[]; ko: readonly string[]; className?: string }) {
+/** One line in the side panel: title + date, with a muted line under it. */
+function Row({ title, sub, date }: { title: ReactNode; sub: ReactNode; date: string }) {
   return (
-    <ul className={`space-y-1.5 text-sm leading-relaxed text-muted ${className}`}>
-      {en.map((b, i) => (
-        <li key={b} className="relative pl-4 before:absolute before:left-0 before:top-[0.6em] before:h-1 before:w-1 before:rounded-full before:bg-accent">
-          <T en={b} ko={ko[i]} />
-        </li>
-      ))}
-    </ul>
+    <li className="border-b border-line pb-3 last:border-b-0 last:pb-0">
+      <div className="flex items-baseline justify-between gap-3">
+        <p className="text-[15px] font-bold leading-snug">{title}</p>
+        <span className="shrink-0 text-[11px] font-semibold tabular-nums text-muted">{date}</span>
+      </div>
+      <p className="mt-0.5 text-sm leading-snug text-muted">{sub}</p>
+    </li>
   );
 }
 
-function AsideSection({
-  icon: Icon,
-  title,
-  children,
-  list = true,
-}: {
-  icon: LucideIcon;
-  title: ReactNode;
-  children: ReactNode;
-  list?: boolean;
-}) {
+function AsideSection({ icon: Icon, title, children }: { icon: LucideIcon; title: ReactNode; children: ReactNode }) {
   return (
     <section>
       <h3 className={`flex items-center gap-3 ${sectionTitle}`}>
         <Icon className="h-5 w-5 text-accent" />
         {title}
       </h3>
-      {list ? <ul className="mt-5 space-y-3">{children}</ul> : <div className="mt-5">{children}</div>}
+      <ul className="mt-5 space-y-3">{children}</ul>
     </section>
   );
 }
