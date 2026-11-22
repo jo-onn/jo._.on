@@ -69,8 +69,8 @@ export default function Home() {
             <p className="mt-3 flex items-center gap-1.5 text-center text-xs leading-tight text-muted">
               <span>
                 <T
-                  en={<><span className="block"><span className="mr-1.5 inline-block h-1.5 w-1.5 rounded-full bg-live align-middle" aria-hidden="true" />Now at</span><span className="whitespace-nowrap font-semibold text-fg"><Image src={withBase(site.now.logo.symbol)} alt="" width={363} height={182} className="mr-1 inline-block h-2.5 w-auto align-[-1px]" />{site.now.org}</span></>}
-                  ko={<><span className="block"><span className="mr-1.5 inline-block h-1.5 w-1.5 rounded-full bg-live align-middle" aria-hidden="true" />현재</span><span className="whitespace-nowrap font-semibold text-fg"><Image src={withBase(site.now.logo.symbol)} alt="" width={363} height={182} className="mr-1 inline-block h-2.5 w-auto align-[-1px]" />{site.now.orgKo}</span></>}
+                  en={<><span className="block"><span className="relative mr-1.5 inline-flex h-1.5 w-1.5 align-middle" aria-hidden="true"><span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-live opacity-60 motion-reduce:animate-none" /><span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-live" /></span>Now at</span><span className="whitespace-nowrap font-semibold text-fg"><Image src={withBase(site.now.logo.symbol)} alt="" width={363} height={182} className="mr-1 inline-block h-2.5 w-auto align-[-1px]" />{site.now.org}</span></>}
+                  ko={<><span className="block"><span className="relative mr-1.5 inline-flex h-1.5 w-1.5 align-middle" aria-hidden="true"><span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-live opacity-60 motion-reduce:animate-none" /><span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-live" /></span>현재</span><span className="whitespace-nowrap font-semibold text-fg"><Image src={withBase(site.now.logo.symbol)} alt="" width={363} height={182} className="mr-1 inline-block h-2.5 w-auto align-[-1px]" />{site.now.orgKo}</span></>}
                 />
               </span>
             </p>
@@ -79,9 +79,9 @@ export default function Home() {
 
         {/* Ask jo._.on — the v2 headline feature. No card: like the name block it
             sits on the page; the aurora lives on the prompt field as a ring/glow.
-            Compact (~70% scale) and vertically centred beside the name block. */}
+            Compact (~70% scale), centred both ways in its column. */}
         <Tile plain index={1} className="md:col-span-2 lg:col-span-7 lg:min-h-[240px] flex flex-col justify-center px-1 py-2 lg:pl-4">
-          <div data-ask-block className="md:w-[70%]">
+          <div data-ask-block className="md:mx-auto md:w-[70%]">
             <h2 className={`${display} flex items-center gap-2 text-[1.25rem] lg:text-[clamp(1.05rem,1.6vw,1.5rem)]`}>
               <span className="ask-tile hidden h-6 w-6 shrink-0 place-items-center rounded-lg text-ask-ink sm:grid lg:h-7 lg:w-7" aria-hidden="true">
                 <Sparkles className="h-3.5 w-3.5" />
