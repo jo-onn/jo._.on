@@ -12,6 +12,7 @@ import { ProjectsCover } from "@/components/ProjectsCover";
 import { DrawOnView } from "@/components/DrawOnView";
 import { AskChat, AskTrigger } from "@/components/chat";
 import { WorkGallery } from "@/components/projects/WorkGallery";
+import { CareerTimeline, CareerTimelineEyebrow } from "@/components/CareerTimeline";
 import { withBase } from "@/lib/base";
 
 const eyebrow = "text-[11px] font-semibold tracking-[0.22em] uppercase";
@@ -36,12 +37,16 @@ export default function Home() {
         {/* ── Row 1 ─────────────────────────────────────────── */}
 
         {/* Name + one-liner — no card, type sits straight on the page */}
-        <Tile plain index={0} className="md:col-span-2 lg:col-span-5 lg:min-h-[240px] flex items-stretch justify-between gap-6 lg:gap-8 px-1 py-2 lg:pr-4">
-          <div className="flex min-w-0 flex-col justify-between">
+        <Tile plain index={0} className="md:col-span-2 lg:col-span-6 lg:min-h-[240px] flex items-stretch justify-between gap-6 px-1 py-2">
+          <div className="flex min-w-0 flex-col justify-between lg:shrink-0">
           <h1 className="text-[56px] leading-[0.92] lg:text-[clamp(40px,3.9vw,58px)] lg:whitespace-nowrap">
             <span className="block font-extralight tracking-[0.02em]">{site.name.first}</span>
             <span className="block font-bold tracking-[0.02em]">{site.name.last}</span>
           </h1>
+          {/* One-liner: under the name below 1150px; beside the photo on wider screens. */}
+          <p className="mt-4 max-w-[22rem] text-balance break-keep text-[13px] leading-snug text-muted min-[1150px]:hidden">
+            <T en={site.intro} ko={site.introKo} />
+          </p>
           <div className="mt-6">
             <p className={`flex items-start gap-3 text-muted ${eyebrow} tracking-[0.18em] leading-relaxed`}>
               <span className="mt-[0.7em] h-px w-10 shrink-0 bg-muted" />
@@ -60,40 +65,47 @@ export default function Home() {
             </div>
           </div>
           </div>
+          {/* ≥1150px: one-liner in a narrow column left of the photo, top-aligned with the name. */}
+          <div className="flex shrink-0 items-start gap-5 self-start lg:min-w-0 lg:shrink">
+          <p className="hidden min-w-0 max-w-[11.5rem] pt-2 text-balance break-keep text-left text-[13px] leading-snug text-muted min-[1150px]:block">
+            <T en={site.intro} ko={site.introKo} />
+          </p>
           {/* Column width follows the "Now at …" line so it never overflows the
               page edge on phones; the photo keeps its own size. */}
-          <div className="flex shrink-0 flex-col items-center self-start">
+          <div className="flex shrink-0 flex-col items-center">
             <div className="relative aspect-square w-20 sm:w-28 lg:w-[clamp(92px,8vw,124px)]">
               <Image src={withBase(site.photo)} alt={`${site.name.first} ${site.name.last}`} fill sizes="170px" className="object-contain" preload />
             </div>
             <p className="mt-3 flex items-center gap-1.5 text-center text-xs leading-tight text-muted">
               <span>
                 <T
-                  en={<><span className="block">Now at</span><span className="whitespace-nowrap font-semibold text-fg"><Image src={withBase(site.now.logo.symbol)} alt="" width={363} height={182} className="mr-1 inline-block h-2.5 w-auto align-[-1px]" />{site.now.org}</span></>}
-                  ko={<><span className="block">현재</span><span className="whitespace-nowrap font-semibold text-fg"><Image src={withBase(site.now.logo.symbol)} alt="" width={363} height={182} className="mr-1 inline-block h-2.5 w-auto align-[-1px]" />{site.now.orgKo}</span></>}
+                  en={<><span className="block"><span className="relative mr-1.5 inline-flex h-1.5 w-1.5 align-middle" aria-hidden="true"><span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-live opacity-60 motion-reduce:animate-none" /><span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-live" /></span>Now at</span><span className="whitespace-nowrap font-semibold text-fg"><Image src={withBase(site.now.logo.symbol)} alt="" width={363} height={182} className="mr-1 inline-block h-2.5 w-auto align-[-1px]" />{site.now.org}</span></>}
+                  ko={<><span className="block"><span className="relative mr-1.5 inline-flex h-1.5 w-1.5 align-middle" aria-hidden="true"><span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-live opacity-60 motion-reduce:animate-none" /><span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-live" /></span>현재</span><span className="whitespace-nowrap font-semibold text-fg"><Image src={withBase(site.now.logo.symbol)} alt="" width={363} height={182} className="mr-1 inline-block h-2.5 w-auto align-[-1px]" />{site.now.orgKo}</span></>}
                 />
               </span>
             </p>
           </div>
+          </div>
         </Tile>
 
         {/* Ask jo._.on — the v2 headline feature. No card: like the name block it
-            sits on the page; the aurora lives on the prompt field as a ring/glow. */}
-        <Tile plain index={1} className="md:col-span-2 lg:col-span-7 lg:min-h-[240px] flex flex-col justify-end px-1 py-2 lg:pl-4">
-          <div data-ask-block>
-            <h2 className={`${display} flex items-center gap-2.5 text-[1.75rem] lg:text-[clamp(1.5rem,2.3vw,2.125rem)]`}>
-              <span className="ask-tile hidden h-8 w-8 shrink-0 place-items-center rounded-xl text-ask-ink sm:grid lg:h-9 lg:w-9" aria-hidden="true">
-                <Sparkles className="h-4 w-4" />
+            sits on the page; the aurora lives on the prompt field as a ring/glow.
+            Compact (~70% scale), centred both ways in its column. */}
+        <Tile plain index={1} className="md:col-span-2 lg:col-span-6 lg:min-h-[240px] flex flex-col justify-center px-1 py-2 lg:pl-4">
+          <div data-ask-block className="md:mx-auto md:w-[70%] lg:w-[88%]">
+            <h2 className={`${display} flex items-center gap-2 text-[1.25rem] lg:text-[clamp(1.05rem,1.6vw,1.5rem)]`}>
+              <span className="ask-tile hidden h-6 w-6 shrink-0 place-items-center rounded-lg text-ask-ink sm:grid lg:h-7 lg:w-7" aria-hidden="true">
+                <Sparkles className="h-3.5 w-3.5" />
               </span>
               <span className="min-w-0">{site.chat.title}</span>
             </h2>
             <AskTrigger
               aria-label="Ask about jo._.on — open chat"
-              className="ask-field group/ask mt-5 flex min-h-14 items-center gap-2 rounded-full py-2 pl-5 pr-2 text-fg"
+              className="ask-field group/ask mt-3.5 flex min-h-11 items-center gap-2 rounded-full py-1.5 pl-4 pr-1.5 text-fg"
             >
-              <span className="flex-1 truncate text-[15px] text-muted transition-colors group-hover/ask:text-fg"><T en={site.chat.placeholder} ko={site.chat.placeholderKo} /></span>
-              <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-fg text-bg transition-transform duration-300 group-hover/ask:-rotate-12 motion-reduce:transition-none motion-reduce:group-hover/ask:rotate-0">
-                <Send className="h-4 w-4" aria-hidden="true" />
+              <span className="flex-1 truncate text-[13px] text-muted transition-colors group-hover/ask:text-fg"><T en={site.chat.placeholder} ko={site.chat.placeholderKo} /></span>
+              <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-fg text-bg transition-transform duration-300 group-hover/ask:-rotate-12 motion-reduce:transition-none motion-reduce:group-hover/ask:rotate-0">
+                <Send className="h-3.5 w-3.5" aria-hidden="true" />
               </span>
             </AskTrigger>
             {/* Chips send their text as the question, so render one set per language.
@@ -106,13 +118,13 @@ export default function Home() {
                 key={lang}
                 {...(lang === "en" ? { "data-lang-en": "" } : { "data-lang-ko": "" })}
                 data-allow-overflow
-                className="no-scrollbar -mx-5 mt-3 flex gap-2 overflow-x-auto px-5 py-1 md:mx-0 md:flex-wrap md:overflow-visible md:px-0"
+                className="no-scrollbar -mx-5 mt-2.5 flex gap-1.5 overflow-x-auto px-5 py-1 md:mx-0 md:flex-wrap md:overflow-visible md:px-0"
               >
                 {list.map((q) => (
                   <AskTrigger
                     key={q}
                     question={q}
-                    className="inline-flex min-h-11 shrink-0 items-center whitespace-nowrap rounded-full border border-line px-4 text-[13px] font-medium text-muted transition-colors hover:border-fg/30 hover:text-fg active:bg-fg/5 md:min-h-9 md:px-3.5"
+                    className="inline-flex min-h-11 shrink-0 items-center whitespace-nowrap rounded-full border border-line px-4 text-[12px] font-medium text-muted transition-colors hover:border-fg/30 hover:text-fg active:bg-fg/5 md:min-h-7 md:px-3"
                   >
                     {q}
                   </AskTrigger>
@@ -149,7 +161,7 @@ export default function Home() {
         </Tile>
 
         {/* Résumé */}
-        <Tile index={4} href={withBase(site.resume)} external ariaLabel="Résumé (PDF, opens in a new tab)" className="resume-card text-fg min-h-[180px] gap-6 lg:col-span-3 lg:min-h-[240px] flex flex-col justify-between">
+        <Tile index={4} href="#resume" ariaLabel="Résumé at a glance" className="resume-card text-fg min-h-[180px] gap-6 lg:col-span-3 lg:min-h-[240px] flex flex-col justify-between">
           <div className="flex items-start justify-between">
             <span className="ask-tile grid h-11 w-11 place-items-center rounded-xl resume-icon">
               <FileText className="h-5 w-5" />
@@ -158,7 +170,7 @@ export default function Home() {
           </div>
           <div>
             <h2 className={`${display} text-5xl lg:text-[clamp(1.9rem,3.2vw,3rem)]`}>RÉSUMÉ</h2>
-            <p className={`mt-2 opacity-70 ${eyebrow} tracking-[0.16em]`}><T en="View PDF" ko="PDF 보기" /></p>
+            <p className={`mt-2 opacity-70 ${eyebrow} tracking-[0.16em]`}><T en="At a glance" ko="한눈에 보기" /></p>
           </div>
         </Tile>
 
@@ -241,6 +253,10 @@ export default function Home() {
 
       <HashModal id="projects" title={["WORK", "GALLERY"]} inlineTitle>
         <WorkGallery />
+      </HashModal>
+
+      <HashModal id="resume" title={["RÉSUMÉ", "AT A GLANCE"]} eyebrow={<CareerTimelineEyebrow />}>
+        <CareerTimeline />
       </HashModal>
 
       <HashModal id="journey" title={["THE", "STORY"]}>

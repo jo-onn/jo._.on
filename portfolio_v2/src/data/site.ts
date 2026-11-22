@@ -417,6 +417,10 @@ export const site = {
       role: "Business Strategy Intern — New Business Development (Healthcare & Manufacturing)",
       period: "2026.08 — Now",
       current: true,
+      kind: "work",
+      companyKo: "네이버클라우드",
+      roleKo: "헬스케어·제조 분야 신사업 발굴, 전략 인턴",
+      periodKo: "2026.08 — 현재",
       bullets: [
         "Supports new-business discovery and strategy in healthcare and manufacturing.",
         "Researches markets and competitors and structures the findings into strategy proposals.",
@@ -428,6 +432,9 @@ export const site = {
       company: "Seoul National University Hospital — Institute of Convergence Medicine with Innovative Technology, Biomedical Informatics Lab",
       role: "Undergraduate Research Intern",
       period: "2026.03 — 2026.08",
+      kind: "research",
+      companyKo: "서울대학교병원 융합의학기술원 · 의생명정보학 Lab",
+      roleKo: "학부연구인턴",
       bullets: [
         "Built the dataset and designed the annotation criteria for RINPAG, a method that creates pathology training labels without manual labeling (co-author, manuscript in preparation).",
         "Validated DINO-based self-supervised ViT encoders for stain/scanner-robust features on pathology whole-slide images.",
@@ -438,6 +445,9 @@ export const site = {
       company: "AIMS Lab, Kyung Hee University",
       role: "Undergraduate Research Intern",
       period: "2025.08 — 2026.07",
+      kind: "research",
+      companyKo: "경희대학교 AIMS Lab",
+      roleKo: "학부연구인턴",
       bullets: [
         "Designed experiments comparing reconstruction-based and self-supervised anomaly detection on label-scarce brain CT images (submitted to KSC 2026).",
         "Designed an attention-prediction pipeline from 4 wearable biosignals with subject-level validation (accuracy 0.762; KSC 2025, first author).",
@@ -447,6 +457,9 @@ export const site = {
       company: "FutureWorkLab",
       role: "AI Research & Engineering Intern",
       period: "2024.12 — 2025.09",
+      kind: "work",
+      companyKo: "퓨처워크랩",
+      roleKo: "AI Research & Engineering 인턴",
       bullets: [
         "Personal knowledge-management service PoC (LinkBrain, B2C): developed a GNN-based knowledge-graph (GNN-KG) service PoC.",
         "Designed and implemented a LangGraph multi-step search / reasoning agent and its prompt workflows.",
@@ -456,7 +469,7 @@ export const site = {
     },
   ],
 
-  // From the résumé. Not shown as page sections; feeds the chatbot.
+  // From the résumé. intro shows beside the name; the rest feeds the chatbot and the "Résumé at a glance" modal (#resume).
   intro: "I like finding the gaps in data — and building the thing that fills them myself.",
   introKo: "데이터에서 공백을 찾고, 그 공백을 메우는 결과물을 직접 만드는 걸 좋아합니다.",
 
@@ -466,6 +479,11 @@ export const site = {
       degree: "Software Convergence, double major in Physical Education",
       period: "2020.03 — 2027.02 (coursework completed)",
       note: "GPA 3.97 / 4.5",
+      schoolKo: "경희대학교",
+      degreeKo: "소프트웨어융합학과 · 체육학과 복수전공",
+      years: "2020.03 — 2027.02",
+      status: "Coursework completed",
+      statusKo: "수료",
     },
   ],
 
@@ -482,6 +500,8 @@ export const site = {
   activities: [
     {
       name: "KHUDA, 5th cohort",
+      nameKo: "KHUDA 5기",
+      roleKo: "경희대학교 데이터분석·AI 중앙동아리 · 기획·운영부장 겸 NLP 트랙 리더",
       role: "Head of Planning & Operations, NLP track lead — Kyung Hee University data analysis & AI central club",
       period: "2024.01 — 2024.06",
       bullets: [
@@ -491,6 +511,8 @@ export const site = {
     },
     {
       name: "KHUDA, 4th cohort",
+      nameKo: "KHUDA 4기",
+      roleKo: "경희대학교 데이터분석·AI 학회 · Data Business 트랙 부원",
       role: "Member, Data Business track",
       period: "2023.08 — 2023.12",
       bullets: ["Studied data analysis and AI fundamentals."],
@@ -498,10 +520,10 @@ export const site = {
   ],
 
   awards: [
-    { title: "Top Excellence Award (최우수상)", event: "KHUTHON inter-university hackathon", project: "CiFarm", date: "2024.05" },
-    { title: "Honorable Mention (장려상)", event: "Korea Economic Daily idea contest", project: "FinWise", date: "2024.10" },
-    { title: "Excellence Award (우수상)", event: "Korea University INISW Academy, 5th cohort", project: "FinWise", date: "2024.12" },
-    { title: "3rd place", event: "KHUDA 5th cohort final conference", project: "Sol_T (team lead)", date: "2024" },
+    { title: "Top Excellence Award (최우수상)", label: "Top Excellence Award", labelKo: "최우수상", event: "KHUTHON inter-university hackathon", eventKo: "KHUTHON 대학연합 해커톤", project: "CiFarm", date: "2024.05" },
+    { title: "Honorable Mention (장려상)", label: "Honorable Mention", labelKo: "장려상", event: "Korea Economic Daily idea contest", eventKo: "한국경제신문 아이디어 공모전", project: "FinWise", date: "2024.10" },
+    { title: "Excellence Award (우수상)", label: "Excellence Award", labelKo: "우수상", event: "Korea University INISW Academy, 5th cohort", eventKo: "고려대학교 INISW 아카데미 5기", project: "FinWise", date: "2024.12" },
+    { title: "3rd place", label: "3rd Place", labelKo: "3위", event: "KHUDA 5th cohort final conference", eventKo: "KHUDA 5기 최종 컨퍼런스", project: "Sol_T (team lead)", projectKo: "Sol_T · 팀장", date: "2024" },
   ],
 
   skills: {
@@ -510,6 +532,8 @@ export const site = {
     Language: ["TEPS 396 / 600 (2026)"],
     "Military service": ["Republic of Korea Army, honorably discharged (2021.10 – 2023.04)"],
   },
+  // Shown on the "Résumé at a glance" modal header.
+  resumeUpdated: { en: "Nov 2026", ko: "2026.11" },
 
   journey: [
     { year: "2024", label: "AI Engineering", labelKo: "AI 엔지니어링" },

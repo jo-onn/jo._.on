@@ -79,12 +79,14 @@ type Props = {
   title: [string, string];
   /** Put both title words on one line ("WORK GALLERY") instead of stacking them. */
   inlineTitle?: boolean;
+  /** Optional badges / line shown above the title. */
+  eyebrow?: ReactNode;
   /** Body fills the dialog and scrolls on its own (the chat keeps its input pinned). */
   fill?: boolean;
   children: ReactNode;
 };
 
-export function HashModal({ id, title, inlineTitle = false, fill = false, children }: Props) {
+export function HashModal({ id, title, eyebrow, inlineTitle = false, fill = false, children }: Props) {
   const hash = useSyncExternalStore(subscribe, getHash, getServerHash);
   const open = hash === id;
   const reduce = useReducedMotion();
@@ -190,6 +192,7 @@ export function HashModal({ id, title, inlineTitle = false, fill = false, childr
                 fill ? "flex min-h-0 flex-1 flex-col" : "overflow-y-auto"
               }`}
             >
+              {eyebrow}
               <h2
                 id={titleId}
                 className="mb-6 pr-14 text-[2.5rem] font-extrabold leading-[0.92] tracking-tight md:mb-10 md:text-6xl"
