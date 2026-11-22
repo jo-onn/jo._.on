@@ -64,7 +64,7 @@ export default function Home() {
               page edge on phones; the photo keeps its own size. */}
           <div className="flex shrink-0 flex-col items-center self-start">
             <div className="relative aspect-square w-20 sm:w-28 lg:w-[clamp(92px,8vw,124px)]">
-              <Image src={withBase(site.photo)} alt={`${site.name.first} ${site.name.last}`} fill sizes="170px" className="object-contain" priority />
+              <Image src={withBase(site.photo)} alt={`${site.name.first} ${site.name.last}`} fill sizes="170px" className="object-contain" preload />
             </div>
             <p className="mt-3 flex items-center gap-1.5 text-center text-xs leading-tight text-muted">
               <span>
