@@ -37,13 +37,13 @@ export default function Home() {
 
         {/* Name + one-liner — no card, type sits straight on the page */}
         <Tile plain index={0} className="md:col-span-2 lg:col-span-6 lg:min-h-[240px] flex items-stretch justify-between gap-6 px-1 py-2">
-          <div className="flex min-w-0 flex-col justify-between">
+          <div className="flex min-w-0 flex-col justify-between lg:shrink-0">
           <h1 className="text-[56px] leading-[0.92] lg:text-[clamp(40px,3.9vw,58px)] lg:whitespace-nowrap">
             <span className="block font-extralight tracking-[0.02em]">{site.name.first}</span>
             <span className="block font-bold tracking-[0.02em]">{site.name.last}</span>
           </h1>
-          {/* One-liner: here on phones/tablets; beside the photo on desktop. */}
-          <p className="mt-4 max-w-[22rem] text-balance break-keep text-[13px] leading-snug text-muted lg:hidden">
+          {/* One-liner: under the name below 1150px; beside the photo on wider screens. */}
+          <p className="mt-4 max-w-[22rem] text-balance break-keep text-[13px] leading-snug text-muted min-[1150px]:hidden">
             <T en={site.intro} ko={site.introKo} />
           </p>
           <div className="mt-6">
@@ -64,9 +64,9 @@ export default function Home() {
             </div>
           </div>
           </div>
-          {/* Desktop: one-liner in a narrow column left of the photo. */}
-          <div className="flex shrink-0 items-center gap-5 self-start">
-          <p className="hidden max-w-[11.5rem] text-balance break-keep text-right text-[13px] leading-snug text-muted lg:block">
+          {/* ≥1150px: one-liner in a narrow column left of the photo, top-aligned with the name. */}
+          <div className="flex shrink-0 items-start gap-5 self-start lg:min-w-0 lg:shrink">
+          <p className="hidden min-w-0 max-w-[11.5rem] pt-2 text-balance break-keep text-left text-[13px] leading-snug text-muted min-[1150px]:block">
             <T en={site.intro} ko={site.introKo} />
           </p>
           {/* Column width follows the "Now at …" line so it never overflows the
