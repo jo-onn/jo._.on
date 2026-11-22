@@ -306,8 +306,8 @@ export const site = {
     {
       year: "2024",
       icon: "bot",
-      headline: "FutureWorkLab · LinkBrain PoC",
-      headlineKo: "퓨처워크랩 · LinkBrain PoC",
+      headline: "FutureWorkLab · LinkBrain",
+      headlineKo: "퓨처워크랩 · LinkBrain",
       meta: { org: "FutureWorkLab", orgKo: "퓨처워크랩", period: "2024.12 — 2025.09", role: "AI Research & Engineering Intern", roleKo: "AI Research & Engineering 인턴" },
       bodyKo: [
         "링크와 메모를 지식 그래프로 정리해 주는 서비스 LinkBrain의 초기 PoC 단계에 합류했습니다. GNN 기반 지식 그래프 PoC를 만들고, LangGraph로 검색·추론 에이전트와 프롬프트 흐름을 구현했습니다.",
