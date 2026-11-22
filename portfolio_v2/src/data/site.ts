@@ -469,7 +469,7 @@ export const site = {
     },
   ],
 
-  // From the résumé. intro shows beside the name; the rest feeds the chatbot and the Career Timeline modal (#resume).
+  // From the résumé. intro shows beside the name; the rest feeds the chatbot and the "Résumé at a glance" modal (#resume).
   intro: "I like finding the gaps in data — and building the thing that fills them myself.",
   introKo: "데이터에서 공백을 찾고, 그 공백을 메우는 결과물을 직접 만드는 걸 좋아합니다.",
 
@@ -532,7 +532,7 @@ export const site = {
     Language: ["TEPS 396 / 600 (2026)"],
     "Military service": ["Republic of Korea Army, honorably discharged (2021.10 – 2023.04)"],
   },
-  // Shown on the Career Timeline modal header.
+  // Shown on the "Résumé at a glance" modal header.
   resumeUpdated: { en: "Nov 2026", ko: "2026.11" },
 
   journey: [

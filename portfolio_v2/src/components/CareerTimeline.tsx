@@ -4,7 +4,7 @@ import { site } from "@/data/site";
 import { T } from "@/components/T";
 import { withBase } from "@/lib/base";
 
-// "Career Timeline" modal (#resume): the résumé as a page.
+// "Résumé at a glance" modal (#resume): the résumé as a page.
 // Kept deliberately light: just where / what / when. Details live in the PDF.
 // Left: timelines (education / experience / research). Right: awards and activities.
 // Server component — bilingual text goes through <T>, so it renders without JS.
@@ -16,7 +16,7 @@ export function CareerTimelineEyebrow() {
   return (
     <div className="mb-5 flex flex-wrap gap-2 pr-14 text-[11px] font-bold uppercase tracking-[0.18em]">
       <span className="rounded-md bg-accent-grad px-3 py-1.5 text-accent-ink">
-        <T en="Résumé" ko="이력서" />
+        <T en="Career summary" ko="이력 요약" />
       </span>
       <span className="rounded-md border border-line px-3 py-1.5 text-muted">
         <T en={`Last updated: ${site.resumeUpdated.en}`} ko={`최종 업데이트 ${site.resumeUpdated.ko}`} />
