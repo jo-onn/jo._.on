@@ -349,16 +349,17 @@ export const site = {
       headlineKo: "서울대병원 · 병리 데이터셋",
       meta: { org: "Seoul National University Hospital · Biomedical Informatics Lab", orgKo: "서울대학교병원 융합의학기술원 · 의생명정보학 Lab", period: "2026.03 — 2026.08", role: "Undergraduate Research Intern", roleKo: "학부연구인턴" },
       bodyKo: [
-        "수작업 라벨링 없이 병리 학습 라벨을 만드는 방법론 RINPAG에서 데이터셋을 만들고 주석 기준을 정했습니다. 공저로 참여해 원고를 쓰고 있습니다.",
-        "ImageNet에서 DINO를 재현하고, 병리 슬라이드용 자기지도 인코더를 검증하는 일도 맡았습니다.",
+        "수작업 라벨링 없이 병리 학습 라벨을 만드는 방법론 RINPAG 연구에서 학습용 데이터셋 구축을 도왔습니다.",
+        "모델이 실제로 유효한지 검증하는 DINO 실험을 맡았습니다. 먼저 ImageNet-1k에서 DINO(ViT-B/14) 학습 과정을 그대로 재현해 논문 수치(kNN 82.4%, linear 79.2%)가 나오는지 확인했고, 이어 병리 슬라이드에서 염색이나 스캐너가 달라도 안정적인 특징을 뽑는지 자기지도 인코더를 검증했습니다.",
       ],
       body: [
-        "For RINPAG, a method that creates pathology training labels without manual labeling, I built the dataset and set the annotation criteria. I'm a co-author; the manuscript is in progress.",
-        "I also reproduced DINO on ImageNet and validated self-supervised encoders for pathology slides.",
+        "On RINPAG, a method that creates pathology training labels without manual labeling, I helped build the training dataset.",
+        "I owned the DINO experiments used to check that the model actually holds up. I first reproduced DINO (ViT-B/14) training on ImageNet-1k and confirmed it matched the paper's numbers (kNN 82.4%, linear 79.2%), then tested whether the self-supervised encoders produce stable features on pathology slides across different stains and scanners.",
       ],
       highlights: [
-        { en: "RINPAG · co-author", ko: "RINPAG 공저" },
-        { en: "Dataset & annotation criteria", ko: "데이터셋·주석 기준 설계" },
+        { en: "RINPAG · dataset", ko: "RINPAG 데이터셋 구축" },
+        { en: "DINO validation experiments", ko: "DINO 유효성 검증 실험" },
+        { en: "DINO ViT-B/14 reproduced (kNN 82.4%)", ko: "DINO ViT-B/14 재현 (kNN 82.4%)" },
       ],
     },
     {
