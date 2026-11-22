@@ -36,12 +36,16 @@ export default function Home() {
         {/* ── Row 1 ─────────────────────────────────────────── */}
 
         {/* Name + one-liner — no card, type sits straight on the page */}
-        <Tile plain index={0} className="md:col-span-2 lg:col-span-5 lg:min-h-[240px] flex items-stretch justify-between gap-6 lg:gap-8 px-1 py-2 lg:pr-4">
+        <Tile plain index={0} className="md:col-span-2 lg:col-span-6 lg:min-h-[240px] flex items-stretch justify-between gap-6 px-1 py-2">
           <div className="flex min-w-0 flex-col justify-between">
           <h1 className="text-[56px] leading-[0.92] lg:text-[clamp(40px,3.9vw,58px)] lg:whitespace-nowrap">
             <span className="block font-extralight tracking-[0.02em]">{site.name.first}</span>
             <span className="block font-bold tracking-[0.02em]">{site.name.last}</span>
           </h1>
+          {/* One-liner: here on phones/tablets; beside the photo on desktop. */}
+          <p className="mt-4 max-w-[22rem] text-balance break-keep text-[13px] leading-snug text-muted lg:hidden">
+            <T en={site.intro} ko={site.introKo} />
+          </p>
           <div className="mt-6">
             <p className={`flex items-start gap-3 text-muted ${eyebrow} tracking-[0.18em] leading-relaxed`}>
               <span className="mt-[0.7em] h-px w-10 shrink-0 bg-muted" />
@@ -60,9 +64,14 @@ export default function Home() {
             </div>
           </div>
           </div>
+          {/* Desktop: one-liner in a narrow column left of the photo. */}
+          <div className="flex shrink-0 items-center gap-5 self-start">
+          <p className="hidden max-w-[11.5rem] text-balance break-keep text-right text-[13px] leading-snug text-muted lg:block">
+            <T en={site.intro} ko={site.introKo} />
+          </p>
           {/* Column width follows the "Now at …" line so it never overflows the
               page edge on phones; the photo keeps its own size. */}
-          <div className="flex shrink-0 flex-col items-center self-start">
+          <div className="flex shrink-0 flex-col items-center">
             <div className="relative aspect-square w-20 sm:w-28 lg:w-[clamp(92px,8vw,124px)]">
               <Image src={withBase(site.photo)} alt={`${site.name.first} ${site.name.last}`} fill sizes="170px" className="object-contain" preload />
             </div>
@@ -75,13 +84,14 @@ export default function Home() {
               </span>
             </p>
           </div>
+          </div>
         </Tile>
 
         {/* Ask jo._.on — the v2 headline feature. No card: like the name block it
             sits on the page; the aurora lives on the prompt field as a ring/glow.
             Compact (~70% scale), centred both ways in its column. */}
-        <Tile plain index={1} className="md:col-span-2 lg:col-span-7 lg:min-h-[240px] flex flex-col justify-center px-1 py-2 lg:pl-4">
-          <div data-ask-block className="md:mx-auto md:w-[70%]">
+        <Tile plain index={1} className="md:col-span-2 lg:col-span-6 lg:min-h-[240px] flex flex-col justify-center px-1 py-2 lg:pl-4">
+          <div data-ask-block className="md:mx-auto md:w-[70%] lg:w-[88%]">
             <h2 className={`${display} flex items-center gap-2 text-[1.25rem] lg:text-[clamp(1.05rem,1.6vw,1.5rem)]`}>
               <span className="ask-tile hidden h-6 w-6 shrink-0 place-items-center rounded-lg text-ask-ink sm:grid lg:h-7 lg:w-7" aria-hidden="true">
                 <Sparkles className="h-3.5 w-3.5" />
