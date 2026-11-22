@@ -78,22 +78,23 @@ export default function Home() {
         </Tile>
 
         {/* Ask jo._.on — the v2 headline feature. No card: like the name block it
-            sits on the page; the aurora lives on the prompt field as a ring/glow. */}
-        <Tile plain index={1} className="md:col-span-2 lg:col-span-7 lg:min-h-[240px] flex flex-col justify-end px-1 py-2 lg:pl-4">
-          <div data-ask-block>
-            <h2 className={`${display} flex items-center gap-2.5 text-[1.75rem] lg:text-[clamp(1.5rem,2.3vw,2.125rem)]`}>
-              <span className="ask-tile hidden h-8 w-8 shrink-0 place-items-center rounded-xl text-ask-ink sm:grid lg:h-9 lg:w-9" aria-hidden="true">
-                <Sparkles className="h-4 w-4" />
+            sits on the page; the aurora lives on the prompt field as a ring/glow.
+            Compact (~70% scale) and vertically centred beside the name block. */}
+        <Tile plain index={1} className="md:col-span-2 lg:col-span-7 lg:min-h-[240px] flex flex-col justify-center px-1 py-2 lg:pl-4">
+          <div data-ask-block className="md:w-[70%]">
+            <h2 className={`${display} flex items-center gap-2 text-[1.25rem] lg:text-[clamp(1.05rem,1.6vw,1.5rem)]`}>
+              <span className="ask-tile hidden h-6 w-6 shrink-0 place-items-center rounded-lg text-ask-ink sm:grid lg:h-7 lg:w-7" aria-hidden="true">
+                <Sparkles className="h-3.5 w-3.5" />
               </span>
               <span className="min-w-0">{site.chat.title}</span>
             </h2>
             <AskTrigger
               aria-label="Ask about jo._.on — open chat"
-              className="ask-field group/ask mt-5 flex min-h-14 items-center gap-2 rounded-full py-2 pl-5 pr-2 text-fg"
+              className="ask-field group/ask mt-3.5 flex min-h-11 items-center gap-2 rounded-full py-1.5 pl-4 pr-1.5 text-fg"
             >
-              <span className="flex-1 truncate text-[15px] text-muted transition-colors group-hover/ask:text-fg"><T en={site.chat.placeholder} ko={site.chat.placeholderKo} /></span>
-              <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-fg text-bg transition-transform duration-300 group-hover/ask:-rotate-12 motion-reduce:transition-none motion-reduce:group-hover/ask:rotate-0">
-                <Send className="h-4 w-4" aria-hidden="true" />
+              <span className="flex-1 truncate text-[13px] text-muted transition-colors group-hover/ask:text-fg"><T en={site.chat.placeholder} ko={site.chat.placeholderKo} /></span>
+              <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-fg text-bg transition-transform duration-300 group-hover/ask:-rotate-12 motion-reduce:transition-none motion-reduce:group-hover/ask:rotate-0">
+                <Send className="h-3.5 w-3.5" aria-hidden="true" />
               </span>
             </AskTrigger>
             {/* Chips send their text as the question, so render one set per language.
@@ -106,13 +107,13 @@ export default function Home() {
                 key={lang}
                 {...(lang === "en" ? { "data-lang-en": "" } : { "data-lang-ko": "" })}
                 data-allow-overflow
-                className="no-scrollbar -mx-5 mt-3 flex gap-2 overflow-x-auto px-5 py-1 md:mx-0 md:flex-wrap md:overflow-visible md:px-0"
+                className="no-scrollbar -mx-5 mt-2.5 flex gap-1.5 overflow-x-auto px-5 py-1 md:mx-0 md:flex-wrap md:overflow-visible md:px-0"
               >
                 {list.map((q) => (
                   <AskTrigger
                     key={q}
                     question={q}
-                    className="inline-flex min-h-11 shrink-0 items-center whitespace-nowrap rounded-full border border-line px-4 text-[13px] font-medium text-muted transition-colors hover:border-fg/30 hover:text-fg active:bg-fg/5 md:min-h-9 md:px-3.5"
+                    className="inline-flex min-h-11 shrink-0 items-center whitespace-nowrap rounded-full border border-line px-4 text-[12px] font-medium text-muted transition-colors hover:border-fg/30 hover:text-fg active:bg-fg/5 md:min-h-7 md:px-3"
                   >
                     {q}
                   </AskTrigger>
