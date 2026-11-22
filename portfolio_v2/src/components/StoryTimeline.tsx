@@ -27,6 +27,8 @@ export type StoryItem = {
   meta?: { org: string; orgKo?: string; period: string; periodKo?: string; role?: string; roleKo?: string };
   /** Short, concrete facts (numbers, awards) shown as chips under the text. */
   highlights?: readonly { en: string; ko: string }[];
+  /** Still going on — gets a "Now" badge. */
+  current?: boolean;
   image?: string;
   logo?: { light: string; dark: string; alt: string };
 };
@@ -36,6 +38,8 @@ export function StoryTimeline({ items }: { items: readonly StoryItem[] }) {
   const [oldestFirst, setOldestFirst] = useState(true);
   const ko = useLang() === "ko";
   const ordered = oldestFirst ? items : [...items].reverse();
+  // The latest year is "where I am now": its chapters get the aurora ring.
+  const latestYear = items.reduce((y, s) => (s.year > y ? s.year : y), "");
 
   return (
     <div>
@@ -61,10 +65,24 @@ export function StoryTimeline({ items }: { items: readonly StoryItem[] }) {
               {showYear && (
                 <>
                   <span className="absolute left-0 top-3 h-[19px] w-[19px] rounded-full bg-accent-grad md:h-6 md:w-6" />
-                  <p className="mb-5 text-4xl font-extrabold tabular-nums tracking-tight text-accent-grad md:text-5xl">{s.year}</p>
+                  <p className="mb-5 flex items-baseline gap-3 text-4xl font-extrabold tabular-nums tracking-tight md:text-5xl">
+                    <span className="text-accent-grad">{s.year}</span>
+                    {s.year === latestYear && (
+                      <span className="text-[11px] font-bold uppercase tracking-[0.18em] text-muted">{ko ? "지금" : "Now"}</span>
+                    )}
+                  </p>
                 </>
               )}
-              <article className="rounded-[24px] border border-line p-5 md:p-8">
+              <article className={`rounded-[24px] border border-line p-5 md:p-8 ${s.year === latestYear ? "story-now" : ""}`}>
+                {s.current && (
+                  <p className="mb-4 inline-flex items-center gap-2 rounded-full border border-line px-3 py-1 text-[11px] font-bold uppercase tracking-[0.16em]">
+                    <span className="relative flex h-2 w-2">
+                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-live opacity-60 motion-reduce:animate-none" />
+                      <span className="relative inline-flex h-2 w-2 rounded-full bg-live" />
+                    </span>
+                    {ko ? "현재 진행 중" : "Now"}
+                  </p>
+                )}
                 <h3 className="flex items-center gap-4 text-lg font-extrabold uppercase leading-tight tracking-tight md:text-2xl">
                   <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-accent/15 text-accent md:h-12 md:w-12">
                     <Icon className="h-5 w-5 md:h-6 md:w-6" />

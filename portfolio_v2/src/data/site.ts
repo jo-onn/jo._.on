@@ -390,6 +390,7 @@ export const site = {
         dark: "/brand/naver-cloud-platform-dark.png",
         alt: "NAVER Cloud Platform",
       },
+      current: true,
       headline: "Crossing to the other side of the gap",
       headlineKo: "간극의 반대편으로 건너가다",
       meta: { org: "NAVER Cloud", orgKo: "네이버클라우드", period: "2026.08 — Now", periodKo: "2026.08 — 현재", role: "Business Strategy Intern · Healthcare & Manufacturing", roleKo: "헬스케어·제조 분야 신사업 발굴, 전략 인턴" },
