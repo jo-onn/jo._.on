@@ -324,3 +324,27 @@ body {
 [data-theme="light"] .ask-field {
   border-width: 2px;
 }
+
+/* ── The Story: chapters of the latest year ("now") ────────────────────────
+   Aurora ring like the Ask field / Résumé card, drawn with a masked pseudo-
+   element so the card keeps the modal's own background in both themes. */
+.story-now {
+  position: relative;
+  border-color: transparent;
+  box-shadow:
+    -18px 8px 44px -26px color-mix(in oklab, var(--aurora-a) calc(var(--aurora-glow) * 100%), transparent),
+    0 16px 48px -28px color-mix(in oklab, var(--aurora-b) calc(var(--aurora-glow) * 100%), transparent),
+    18px 8px 44px -26px color-mix(in oklab, var(--aurora-c) calc(var(--aurora-glow) * 100%), transparent);
+}
+.story-now::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: linear-gradient(130deg, var(--aurora-a), var(--aurora-b) 50%, var(--aurora-c));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  pointer-events: none;
+}
