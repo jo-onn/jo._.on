@@ -15,6 +15,10 @@ import Anthropic from "@anthropic-ai/sdk";
 import { mockAnswer } from "../../portfolio_v2/src/lib/chat/mock";
 import { MAX_BODY_BYTES, parseChatRequest } from "../../portfolio_v2/src/lib/chat/validate";
 import { claudeAnswer } from "./claude";
+import { IpRateLimiter, limiterKey } from "./ipLimiter";
+
+// The Durable Object class must be exported from the Worker entry module.
+export { IpRateLimiter };
 
 export interface Env {
   /** Secret. Unset → mock mode. */
@@ -23,13 +27,16 @@ export interface Env {
   CHAT_MOCK?: string;
   /** Comma-separated list of exact origins allowed to call this Worker. */
   ALLOWED_ORIGINS?: string;
-  /** Workers Rate Limiting binding (see wrangler.jsonc). */
-  CHAT_RATE_LIMITER?: RateLimit;
+  /** Durable Object namespace: one strict counter per client IP (see ipLimiter.ts). */
+  IP_LIMITER?: DurableObjectNamespace<IpRateLimiter>;
+  /** Per-IP limits (strings from wrangler.jsonc vars). */
+  RATE_LIMIT_PER_MINUTE?: string;
+  RATE_LIMIT_PER_DAY?: string;
 }
 
 const DEFAULT_ALLOWED_ORIGINS = "https://jo-onn.github.io,http://localhost:3000,http://127.0.0.1:3000";
-/** Must match the binding's `simple.period` in wrangler.jsonc. */
-const RATE_LIMIT_PERIOD_SEC = 60;
+const DEFAULT_PER_MINUTE = 10;
+const DEFAULT_PER_DAY = 50;
 const CHAT_PATHS = new Set(["/", "/api/chat"]);
 
 const encoder = new TextEncoder();
@@ -94,22 +101,40 @@ async function readBodyCapped(request: Request, maxBytes: number): Promise<strin
   return new TextDecoder().decode(buf);
 }
 
-/** true = allowed. Falls back to "allow" if the binding is missing or errors. */
-async function underRateLimit(env: Env, ip: string): Promise<boolean> {
-  if (!env.CHAT_RATE_LIMITER) return true;
+const positiveInt = (v: string | undefined, fallback: number) => {
+  const n = Number(v);
+  return Number.isInteger(n) && n > 0 ? n : fallback;
+};
+
+/**
+ * Exact per-IP limit via the IP_LIMITER Durable Object. Returns null when
+ * allowed, or the Retry-After seconds when the IP is over its limit.
+ * If the binding is missing or the call fails, the request is allowed and the
+ * failure is logged (the Anthropic workspace spend limit is the hard backstop).
+ */
+async function rateLimited(env: Env, ip: string): Promise<number | null> {
+  if (!env.IP_LIMITER) {
+    console.error("[chat] IP_LIMITER binding missing, allowing request");
+    return null;
+  }
   try {
-    const { success } = await env.CHAT_RATE_LIMITER.limit({ key: ip });
-    return success;
+    const stub = env.IP_LIMITER.getByName(limiterKey(ip));
+    const res = await stub.hit(
+      positiveInt(env.RATE_LIMIT_PER_MINUTE, DEFAULT_PER_MINUTE),
+      positiveInt(env.RATE_LIMIT_PER_DAY, DEFAULT_PER_DAY),
+    );
+    return res.allowed ? null : res.retryAfterSec;
   } catch (err) {
     console.error("[chat] rate limiter unavailable, allowing request", err);
-    return true;
+    return null;
   }
 }
 
 async function handleChat(request: Request, env: Env, origin: string): Promise<Response> {
   const ip = request.headers.get("CF-Connecting-IP") ?? "unknown";
-  if (!(await underRateLimit(env, ip))) {
-    return jsonError(429, "rate_limited", origin, { "Retry-After": String(RATE_LIMIT_PERIOD_SEC) });
+  const retryAfter = await rateLimited(env, ip);
+  if (retryAfter !== null) {
+    return jsonError(429, "rate_limited", origin, { "Retry-After": String(retryAfter) });
   }
 
   let raw: string | null;

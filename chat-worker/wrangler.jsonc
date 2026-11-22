@@ -17,18 +17,21 @@
   // Locally, .dev.vars overrides these (see .dev.vars.example).
   "vars": {
     "ALLOWED_ORIGINS": "https://jo-onn.github.io,http://localhost:3000,http://127.0.0.1:3000",
-    "CHAT_MOCK": "0"
+    "CHAT_MOCK": "0",
+    // Per client IP (IPv6 grouped by /64). Enforced exactly by the IP_LIMITER
+    // Durable Object. The Workers Rate Limiting binding was dropped: its counts
+    // are approximate and it never blocked anything on workers.dev.
+    "RATE_LIMIT_PER_MINUTE": "10",
+    "RATE_LIMIT_PER_DAY": "50"
   },
 
-  // Workers Rate Limiting binding: 10 requests per 60 s per client IP
-  // (counted per Cloudflare location; period must be 10 or 60).
-  "ratelimits": [
-    {
-      "name": "CHAT_RATE_LIMITER",
-      "namespace_id": "2067",
-      "simple": { "limit": 10, "period": 60 }
-    }
-  ],
+  // One SQLite-backed Durable Object per client IP (src/ipLimiter.ts).
+  "durable_objects": {
+    "bindings": [{ "name": "IP_LIMITER", "class_name": "IpRateLimiter" }]
+  },
+  "exports": {
+    "IpRateLimiter": { "type": "durable-object", "storage": "sqlite" }
+  },
 
   "observability": { "enabled": true }
 }

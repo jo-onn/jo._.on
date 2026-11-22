@@ -44,8 +44,16 @@ const STRINGS = {
     bot: "jo._.on AI",
     thinking: "Thinking…",
     stopped: "Stopped",
-    rateLimited: (n: number) =>
-      n > 0 ? `Too many questions — try again in ${n} second${n === 1 ? "" : "s"}.` : "You can ask again now.",
+    rateLimited: (n: number) => {
+      if (n <= 0) return "You can ask again now.";
+      if (n <= 120) return `Too many questions — try again in ${n} second${n === 1 ? "" : "s"}.`;
+      if (n < 3600) {
+        const m = Math.ceil(n / 60);
+        return `Too many questions — try again in ${m} minutes.`;
+      }
+      const h = Math.ceil(n / 3600);
+      return `You've reached today's question limit — try again in about ${h} hour${h === 1 ? "" : "s"}.`;
+    },
     failed: "Something went wrong while answering.",
     retry: "Try again",
     disclaimer: "AI answers based on jo._.on's portfolio · may be imperfect",
@@ -64,8 +72,12 @@ const STRINGS = {
     bot: "jo._.on AI",
     thinking: "생각 중…",
     stopped: "중지됨",
-    rateLimited: (n: number) =>
-      n > 0 ? `질문이 너무 많아요 — ${n}초 후에 다시 시도해 주세요.` : "이제 다시 질문할 수 있어요.",
+    rateLimited: (n: number) => {
+      if (n <= 0) return "이제 다시 질문할 수 있어요.";
+      if (n <= 120) return `질문이 너무 많아요 — ${n}초 후에 다시 시도해 주세요.`;
+      if (n < 3600) return `질문이 너무 많아요 — ${Math.ceil(n / 60)}분 후에 다시 시도해 주세요.`;
+      return `오늘 질문 한도에 도달했어요 — 약 ${Math.ceil(n / 3600)}시간 후에 다시 시도해 주세요.`;
+    },
     failed: "답변을 가져오지 못했어요.",
     retry: "다시 시도",
     disclaimer: "jo._.on의 포트폴리오를 바탕으로 한 AI 답변 · 부정확할 수 있어요",
