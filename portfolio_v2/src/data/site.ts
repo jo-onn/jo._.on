@@ -160,8 +160,8 @@ export const site = {
           {
             heading: "Result",
             headingKo: "결과",
-            body: "Reached 0.762 accuracy under subject-level validation, and was presented as a poster at KSC 2025 as first author.",
-            bodyKo: "피험자 단위 검증에서 정확도 0.762를 기록했고, KSC 2025에 1저자로 포스터 발표했습니다.",
+            body: "Reached accuracy 0.762 under subject-level validation, and was presented as a poster at KSC 2025 as first author.",
+            bodyKo: "피험자 단위 검증에서 accuracy 0.762를 기록했고, KSC 2025에 1저자로 포스터 발표했습니다.",
           },
         ],
         // TODO(user): fill in — each is shown on the detail page only once set (string instead of null).
@@ -250,10 +250,10 @@ export const site = {
       status: "Poster",
       statusKo: "포스터",
       summary:
-        "Predicted learner attention from wearable HR, RRI, EDA and skin-temperature signals with a multimodal time-series ML pipeline — 0.762 accuracy under subject-level validation (first author).",
+        "Predicted learner attention from wearable HR, RRI, EDA and skin-temperature signals with a multimodal time-series ML pipeline — accuracy 0.762 under subject-level validation (first author).",
       href: "/projects/ksc-2025-poster.pdf",
       linkLabel: "View poster",
-      summaryKo: "웨어러블 HR, RRI, EDA, 피부 온도 신호로 학습자 집중도를 예측하는 멀티모달 시계열 머신러닝 파이프라인을 만들었고, 피험자 단위 검증에서 정확도 0.762를 기록했습니다 (1저자).",
+      summaryKo: "웨어러블 HR, RRI, EDA, 피부 온도 신호로 학습자 집중도를 예측하는 멀티모달 시계열 머신러닝 파이프라인을 만들었고, 피험자 단위 검증에서 accuracy 0.762를 기록했습니다 (1저자).",
       linkLabelKo: "포스터 보기",
     },
   ],
@@ -265,8 +265,8 @@ export const site = {
     {
       year: "2023",
       icon: "users",
-      headline: "KHUDA — where data started",
-      headlineKo: "KHUDA, 데이터 공부의 시작",
+      headline: "KHUDA — where data analysis started",
+      headlineKo: "KHUDA, 데이터 분석의 시작",
       meta: { org: "KHUDA · Kyung Hee University data analysis & AI club", orgKo: "KHUDA · 경희대 데이터분석·AI 동아리", period: "2023.08 — 2024.06", role: "4th member → 5th Head of Planning & Operations, NLP track lead", roleKo: "4기 부원 → 5기 기획·운영부장 겸 NLP 트랙 리더" },
       bodyKo: [
         "전역 후 KHUDA 4기 Data Business 트랙에 들어가 데이터 분석과 AI를 처음 배웠습니다.",
@@ -330,14 +330,14 @@ export const site = {
       meta: { org: "AIMS Lab, Kyung Hee University", orgKo: "경희대학교 AIMS Lab", period: "2025.08 — 2026.07", role: "Undergraduate Research Intern", roleKo: "학부연구인턴" },
       bodyKo: [
         "웨어러블 생체신호 4종(심박, R-R 간격, 피부전도, 피부 온도)으로 학습자의 집중도를 예측하는 연구를 했습니다.",
-        "피험자 단위로 검증해 정확도 0.762가 나왔고, KSC 2025에 1저자로 투고해 포스터로 발표했습니다.",
+        "피험자 단위로 검증해 accuracy 0.762가 나왔고, KSC 2025에 1저자로 투고해 포스터로 발표했습니다.",
       ],
       body: [
         "I worked on predicting learners' attention from four wearable signals: heart rate, R-R intervals, EDA and skin temperature.",
-        "Validated at the subject level, it reached 0.762 accuracy. I submitted it to KSC 2025 as first author and presented it as a poster.",
+        "Validated at the subject level, it reached accuracy 0.762. I submitted it to KSC 2025 as first author and presented it as a poster.",
       ],
       highlights: [
-        { en: "Accuracy 0.762 (subject-level)", ko: "정확도 0.762 (피험자 단위)" },
+        { en: "accuracy 0.762 (subject-level)", ko: "accuracy 0.762 (피험자 단위)" },
         { en: "KSC 2025 · first author", ko: "KSC 2025 1저자" },
       ],
       image: "/projects/ksc-1.webp",
