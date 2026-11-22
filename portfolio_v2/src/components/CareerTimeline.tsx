@@ -1,0 +1,250 @@
+import type { ReactNode } from "react";
+import { Briefcase, Download, FlaskConical, GraduationCap, Trophy, Users, Wrench, type LucideIcon } from "lucide-react";
+import { site } from "@/data/site";
+import { T } from "@/components/T";
+import { withBase } from "@/lib/base";
+
+// "Career Timeline" modal (#resume): the résumé as a page.
+// Left: timelines (education / experience / research). Right: awards, activities, skills.
+// Server component — bilingual text goes through <T>, so it renders without JS.
+
+const sectionTitle = "text-sm font-extrabold uppercase tracking-[0.2em] md:text-base";
+
+/** Header badges shown above the modal title. */
+export function CareerTimelineEyebrow() {
+  return (
+    <div className="mb-5 flex flex-wrap gap-2 pr-14 text-[11px] font-bold uppercase tracking-[0.18em]">
+      <span className="rounded-md bg-accent-grad px-3 py-1.5 text-accent-ink">
+        <T en="Résumé" ko="이력서" />
+      </span>
+      <span className="rounded-md border border-line px-3 py-1.5 text-muted">
+        <T en={`Last updated: ${site.resumeUpdated.en}`} ko={`최종 업데이트 ${site.resumeUpdated.ko}`} />
+      </span>
+    </div>
+  );
+}
+
+export function CareerTimeline() {
+  const work = site.experience.filter((e) => e.kind === "work");
+  const research = site.experience.filter((e) => e.kind === "research");
+
+  return (
+    // break-keep: Korean wraps between words, not inside them.
+    <div className="break-keep">
+      {/* Download sits beside the title on desktop (pulled up into the title's row). */}
+      <div className="mb-10 flex border-b border-line pb-8 md:-mt-[4.75rem] md:mb-12 md:justify-end md:pb-10">
+        <a
+          href={withBase(site.resume)}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex min-h-12 items-center gap-2.5 rounded-full bg-accent-grad px-6 text-xs font-bold uppercase tracking-[0.18em] text-accent-ink shadow-lg transition-transform hover:-translate-y-0.5 active:translate-y-0 motion-reduce:transition-none"
+        >
+          <Download className="h-4 w-4" aria-hidden="true" />
+          <T en="Download CV" ko="이력서 PDF" />
+        </a>
+      </div>
+
+      <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_340px] lg:gap-10">
+        <div className="space-y-14">
+          <Section icon={GraduationCap} title={<T en="Education" ko="학력" />}>
+            {site.education.map((e, i) => (
+              <Entry
+                key={e.school}
+                first={i === 0}
+                title={<T en={e.school} ko={e.schoolKo} />}
+                period={e.years}
+                sub={<T en={e.degree} ko={e.degreeKo} />}
+                chips={[<T key="s" en={e.status} ko={e.statusKo} />, e.note]}
+              />
+            ))}
+          </Section>
+
+          <Section icon={Briefcase} title={<T en="Experience" ko="경력" />}>
+            {work.map((e, i) => (
+              <Entry
+                key={e.company}
+                first={i === 0}
+                title={<T en={e.company} ko={e.companyKo} />}
+                period={"periodKo" in e ? <T en={e.period} ko={e.periodKo} /> : e.period}
+                sub={<T en={e.role} ko={e.roleKo} />}
+                bullets={{ en: e.bullets, ko: e.bulletsKo }}
+                chips={e.tags}
+              />
+            ))}
+          </Section>
+
+          <Section icon={FlaskConical} title={<T en="Research" ko="연구 경험" />}>
+            {research.map((e, i) => (
+              <Entry
+                key={e.company}
+                first={i === 0}
+                title={<T en={e.company} ko={e.companyKo} />}
+                period={e.period}
+                sub={<T en={e.role} ko={e.roleKo} />}
+                bullets={{ en: e.bullets, ko: e.bulletsKo }}
+                chips={e.tags}
+              />
+            ))}
+          </Section>
+        </div>
+
+        <aside className="h-fit space-y-10 rounded-[28px] border border-line p-5 md:p-7">
+          <AsideSection icon={Trophy} title={<T en="Awards" ko="수상" />}>
+            {site.awards.map((a) => (
+              <li key={a.title} className="rounded-2xl border border-line bg-bg/40 p-4">
+                <p className="text-[15px] font-bold leading-snug">
+                  <T en={a.label} ko={a.labelKo} />
+                </p>
+                <p className="mt-1 text-sm leading-snug text-muted">
+                  <T en={a.event} ko={a.eventKo} />
+                </p>
+                <p className="mt-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-muted">
+                  {"projectKo" in a ? <T en={a.project} ko={a.projectKo} /> : a.project} · {a.date}
+                </p>
+              </li>
+            ))}
+          </AsideSection>
+
+          <AsideSection icon={Users} title={<T en="Activities" ko="대외활동" />}>
+            {site.activities.map((a) => (
+              <li key={a.name} className="rounded-2xl border border-line bg-bg/40 p-4">
+                <div className="flex items-baseline justify-between gap-3">
+                  <p className="text-[15px] font-bold">
+                    <T en={a.name} ko={a.nameKo} />
+                  </p>
+                  <span className="shrink-0 text-[11px] font-semibold tabular-nums text-muted">{a.period}</span>
+                </div>
+                <p className="mt-1 text-sm leading-snug text-muted">
+                  <T en={a.role} ko={a.roleKo} />
+                </p>
+                <Bullets en={a.bullets} ko={a.bulletsKo} className="mt-2" />
+              </li>
+            ))}
+          </AsideSection>
+
+          <AsideSection icon={Wrench} title={<T en="Skills & more" ko="역량 및 기타" />} list={false}>
+            <dl className="space-y-4">
+              {Object.entries(site.skills).map(([label, items]) => {
+                const ko = site.skillsKo[label as keyof typeof site.skillsKo];
+                return (
+                  <div key={label}>
+                    <dt className="text-[11px] font-bold uppercase tracking-[0.16em] text-muted">
+                      <T en={label} ko={ko.label} />
+                    </dt>
+                    <dd className="mt-2 flex flex-wrap gap-1.5">
+                      {items.map((item, i) => (
+                        <span key={item} className="rounded-md border border-line px-2 py-1 text-xs font-semibold">
+                          <T en={item} ko={ko.items[i]} />
+                        </span>
+                      ))}
+                    </dd>
+                  </div>
+                );
+              })}
+            </dl>
+          </AsideSection>
+        </aside>
+      </div>
+    </div>
+  );
+}
+
+function Section({ icon: Icon, title, children }: { icon: LucideIcon; title: ReactNode; children: ReactNode }) {
+  return (
+    <section>
+      <h3 className={`flex items-center gap-4 ${sectionTitle}`}>
+        <span className="grid h-12 w-12 shrink-0 place-items-center rounded-xl border border-line text-accent md:h-14 md:w-14">
+          <Icon className="h-5 w-5 md:h-6 md:w-6" />
+        </span>
+        {title}
+      </h3>
+      <ol className="relative mt-8 space-y-10">
+        {/* rail */}
+        <span className="absolute bottom-1 left-[6px] top-2 w-px bg-line" aria-hidden="true" />
+        {children}
+      </ol>
+    </section>
+  );
+}
+
+function Entry({
+  first,
+  title,
+  period,
+  sub,
+  bullets,
+  chips,
+}: {
+  first: boolean;
+  title: ReactNode;
+  period: ReactNode;
+  sub: ReactNode;
+  bullets?: { en: readonly string[]; ko: readonly string[] };
+  chips?: readonly ReactNode[];
+}) {
+  return (
+    <li className="relative pl-9 md:pl-11">
+      <span
+        className={`absolute left-0 top-[0.4rem] h-[13px] w-[13px] rounded-full ${
+          first ? "bg-accent-grad ring-4 ring-accent/20" : "bg-fg/70"
+        }`}
+        aria-hidden="true"
+      />
+      <div className="flex flex-wrap items-start justify-between gap-x-4 gap-y-2">
+        <h4 className="min-w-0 text-lg font-extrabold leading-tight tracking-tight md:text-xl">{title}</h4>
+        <span
+          className={`shrink-0 rounded-md px-2.5 py-1 text-[11px] font-bold tabular-nums tracking-[0.1em] ${
+            first ? "bg-accent-grad text-accent-ink" : "border border-line text-muted"
+          }`}
+        >
+          {period}
+        </span>
+      </div>
+      <p className="mt-1.5 text-[15px] font-medium leading-snug text-muted">{sub}</p>
+      {bullets && <Bullets en={bullets.en} ko={bullets.ko} className="mt-3" />}
+      {chips && chips.length > 0 && (
+        <div className="mt-3 flex flex-wrap gap-1.5">
+          {chips.map((c, i) => (
+            <span key={i} className="rounded-md border border-line px-2.5 py-1 text-xs font-semibold">
+              {c}
+            </span>
+          ))}
+        </div>
+      )}
+    </li>
+  );
+}
+
+function Bullets({ en, ko, className = "" }: { en: readonly string[]; ko: readonly string[]; className?: string }) {
+  return (
+    <ul className={`space-y-1.5 text-sm leading-relaxed text-muted ${className}`}>
+      {en.map((b, i) => (
+        <li key={b} className="relative pl-4 before:absolute before:left-0 before:top-[0.6em] before:h-1 before:w-1 before:rounded-full before:bg-accent">
+          <T en={b} ko={ko[i]} />
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+function AsideSection({
+  icon: Icon,
+  title,
+  children,
+  list = true,
+}: {
+  icon: LucideIcon;
+  title: ReactNode;
+  children: ReactNode;
+  list?: boolean;
+}) {
+  return (
+    <section>
+      <h3 className={`flex items-center gap-3 ${sectionTitle}`}>
+        <Icon className="h-5 w-5 text-accent" />
+        {title}
+      </h3>
+      {list ? <ul className="mt-5 space-y-3">{children}</ul> : <div className="mt-5">{children}</div>}
+    </section>
+  );
+}

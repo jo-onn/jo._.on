@@ -12,6 +12,7 @@ import { ProjectsCover } from "@/components/ProjectsCover";
 import { DrawOnView } from "@/components/DrawOnView";
 import { AskChat, AskTrigger } from "@/components/chat";
 import { WorkGallery } from "@/components/projects/WorkGallery";
+import { CareerTimeline, CareerTimelineEyebrow } from "@/components/CareerTimeline";
 import { withBase } from "@/lib/base";
 
 const eyebrow = "text-[11px] font-semibold tracking-[0.22em] uppercase";
@@ -160,7 +161,7 @@ export default function Home() {
         </Tile>
 
         {/* Résumé */}
-        <Tile index={4} href={withBase(site.resume)} external ariaLabel="Résumé (PDF, opens in a new tab)" className="resume-card text-fg min-h-[180px] gap-6 lg:col-span-3 lg:min-h-[240px] flex flex-col justify-between">
+        <Tile index={4} href="#resume" ariaLabel="Résumé — career timeline" className="resume-card text-fg min-h-[180px] gap-6 lg:col-span-3 lg:min-h-[240px] flex flex-col justify-between">
           <div className="flex items-start justify-between">
             <span className="ask-tile grid h-11 w-11 place-items-center rounded-xl resume-icon">
               <FileText className="h-5 w-5" />
@@ -169,7 +170,7 @@ export default function Home() {
           </div>
           <div>
             <h2 className={`${display} text-5xl lg:text-[clamp(1.9rem,3.2vw,3rem)]`}>RÉSUMÉ</h2>
-            <p className={`mt-2 opacity-70 ${eyebrow} tracking-[0.16em]`}><T en="View PDF" ko="PDF 보기" /></p>
+            <p className={`mt-2 opacity-70 ${eyebrow} tracking-[0.16em]`}><T en="Career timeline" ko="이력 보기" /></p>
           </div>
         </Tile>
 
@@ -252,6 +253,10 @@ export default function Home() {
 
       <HashModal id="projects" title={["WORK", "GALLERY"]} inlineTitle>
         <WorkGallery />
+      </HashModal>
+
+      <HashModal id="resume" title={["CAREER", "TIMELINE"]} eyebrow={<CareerTimelineEyebrow />}>
+        <CareerTimeline />
       </HashModal>
 
       <HashModal id="journey" title={["THE", "STORY"]}>
