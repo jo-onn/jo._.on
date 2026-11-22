@@ -69,8 +69,8 @@ export default function Home() {
             <p className="mt-3 flex items-center gap-1.5 text-center text-xs leading-tight text-muted">
               <span>
                 <T
-                  en={<><span className="block">Now at</span><span className="whitespace-nowrap font-semibold text-fg"><Image src={withBase(site.now.logo.symbol)} alt="" width={363} height={182} className="mr-1 inline-block h-2.5 w-auto align-[-1px]" />{site.now.org}</span></>}
-                  ko={<><span className="block">현재</span><span className="whitespace-nowrap font-semibold text-fg"><Image src={withBase(site.now.logo.symbol)} alt="" width={363} height={182} className="mr-1 inline-block h-2.5 w-auto align-[-1px]" />{site.now.orgKo}</span></>}
+                  en={<><span className="block"><span className="mr-1.5 inline-block h-1.5 w-1.5 rounded-full bg-live align-middle" aria-hidden="true" />Now at</span><span className="whitespace-nowrap font-semibold text-fg"><Image src={withBase(site.now.logo.symbol)} alt="" width={363} height={182} className="mr-1 inline-block h-2.5 w-auto align-[-1px]" />{site.now.org}</span></>}
+                  ko={<><span className="block"><span className="mr-1.5 inline-block h-1.5 w-1.5 rounded-full bg-live align-middle" aria-hidden="true" />현재</span><span className="whitespace-nowrap font-semibold text-fg"><Image src={withBase(site.now.logo.symbol)} alt="" width={363} height={182} className="mr-1 inline-block h-2.5 w-auto align-[-1px]" />{site.now.orgKo}</span></>}
                 />
               </span>
             </p>
