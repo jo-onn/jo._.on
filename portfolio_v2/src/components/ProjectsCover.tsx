@@ -61,7 +61,10 @@ export function ProjectsCover({ images, sizes }: { images: string[]; sizes: stri
             alt=""
             fill
             sizes={sizes}
-            priority={src === images[0]}
+            // Every frame sits above the fold in the same tile, so none may lazy-load
+            // (Next warns when the LCP image is lazy).
+            loading="eager"
+            fetchPriority={src === images[0] ? "high" : "auto"}
             className="object-cover object-[50%_30%] opacity-80 transition-transform duration-700 group-hover:scale-105"
           />
         </motion.div>

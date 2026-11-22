@@ -18,6 +18,7 @@ function buildFacts(): string {
     `Name: ${s.name.first} ${s.name.last}; Korean name: ${s.name.ko} (handle: ${s.handle}). In English refer to him as "Joon Hyuk" or "jo._.on"; in Korean always as "${s.name.ko}" or "${s.name.ko} 님".`,
     `Headline: ${s.tagline}`,
     `Summary: ${s.description}`,
+    `In his own words: ${s.intro} (${s.introKo})`,
     `Currently: ${s.now.role} at ${s.now.org} (based in Seoul, KST).`,
     `Email: ${s.email}`,
     `GitHub: ${s.social.github}`,
@@ -46,6 +47,20 @@ function buildFacts(): string {
     ),
   );
 
+  const education = s.education.map((e) => `- ${e.school} — ${e.degree} (${e.period}; ${e.note})`);
+
+  const otherProjects = s.otherProjects.map(
+    (p) => `- ${p.name} — ${p.context} (${p.period})\n  ${p.summary}`,
+  );
+
+  const activities = s.activities.map((a) =>
+    [`- ${a.name} — ${a.role} (${a.period})`, bullets(a.bullets)].join("\n"),
+  );
+
+  const awards = s.awards.map((a) => `- ${a.title} — ${a.event}, for ${a.project} (${a.date})`);
+
+  const skills = Object.entries(s.skills).map(([k, v]) => `- ${k}: ${v.join(", ")}`);
+
   const story = s.story.map((st) => [`- ${st.year}: ${st.headline}`, bullets(st.body)].join("\n"));
 
   const journey = s.journey.map((j) => `${j.year} ${j.label}`).join(" → ");
@@ -59,9 +74,22 @@ function buildFacts(): string {
     "",
     "## Projects",
     ...projects,
+    ...otherProjects,
     "",
     "## Research",
     ...research,
+    "",
+    "## Education",
+    ...education,
+    "",
+    "## Activities",
+    ...activities,
+    "",
+    "## Awards",
+    ...awards,
+    "",
+    "## Skills & other",
+    ...skills,
     "",
     "## His story (career narrative, oldest first)",
     `Journey: ${journey}`,

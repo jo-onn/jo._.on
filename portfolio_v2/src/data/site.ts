@@ -28,7 +28,7 @@ export const site = {
       symbol: "/brand/naver-cloud-symbol.png",
       alt: "NAVER Cloud Platform",
     },
-    role: "Healthcare AI Business Strategy Intern",
+    role: "Business Strategy Intern — new business in healthcare & manufacturing",
     timeZone: "Asia/Seoul",
     zoneLabel: "SEOUL / KST",
   },
@@ -67,8 +67,8 @@ export const site = {
           {
             heading: "Result",
             headingKo: "결과",
-            body: "Reconstruction-based methods outperformed self-supervised ones for intracranial hemorrhage. The study was submitted to MIDL 2026.",
-            bodyKo: "두개내출혈 탐지에서는 재구성 기반 방법이 자기지도학습 방법보다 우수했고, 이 연구는 MIDL 2026에 투고되었습니다.",
+            body: "Reconstruction-based methods outperformed self-supervised ones for intracranial hemorrhage. The study was submitted to KSC 2026.",
+            bodyKo: "두개내출혈 탐지에서는 재구성 기반 방법이 자기지도학습 방법보다 우수했고, 이 연구는 KSC 2026에 투고되었습니다.",
           },
         ],
         // TODO(user): fill in — each is shown on the detail page only once set (string instead of null).
@@ -82,7 +82,7 @@ export const site = {
         descriptionKo:
           "뇌 CT의 두개내출혈 탐지를 위해 딥러닝 이상 탐지 기법 11종을 체계적으로 비교했고, 자기지도학습보다 재구성 기반 방법이 우세함을 확인했습니다.",
         year: "2026",
-        badges: ["Paper", "MIDL 2026"],
+        badges: ["Paper", "KSC 2026"],
         image: "/projects/brain-ct-1.webp",
         description:
           "A systematic benchmark of 11 deep-learning anomaly detection methods for intracranial hemorrhage in brain CT, favoring reconstruction-based over self-supervised approaches.",
@@ -160,8 +160,8 @@ export const site = {
           {
             heading: "Result",
             headingKo: "결과",
-            body: "Presented as a poster at KSC 2025.",
-            bodyKo: "KSC 2025에서 포스터로 발표했습니다.",
+            body: "Reached 0.762 accuracy under subject-level validation, and was presented as a poster at KSC 2025 as first author.",
+            bodyKo: "피험자 단위 검증에서 정확도 0.762를 기록했고, KSC 2025에 1저자로 포스터 발표했습니다.",
           },
         ],
         // TODO(user): fill in — each is shown on the detail page only once set (string instead of null).
@@ -205,8 +205,8 @@ export const site = {
           {
             heading: "Result",
             headingKo: "결과",
-            body: "Won the grand prize at KHUTHON 2024.",
-            bodyKo: "KHUTHON 2024에서 대상을 받았습니다.",
+            body: "Won the top excellence award at KHUTHON 2024, an inter-university hackathon.",
+            bodyKo: "대학연합 해커톤 KHUTHON 2024에서 최우수상을 받았습니다.",
           },
         ],
         // TODO(user): fill in — each is shown on the detail page only once set (string instead of null).
@@ -219,7 +219,7 @@ export const site = {
         nameKo: "CiFarm — 도시텃밭 중개 및 AI 도시농부 코치",
         descriptionKo: "LangGraph 기반 AI 에이전트가 텃밭 분양과 단계별 재배 가이드를 제공하는 도시농업 플랫폼입니다.",
         year: "2024",
-        badges: ["KHUTHON 2024 · Grand Prize"],
+        badges: ["KHUTHON 2024 · Top Excellence Award"],
         image: "/projects/cifarm-1.webp",
         description:
           "An urban-farming platform where a LangGraph-based AI agent handles plot matching and step-by-step growing guides.",
@@ -231,7 +231,7 @@ export const site = {
 
   research: [
     {
-      venue: "MIDL 2026",
+      venue: "KSC 2026",
       title: "Anomaly detection for brain CT hemorrhage",
       titleKo: "뇌 CT 출혈 이상 탐지",
       status: "Submitted",
@@ -250,10 +250,10 @@ export const site = {
       status: "Poster",
       statusKo: "포스터",
       summary:
-        "Predicted learner attention from wearable HR, RRI, EDA and skin-temperature signals with a multimodal time-series ML pipeline.",
+        "Predicted learner attention from wearable HR, RRI, EDA and skin-temperature signals with a multimodal time-series ML pipeline — 0.762 accuracy under subject-level validation (first author).",
       href: "/projects/ksc-2025-poster.pdf",
       linkLabel: "View poster",
-      summaryKo: "웨어러블 HR, RRI, EDA, 피부 온도 신호로 학습자 집중도를 예측하는 멀티모달 시계열 머신러닝 파이프라인을 만들었습니다.",
+      summaryKo: "웨어러블 HR, RRI, EDA, 피부 온도 신호로 학습자 집중도를 예측하는 멀티모달 시계열 머신러닝 파이프라인을 만들었고, 피험자 단위 검증에서 정확도 0.762를 기록했습니다 (1저자).",
       linkLabelKo: "포스터 보기",
     },
   ],
@@ -269,11 +269,11 @@ export const site = {
       headlineKo: "스타트업에서 에이전트를 만들다",
       bodyKo: [
         "퓨처워크랩에서 링크와 메모를 지식 그래프로 바꿔 주는 '세컨드 브레인' 서비스 LinkBrain의 가장 초기 PoC 단계에 합류했습니다.",
-        "LangGraph 에이전트 파이프라인을 처음부터 끝까지 설계하고 GNN + BERT 링크 예측을 연구했습니다. 같은 해 AI 도시농부 코치 에이전트로 KHUTHON 대상을 받았습니다.",
+        "LangGraph 에이전트 파이프라인을 처음부터 끝까지 설계하고 GNN + BERT 링크 예측을 연구했습니다. 같은 해 AI 도시농부 코치 에이전트로 KHUTHON 최우수상을 받았습니다.",
       ],
       body: [
         "At FutureWorkLab I joined LinkBrain at its earliest PoC stage — a 'second brain' that turns links and memos into a knowledge graph.",
-        "I designed the LangGraph agent pipeline end to end and researched GNN + BERT link prediction. That same year, an AI farming-coach agent won the KHUTHON grand prize.",
+        "I designed the LangGraph agent pipeline end to end and researched GNN + BERT link prediction. That same year, an AI farming-coach agent won the KHUTHON top excellence award.",
       ],
       image: "/projects/cifarm-1.webp",
     },
@@ -298,11 +298,11 @@ export const site = {
       headline: "Teaching models to read medical images",
       headlineKo: "모델에게 의료 영상을 읽히다",
       bodyKo: [
-        "뇌 CT에서 이상 탐지 기법 11종을 비교한 연구는 MIDL 2026 투고로 이어졌습니다.",
+        "뇌 CT에서 이상 탐지 기법 11종을 비교한 연구는 KSC 2026 투고로 이어졌습니다.",
         "서울대병원 BMI Lab에서는 ImageNet에서 DINO를 재현하고 병리 슬라이드용 자기지도학습 인코더를 검증하며, 좋은 모델과 병원 현장 사이의 거리가 아직 멀다는 것을 보았습니다.",
       ],
       body: [
-        "A benchmark of 11 anomaly-detection methods on brain CT turned into a MIDL 2026 submission.",
+        "A benchmark of 11 anomaly-detection methods on brain CT turned into a KSC 2026 submission.",
         "At SNUH's BMI Lab I reproduced DINO on ImageNet and validated self-supervised encoders for pathology slides — and saw how far a strong model still is from a hospital workflow.",
       ],
       image: "/projects/brain-ct-1.webp",
@@ -328,46 +328,106 @@ export const site = {
     },
   ],
 
-  // Newest first. Mirrors v1's experience entries (English).
+  // Newest first. Mirrors the résumé (public/resume.pdf, updated 2026-11).
   experience: [
     {
       company: "NAVER Cloud",
-      role: "Healthcare AI Business Strategy Intern",
-      period: "2026.09 — Now",
+      role: "Business Strategy Intern — New Business Development (Healthcare & Manufacturing)",
+      period: "2026.08 — Now",
       current: true,
       bullets: [
-        "Support healthcare AI business strategy — sizing the market and mapping government programs and budget flows.",
-        "Build the sales pipeline and partner process that carry a medical AI service from first contact to contract.",
+        "Opportunity pipeline: designed a dashboard that tracks business opportunities for an in-house medical LLM service by sourcing channel (partner-led vs. self-sourced) and stage; condensed 41 early-screening criteria across 9 stages into 5 quantitative stage metrics aligned with the CRM (SalesInsight) stage system.",
+        "Healthcare AI market strategy: structured the domestic and global healthcare AI market into a strategy proposal — a positioning map of 8 competing products and 4 regulatory changes, plus a target-partner list from public partner data; reported a strategy deck on NAVER's healthcare investment portfolio (D2SF and direct investments).",
+        "Pricing analysis: benchmarked medical AI pricing and the licensing / contract structures of Microsoft, AWS and Google as grounds for a pricing policy.",
+        "Partners & execution: sole point of contact for MSP partner sales leads and CEOs; ran internal workshops and reported results; supported PoCs, MOU drafts and technical consultations for public-sector projects.",
       ],
     },
     {
-      company: "Seoul National University Hospital, BMI Lab",
-      role: "Research Intern",
+      company: "Seoul National University Hospital — Institute of Convergence Medicine with Innovative Technology, Biomedical Informatics Lab",
+      role: "Undergraduate Research Intern",
       period: "2026.03 — 2026.08",
       bullets: [
+        "Built the dataset and designed the annotation criteria for RINPAG, a method that creates pathology training labels without manual labeling (co-author, manuscript in preparation).",
         "Validated DINO-based self-supervised ViT encoders for stain/scanner-robust features on pathology whole-slide images.",
         "Reproduced the full DINO pipeline (ViT-B/14) on ImageNet-1k, matching paper numbers (kNN 82.4%, linear 79.2%).",
       ],
     },
     {
-      company: "AIMS Lab, Kyung-Hee University",
-      role: "Undergraduate Researcher",
+      company: "AIMS Lab, Kyung Hee University",
+      role: "Undergraduate Research Intern",
       period: "2025.08 — 2026.07",
       bullets: [
-        "Comparative study of quantitative attention-measurement models from wearable-sensor data.",
-        "Deep-learning model comparison analysis on brain CT data.",
+        "Designed experiments comparing reconstruction-based and self-supervised anomaly detection on label-scarce brain CT images (submitted to KSC 2026).",
+        "Designed an attention-prediction pipeline from 4 wearable biosignals with subject-level validation (accuracy 0.762; KSC 2025, first author).",
       ],
     },
     {
       company: "FutureWorkLab",
-      role: "AI Engineer · Research Intern",
-      period: "2024.12 — 2025.08",
+      role: "AI Research & Engineering Intern",
+      period: "2024.12 — 2025.09",
       bullets: [
-        "Built the LangGraph agentic pipeline for LinkBrain, a graph-centric 'second brain' service.",
+        "Personal knowledge-management service PoC (LinkBrain, B2C): developed a GNN-based knowledge-graph (GNN-KG) service PoC.",
+        "Designed and implemented a LangGraph multi-step search / reasoning agent and its prompt workflows.",
+        "Validated technical feasibility at the PoC stage and fed the results into decisions on the service's direction.",
         "Researched GNN + BERT knowledge-graph link prediction (GnBERT).",
       ],
     },
   ],
+
+  // From the résumé. Not shown as page sections; feeds the chatbot.
+  intro: "I like finding the gaps in data — and building the thing that fills them myself.",
+  introKo: "데이터에서 공백을 찾고, 그 공백을 메우는 결과물을 직접 만드는 걸 좋아합니다.",
+
+  education: [
+    {
+      school: "Kyung Hee University",
+      degree: "Software Convergence, double major in Physical Education",
+      period: "2020.03 — 2027.02 (coursework completed)",
+      note: "GPA 3.97 / 4.5",
+    },
+  ],
+
+  // Projects on the résumé that have no Work Gallery page.
+  otherProjects: [
+    {
+      name: "FinWise",
+      context: "Korea University INISW Academy, 5th cohort — team lead",
+      period: "2024.09 — 2024.12",
+      summary: "Planned and built a Chrome extension that links economic-news keywords into a graph to deliver insights.",
+    },
+  ],
+
+  activities: [
+    {
+      name: "KHUDA, 5th cohort",
+      role: "Head of Planning & Operations, NLP track lead — Kyung Hee University data analysis & AI central club",
+      period: "2024.01 — 2024.06",
+      bullets: [
+        "The club was promoted to an official central club during his term.",
+        "Planned and ran Tech Talk, a finance / economy / IT newsletter (13+ issues).",
+      ],
+    },
+    {
+      name: "KHUDA, 4th cohort",
+      role: "Member, Data Business track",
+      period: "2023.08 — 2023.12",
+      bullets: ["Studied data analysis and AI fundamentals."],
+    },
+  ],
+
+  awards: [
+    { title: "Top Excellence Award (최우수상)", event: "KHUTHON inter-university hackathon", project: "CiFarm", date: "2024.05" },
+    { title: "Honorable Mention (장려상)", event: "Korea Economic Daily idea contest", project: "FinWise", date: "2024.10" },
+    { title: "Excellence Award (우수상)", event: "Korea University INISW Academy, 5th cohort", project: "FinWise", date: "2024.12" },
+    { title: "3rd place", event: "KHUDA 5th cohort final conference", project: "Sol_T (team lead)", date: "2024" },
+  ],
+
+  skills: {
+    "Analysis & docs": ["Excel", "Google Sheets", "PowerPoint", "Notion", "CRM (SalesInsight)"],
+    "Data & AI": ["Python (pandas, scikit-learn)", "PyTorch", "LangGraph"],
+    Language: ["TEPS 396 / 600 (2026)"],
+    "Military service": ["Republic of Korea Army, honorably discharged (2021.10 – 2023.04)"],
+  },
 
   journey: [
     { year: "2024", label: "AI Engineering", labelKo: "AI 엔지니어링" },

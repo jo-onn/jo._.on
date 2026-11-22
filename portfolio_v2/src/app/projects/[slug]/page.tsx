@@ -93,7 +93,7 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
       </header>
 
       <div className="relative mt-10 aspect-[16/10] overflow-hidden rounded-[28px] border border-line bg-card md:mt-12">
-        <Image src={withBase(p.image)} alt="" fill priority sizes="(min-width: 896px) 832px, 100vw" className="object-cover object-top" />
+        <Image src={withBase(p.image)} alt="" fill preload sizes="(min-width: 896px) 832px, 100vw" className="object-cover object-top" />
       </div>
 
       <section className="mt-12 md:mt-16">
