@@ -330,16 +330,16 @@ export const site = {
       meta: { org: "AIMS Lab, Kyung Hee University", orgKo: "경희대학교 AIMS Lab", period: "2025.08 — 2026.07", role: "Undergraduate Research Intern", roleKo: "학부연구인턴" },
       bodyKo: [
         "제품을 만드는 일에서 연구 질문을 던지는 일로 옮겨 갔습니다. 웨어러블 생체신호로 학습자가 집중하고 있는지 알 수 있을까?",
-        "심박, R-R 간격, 피부전도, 피부 온도 4종을 함께 쓰는 집중도 예측 파이프라인을 설계하고 피험자 단위로 검증해 정확도 0.762를 얻었고, KSC 2025에 1저자로 발표했습니다. 이어 라벨이 적은 뇌 CT 영상에서 재구성 기반과 자기지도 이상 탐지 기법을 비교하는 실험을 설계해 KSC 2026에 투고했습니다.",
+        "심박, R-R 간격, 피부전도, 피부 온도 4종을 함께 쓰는 집중도 예측 파이프라인을 설계하고 피험자 단위로 검증해 정확도 0.762를 얻었고, KSC 2025에 1저자로 발표했습니다. 이어 라벨이 적은 뇌 CT 영상에서 재구성 기반과 자기지도 이상 탐지 기법을 비교하는 실험을 설계해 KSC 2025에 투고했습니다.",
       ],
       body: [
         "I moved from building products to asking research questions: can wearable biosignals tell us when a learner is paying attention?",
-        "I designed an attention-prediction pipeline over four signals — heart rate, R-R intervals, EDA and skin temperature — and validated it at the subject level (accuracy 0.762), presented at KSC 2025 as first author. I then designed experiments comparing reconstruction-based and self-supervised anomaly detection on label-scarce brain CT, submitted to KSC 2026.",
+        "I designed an attention-prediction pipeline over four signals — heart rate, R-R intervals, EDA and skin temperature — and validated it at the subject level (accuracy 0.762), presented at KSC 2025 as first author. I then designed experiments comparing reconstruction-based and self-supervised anomaly detection on label-scarce brain CT, submitted to KSC 2025.",
       ],
       highlights: [
         { en: "Accuracy 0.762 (subject-level)", ko: "정확도 0.762 (피험자 단위)" },
         { en: "KSC 2025 · first author", ko: "KSC 2025 1저자" },
-        { en: "Brain CT · KSC 2026 submitted", ko: "뇌 CT · KSC 2026 투고" },
+        { en: "Brain CT · KSC 2025 submitted", ko: "뇌 CT · KSC 2025 투고" },
       ],
       image: "/projects/ksc-1.webp",
     },
