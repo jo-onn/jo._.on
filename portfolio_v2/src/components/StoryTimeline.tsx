@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useState } from "react";
-import { Activity, ArrowDownUp, Bot, Handshake, Microscope, type LucideIcon } from "lucide-react";
+import { Activity, ArrowDownUp, Bot, Handshake, Microscope, ShoppingBag, Trophy, Users, type LucideIcon } from "lucide-react";
 import { useLang } from "@/lib/lang";
 import { withBase } from "@/lib/base";
 
@@ -11,6 +11,9 @@ const ICONS: Record<string, LucideIcon> = {
   activity: Activity,
   microscope: Microscope,
   handshake: Handshake,
+  users: Users,
+  trophy: Trophy,
+  shopping: ShoppingBag,
 };
 
 export type StoryItem = {
@@ -20,6 +23,10 @@ export type StoryItem = {
   headlineKo?: string;
   body: readonly string[];
   bodyKo?: readonly string[];
+  /** Where / when / as what — shown under the headline. */
+  meta?: { org: string; orgKo?: string; period: string; periodKo?: string; role?: string; roleKo?: string };
+  /** Short, concrete facts (numbers, awards) shown as chips under the text. */
+  highlights?: readonly { en: string; ko: string }[];
   image?: string;
   logo?: { light: string; dark: string; alt: string };
 };
@@ -64,15 +71,40 @@ export function StoryTimeline({ items }: { items: readonly StoryItem[] }) {
                   </span>
                   {ko && s.headlineKo ? s.headlineKo : s.headline}
                 </h3>
+                {s.meta && (
+                  <p className="mt-4 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm leading-snug">
+                    {/* Phones: one line each (no separators), so no dot dangles at a line edge. */}
+                    <span className="basis-full font-semibold text-fg sm:basis-auto">{ko && s.meta.orgKo ? s.meta.orgKo : s.meta.org}</span>
+                    {s.meta.role && (
+                      <>
+                        <span className="hidden text-muted/60 sm:inline" aria-hidden="true">·</span>
+                        <span className="basis-full text-muted sm:basis-auto">{ko && s.meta.roleKo ? s.meta.roleKo : s.meta.role}</span>
+                      </>
+                    )}
+                    <span className="hidden text-muted/60 sm:inline" aria-hidden="true">·</span>
+                    <span className="basis-full whitespace-nowrap tabular-nums text-muted sm:basis-auto">{ko && s.meta.periodKo ? s.meta.periodKo : s.meta.period}</span>
+                  </p>
+                )}
                 <div className={`mt-5 grid gap-6 ${s.image || s.logo ? "md:grid-cols-[1fr_260px]" : ""}`}>
                   <div className="space-y-4 text-[15px] leading-relaxed text-muted md:text-base">
                     {(ko && s.bodyKo ? s.bodyKo : s.body).map((para) => (
                       <p key={para}>{para}</p>
                     ))}
+                    {s.highlights && (
+                      <ul className="flex flex-wrap gap-2 pt-1">
+                        {s.highlights.map((h) => (
+                          <li key={h.en} className="rounded-full border border-accent/30 bg-accent/10 px-3 py-1 text-xs font-semibold text-fg">
+                            {ko ? h.ko : h.en}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
                   </div>
                   {s.image && (
                     <div className="relative aspect-square overflow-hidden rounded-2xl border border-line bg-fg/5">
-                      <Image src={withBase(s.image)} alt="" fill sizes="260px" className="object-cover object-top" />
+                      {/* Same files the Projects cover slideshow already loads eagerly (cache hit). Lazy here
+                          would make Next flag the cover as a lazy LCP image, since it tracks images by src. */}
+                      <Image src={withBase(s.image)} alt="" fill sizes="260px" loading="eager" className="object-cover object-top" />
                     </div>
                   )}
                   {s.logo && (
