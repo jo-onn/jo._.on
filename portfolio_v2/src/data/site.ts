@@ -345,8 +345,8 @@ export const site = {
     {
       year: "2026",
       icon: "microscope",
-      headline: "SNUH · pathology dataset",
-      headlineKo: "서울대병원 · 병리 데이터셋",
+      headline: "SNUH · pathology AI research",
+      headlineKo: "서울대병원 · 병리 AI 연구",
       meta: { org: "Seoul National University Hospital · Biomedical Informatics Lab", orgKo: "서울대학교병원 융합의학기술원 · 의생명정보학 Lab", period: "2026.03 — 2026.08", role: "Undergraduate Research Intern", roleKo: "학부연구인턴" },
       bodyKo: [
         "수작업 라벨링 없이 병리 학습 라벨을 만드는 방법론 RINPAG 연구에서 학습용 데이터셋 구축을 도왔습니다.",
@@ -436,7 +436,7 @@ export const site = {
       companyKo: "서울대학교병원 융합의학기술원 · 의생명정보학 Lab",
       roleKo: "학부연구인턴",
       bullets: [
-        "Built the dataset and designed the annotation criteria for RINPAG, a method that creates pathology training labels without manual labeling (co-author, manuscript in preparation).",
+        "Helped build the training dataset for RINPAG, a method that creates pathology training labels without manual labeling, and owned the DINO experiments used to validate the model.",
         "Validated DINO-based self-supervised ViT encoders for stain/scanner-robust features on pathology whole-slide images.",
         "Reproduced the full DINO pipeline (ViT-B/14) on ImageNet-1k, matching paper numbers (kNN 82.4%, linear 79.2%).",
       ],
