@@ -396,16 +396,16 @@ export const site = {
       meta: { org: "NAVER Cloud", orgKo: "네이버클라우드", period: "2026.08 — Now", periodKo: "2026.08 — 현재", role: "Business Strategy Intern · Healthcare & Manufacturing", roleKo: "헬스케어·제조 분야 신사업 발굴, 전략 인턴" },
       bodyKo: [
         "현장의 문제와 연결되지 않은 모델은 결국 모델로만 남습니다. 그래서 지금은 네이버클라우드에서 헬스케어·제조 분야 신사업 발굴과 전략을 맡고 있습니다.",
-        "사내 의료 LLM 서비스의 사업 기회를 경로별·단계별로 추적하는 대시보드를 설계하며 초기 판단 기준 41개(9단계)를 5단계 정량 지표로 압축했습니다. 경쟁 제품 8종과 규제 변화 4건으로 포지셔닝 맵을 그려 시장 전략 제안서를 만들고, MS·AWS·Google의 라이선스·계약 체계를 조사해 가격 정책의 근거를 마련했습니다. MSP 파트너사와의 커뮤니케이션을 전담하며 PoC, MOU 초안, 공공사업 기술 협의도 지원합니다.",
+        "시장과 경쟁 환경을 조사해 전략으로 정리하고, 사업 기회를 체계적으로 살피는 방법을 만들며, 파트너와 함께 사업이 실제로 실행되도록 돕고 있습니다.",
       ],
       body: [
         "A model disconnected from a real problem stays a model. So now, at NAVER Cloud, I work on new-business discovery and strategy in healthcare and manufacturing.",
-        "I designed a dashboard that tracks opportunities for an in-house medical LLM service by channel and stage, condensing 41 early-screening criteria (9 stages) into 5 quantitative stage metrics. I built a market-strategy proposal around a positioning map of 8 competing products and 4 regulatory changes, benchmarked Microsoft, AWS and Google licensing and contracts to ground a pricing policy, and act as the point of contact for MSP partners while supporting PoCs, MOU drafts and public-sector technical consultations.",
+        "I research markets and competitors and turn them into strategy, help build a structured way to track business opportunities, and work with partners so the business actually gets done.",
       ],
       highlights: [
-        { en: "41 criteria → 5 stage metrics", ko: "판단 기준 41개 → 5단계 지표" },
-        { en: "8 competitors · 4 regulatory changes", ko: "경쟁 제품 8종 · 규제 변화 4건" },
-        { en: "MS · AWS · Google pricing benchmark", ko: "MS·AWS·Google 가격 벤치마크" },
+        { en: "New business discovery", ko: "신사업 발굴" },
+        { en: "Market & competitive research", ko: "시장·경쟁 분석" },
+        { en: "Partner collaboration", ko: "파트너 협업" },
       ],
     },
   ],
@@ -418,10 +418,10 @@ export const site = {
       period: "2026.08 — Now",
       current: true,
       bullets: [
-        "Opportunity pipeline: designed a dashboard that tracks business opportunities for an in-house medical LLM service by sourcing channel (partner-led vs. self-sourced) and stage; condensed 41 early-screening criteria across 9 stages into 5 quantitative stage metrics aligned with the CRM (SalesInsight) stage system.",
-        "Healthcare AI market strategy: structured the domestic and global healthcare AI market into a strategy proposal — a positioning map of 8 competing products and 4 regulatory changes, plus a target-partner list from public partner data; reported a strategy deck on NAVER's healthcare investment portfolio (D2SF and direct investments).",
-        "Pricing analysis: benchmarked medical AI pricing and the licensing / contract structures of Microsoft, AWS and Google as grounds for a pricing policy.",
-        "Partners & execution: sole point of contact for MSP partner sales leads and CEOs; ran internal workshops and reported results; supported PoCs, MOU drafts and technical consultations for public-sector projects.",
+        "Supports new-business discovery and strategy in healthcare and manufacturing.",
+        "Researches markets and competitors and structures the findings into strategy proposals.",
+        "Helps set up a structured way to track and evaluate business opportunities.",
+        "Works with partners to support business execution.",
       ],
     },
     {
@@ -505,7 +505,7 @@ export const site = {
   ],
 
   skills: {
-    "Analysis & docs": ["Excel", "Google Sheets", "PowerPoint", "Notion", "CRM (SalesInsight)"],
+    "Analysis & docs": ["Excel", "Google Sheets", "PowerPoint", "Notion", "CRM"],
     "Data & AI": ["Python (pandas, scikit-learn)", "PyTorch", "LangGraph"],
     Language: ["TEPS 396 / 600 (2026)"],
     "Military service": ["Republic of Korea Army, honorably discharged (2021.10 – 2023.04)"],
