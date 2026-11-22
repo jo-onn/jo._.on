@@ -38,13 +38,14 @@ export default function Home() {
 
         {/* Name + one-liner — no card, type sits straight on the page */}
         <Tile plain index={0} className="md:col-span-2 lg:col-span-6 lg:min-h-[240px] flex items-stretch justify-between gap-6 px-1 py-2">
-          <div className="flex min-w-0 flex-col justify-between lg:shrink-0">
+          {/* lg: as wide as the name (h1 is nowrap); the tagline wraps inside that width. */}
+          <div className="flex min-w-0 flex-col justify-between lg:w-min lg:shrink-0">
           <h1 className="text-[56px] leading-[0.92] lg:text-[clamp(40px,3.9vw,58px)] lg:whitespace-nowrap">
             <span className="block font-extralight tracking-[0.02em]">{site.name.first}</span>
             <span className="block font-bold tracking-[0.02em]">{site.name.last}</span>
           </h1>
-          {/* One-liner: under the name below 1150px; beside the photo on wider screens. */}
-          <p className="mt-4 max-w-[22rem] text-balance break-keep text-[13px] leading-snug text-muted min-[1150px]:hidden">
+          {/* One-liner: under the name below 1200px; beside the photo on wider screens. */}
+          <p className="mt-4 max-w-[22rem] text-balance break-keep text-[13px] leading-snug text-muted min-[1200px]:hidden">
             <T en={site.intro} ko={site.introKo} />
           </p>
           <div className="mt-6">
@@ -65,11 +66,17 @@ export default function Home() {
             </div>
           </div>
           </div>
-          {/* ≥1150px: one-liner in a narrow column left of the photo, top-aligned with the name. */}
-          <div className="flex shrink-0 items-start gap-5 self-start lg:min-w-0 lg:shrink">
-          <p className="hidden min-w-0 max-w-[11.5rem] pt-2 text-balance break-keep text-left text-[13px] leading-snug text-muted min-[1150px]:block">
-            <T en={site.intro} ko={site.introKo} />
-          </p>
+          {/* ≥1200px: one-liner in a narrow column left of the photo, top-aligned with the name. */}
+          {/* The block hugs its lines and sits centred in the space between name and photo. */}
+          <div className="flex shrink-0 items-start gap-6 self-start lg:min-w-0 lg:flex-1 lg:shrink">
+          <div className="hidden min-w-0 flex-1 justify-center pt-2 min-[1200px]:flex">
+            <p className="w-max max-w-full break-keep text-left text-[13px] leading-snug text-muted">
+              <T
+                en={site.introLines.map((l) => <span key={l} className="block">{l}</span>)}
+                ko={site.introLinesKo.map((l) => <span key={l} className="block">{l}</span>)}
+              />
+            </p>
+          </div>
           {/* Column width follows the "Now at …" line so it never overflows the
               page edge on phones; the photo keeps its own size. */}
           <div className="flex shrink-0 flex-col items-center">

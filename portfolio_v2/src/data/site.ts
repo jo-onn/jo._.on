@@ -472,6 +472,9 @@ export const site = {
   // From the résumé. intro shows beside the name; the rest feeds the chatbot and the "Résumé at a glance" modal (#resume).
   intro: "I like finding the gaps in data — and building the thing that fills them myself.",
   introKo: "데이터에서 공백을 찾고, 그 공백을 메우는 결과물을 직접 만드는 걸 좋아합니다.",
+  // Same line, broken by hand for the narrow column beside the photo (box hugs the text).
+  introLines: ["I like finding the gaps", "in data — and building", "the thing that fills", "them myself."],
+  introLinesKo: ["데이터에서 공백을 찾고,", "그 공백을 메우는 결과물을", "직접 만드는 걸 좋아합니다."],
 
   education: [
     {
